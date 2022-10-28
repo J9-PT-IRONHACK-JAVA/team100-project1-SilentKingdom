@@ -8,4 +8,5 @@ public interface ArmyRepository {
     public Army get();
 
     public void delete(Army army);
+
 }

@@ -14,6 +14,11 @@ public class ArmyCsv implements ArmyRepository {
         return null;
     }
 
+    public Army get(String filePath) {
+
+        return null;
+    }
+
     @Override
     public void delete(Army army) {
 
