@@ -1,0 +1,14 @@
+id,type,name,hp,is_alive,stamina,strength,mana,intelligence
+1,warrior,Troll,190,TRUE,10,8,,
+2,wizard,Sauron,80,TRUE,,,45,49
+3,warrior,Orc,100,TRUE,15,5,,
+4,warrior,Uruk-hai,150,TRUE,20,8,,
+5,wizard,Saruman,90,TRUE,,,30,25
+6,wizard,Nazgul,100,TRUE,,,35,20
+7,warrior,Orc,100,TRUE,15,5,,
+8,warrior,Troll,190,TRUE,10,8,,
+9,warrior,Orc,100,TRUE,15,5,,
+10,warrior,Uruk-hai,150,TRUE,20,8,,
+11,warrior,Uruk-hai,150,TRUE,20,8,,
+12,wizard,Nazgul,100,TRUE,,,35,20
+13,warrior,Orc,100,TRUE,15,5,,
