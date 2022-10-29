@@ -1,0 +1,3 @@
+type,name,hp,is_alive,stamina,strength,mana,intelligence
+warrior,Orc,100,TRUE,15,5,-1,-1
+warrior,Troll,190,TRUE,10,8,-1,-1

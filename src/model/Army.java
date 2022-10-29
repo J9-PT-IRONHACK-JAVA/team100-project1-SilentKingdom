@@ -1,16 +1,56 @@
 package model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
-public class Army {
+public class Army implements ArmyMethods{
     private String name;
     private String side;
-    private HashMap<Integer,Combatant> combatants;
-    private int aliveCount;
+    private final ArrayList<Combatant> combatants;
+    private final int initialSize;
+
+
+    @Override
+    public Combatant pickRandomCombatant() {
+        return combatants.get(0);
+    }
+
+    @Override
+    public Combatant pickCombatantByName() {
+        return null;
+    }
+
+    @Override
+    public void addCombatant(Combatant combatant){
+        combatants.add(combatant);
+    }
+
+    @Override
+    public void removeCombatant(Combatant combatant) {
+
+    }
+
+    @Override
+    public String getArmyStatus() {
+        return null;
+    }
+
+    @Override
+    public String getArmyVisual() {
+        return null;
+    }
+
+    public Army(String name, String side, int initialSize) {
+        this.name = name;
+        this.side = side;
+        this.initialSize = initialSize;
+        this.combatants = new ArrayList<>();
+    }
 
     public Army(String name, String side) {
         this.name = name;
         this.side = side;
+        this.initialSize = -1;
+        this.combatants = new ArrayList<>();
     }
 
     public String getName() {
@@ -29,19 +69,29 @@ public class Army {
         this.side = side;
     }
 
-    public HashMap<Integer, Combatant> getCombatants() {
+
+
+    public ArrayList<Combatant> getCombatants() {
         return combatants;
     }
 
-    public void setCombatants(HashMap<Integer, Combatant> combatants) {
-        this.combatants = combatants;
+    public int getSize() {
+        return combatants.size();
     }
 
-    public int getAliveCount() {
-        return aliveCount;
+    public int getInitialSize() {
+        return initialSize;
     }
 
-    public void setAliveCount(int aliveCount) {
-        this.aliveCount = aliveCount;
+
+
+    @Override
+    public String toString() {
+        return "Army{" +
+                "name='" + name + '\'' +
+                ", side='" + side + '\'' +
+                ", combatants:\n"
+                +
+                '}';
     }
 }

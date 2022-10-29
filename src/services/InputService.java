@@ -13,22 +13,22 @@ public class InputService {
     // store them in variables and instantiate the new object with them
 
     private Warrior createWarrior(Army army) {
-        return new Warrior();
+        return null;
     }
 
     private Wizard createWizard(Army army) {
-        return new Wizard();
+        return null;
     }
 
     private Army createManualArmy(){
         // LOOP until army size is reached
         // Create and append combatants to the army
 
-        return new Army();
+        return null;
     }
 
     private Army createRandomArmy(){
-        return new Army();
+        return null;
     }
 
 
