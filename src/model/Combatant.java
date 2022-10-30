@@ -1,8 +1,11 @@
 package model;
 
+import jdk.dynalink.linker.support.CompositeTypeBasedGuardingDynamicLinker;
 import repository.ArmyCsv;
 import repository.ArmyRepository;
+import repository.CombatantCsv;
 
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 public abstract class Combatant implements Attacker{
@@ -10,9 +13,20 @@ public abstract class Combatant implements Attacker{
     private String name;
     private int hp;
     private boolean isAlive;
+    private String armyName;
 
-    public Combatant(String name, int hp, boolean isAlive) {
-        this.id = new Random().nextInt(); // ArmyCsv.getNextId();
+    // When creating new combatant
+    public Combatant(String name, int hp, boolean isAlive, CombatantCsv repo) throws Exception {
+        this.id = repo.getLastId() + 1;
+        this.name = name;
+        this.hp = hp;
+        this.isAlive = isAlive;
+        repo.save(this);
+    }
+
+    // When retrieving combatant from repository
+    public Combatant(int id, String name, int hp, boolean isAlive) {
+        this.id = id;
         this.name = name;
         this.hp = hp;
         this.isAlive = isAlive;
@@ -46,6 +60,14 @@ public abstract class Combatant implements Attacker{
 
     public void setAlive(boolean alive) {
         isAlive = alive;
+    }
+
+    public String getArmyName() {
+        return armyName;
+    }
+
+    public void setArmyName(String armyName) {
+        this.armyName = armyName;
     }
 
     @Override

@@ -1,5 +1,9 @@
 package model;
 
+import repository.CombatantCsv;
+
+import java.io.FileNotFoundException;
+
 public class Wizard extends Combatant{
     private int mana;
     private int intelligence;
@@ -15,15 +19,22 @@ public class Wizard extends Combatant{
 
     }
 
-    public Wizard(String name, int hp, boolean isAlive, int mana, int intelligence) {
-        super(name, hp, isAlive);
+    public Wizard(String name, int hp, boolean isAlive, int mana, int intelligence, CombatantCsv repo)
+            throws Exception {
+        super(name, hp, isAlive, repo);
         this.mana = mana;
         this.intelligence = intelligence;
     }
 
-    public Wizard(String name){
+    public Wizard(int id, String name, int hp, boolean isAlive, int mana, int intelligence) {
+        super(id, name, hp, isAlive);
+        this.mana = mana;
+        this.intelligence = intelligence;
+    }
+
+    public Wizard(String name, CombatantCsv repo) throws Exception {
         // TO DO Random logic for attributes
-        super(name, -1, true);
+        super(name, -1, true, repo);
         this.mana = -1;
         this.intelligence = -1;
     }

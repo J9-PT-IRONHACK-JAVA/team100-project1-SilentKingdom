@@ -1,5 +1,9 @@
 package model;
 
+import repository.CombatantCsv;
+
+import java.io.FileNotFoundException;
+
 public class Warrior extends Combatant{
     private int stamina;
     private int strength;
@@ -14,20 +18,25 @@ public class Warrior extends Combatant{
 
     }
 
-
-    public Warrior(String name, int hp, boolean isAlive, int stamina, int strength) {
-        super(name, hp, isAlive);
+    public Warrior(String name, int hp, boolean isAlive, int stamina, int strength, CombatantCsv repo)
+            throws Exception {
+        super(name, hp, isAlive, repo);
         this.stamina = stamina;
         this.strength = strength;
     }
 
-    public Warrior(String name){
+    public Warrior(int id, String name, int hp, boolean isAlive, int stamina, int strength) {
+        super(id, name, hp, isAlive);
+        this.stamina = stamina;
+        this.strength = strength;
+    }
+
+    public Warrior(String name, CombatantCsv repo) throws Exception {
         // TO DO Random logic for attributes
-        super(name, -1, true);
+        super(name, -1, true, repo);
         this.stamina = -1;
         this.strength = -1;
     }
-
 
     public int getStamina() {
         return stamina;

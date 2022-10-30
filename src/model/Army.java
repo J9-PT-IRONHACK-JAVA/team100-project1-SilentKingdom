@@ -21,6 +21,7 @@ public class Army implements ArmyMethods{
 
     @Override
     public void addCombatant(Combatant combatant){
+        combatant.setArmyName(name);
         combatants.add(combatant);
     }
 
