@@ -4,7 +4,8 @@ import repository.RepositoryCsv;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        // =========== DEMO Repository ============
+        /*
+        // =========== DEMO Repository ============ (Uncomment for testing)
 
         // Initialize CSV repository
         var repo = new RepositoryCsv();
@@ -44,5 +45,7 @@ public class Main {
         // Import new combatant from imports/templates/ and saved it when added to army
         var warrior2 = repo.importCombatant("Troll");
         darkArmy.addCombatant(warrior2);
+
+         */
     }
 }
