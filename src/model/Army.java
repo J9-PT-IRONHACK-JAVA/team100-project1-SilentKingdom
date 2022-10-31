@@ -1,13 +1,18 @@
 package model;
 
+import repository.RepositoryCsv;
+
 import java.util.ArrayList;
 
 public class Army implements ArmyMethods{
     private String name;
-    private String side;
     private final ArrayList<Combatant> combatants;
     private final int initialSize;
 
+    private final RepositoryCsv repo;
+
+    // TODO army.remove() method to remove army calling repo.deleteArmy()
+    //  In case user wants to change armies during game
 
     @Override
     public Combatant pickRandomCombatant() {
@@ -20,9 +25,10 @@ public class Army implements ArmyMethods{
     }
 
     @Override
-    public void addCombatant(Combatant combatant){
+    public void addCombatant(Combatant combatant) throws Exception {
         combatant.setArmyName(name);
         combatants.add(combatant);
+        repo.saveCombatant(combatant);
     }
 
     @Override
@@ -40,18 +46,11 @@ public class Army implements ArmyMethods{
         return null;
     }
 
-    public Army(String name, String side, int initialSize) {
+    public Army(String name, RepositoryCsv repo) {
         this.name = name;
-        this.side = side;
-        this.initialSize = initialSize;
+        this.initialSize = 0;
         this.combatants = new ArrayList<>();
-    }
-
-    public Army(String name, String side) {
-        this.name = name;
-        this.side = side;
-        this.initialSize = -1;
-        this.combatants = new ArrayList<>();
+        this.repo = repo;
     }
 
     public String getName() {
@@ -61,16 +60,6 @@ public class Army implements ArmyMethods{
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getSide() {
-        return side;
-    }
-
-    public void setSide(String side) {
-        this.side = side;
-    }
-
-
 
     public ArrayList<Combatant> getCombatants() {
         return combatants;
@@ -85,12 +74,10 @@ public class Army implements ArmyMethods{
     }
 
 
-
     @Override
     public String toString() {
         return "Army{" +
                 "name='" + name + '\'' +
-                ", side='" + side + '\'' +
                 ", combatants:\n"
                 +
                 '}';

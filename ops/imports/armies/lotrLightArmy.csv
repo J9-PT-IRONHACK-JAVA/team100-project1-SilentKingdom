@@ -1,8 +1,0 @@
-type,name,hp,is_alive,stamina,strength,mana,intelligence
-warrior,Aragorn,160,TRUE,45,8,-1,-1
-wizard,Gandalf,80,TRUE,-1,-1,40,47
-warrior,Gimli,136,TRUE,25,10,-1,-1
-warrior,Legolas,190,TRUE,36,5,-1,-1
-wizard,Radagast,90,TRUE,-1,-1,35,35
-wizard,Galadriel,100,TRUE,-1,-1,48,23
-warrior,Eowyn,150,TRUE,50,4,-1,-1

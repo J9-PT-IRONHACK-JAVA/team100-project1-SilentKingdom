@@ -1,12 +1,6 @@
 package model;
 
-import jdk.dynalink.linker.support.CompositeTypeBasedGuardingDynamicLinker;
-import repository.ArmyCsv;
-import repository.ArmyRepository;
-import repository.CombatantCsv;
-
-import java.io.FileNotFoundException;
-import java.util.Random;
+import repository.RepositoryCsv;
 
 public abstract class Combatant implements Attacker{
     private int id;
@@ -15,13 +9,16 @@ public abstract class Combatant implements Attacker{
     private boolean isAlive;
     private String armyName;
 
+    // TODO combatant.Remove method to call repo.deleteCombatant() to remove combatants from repository
+    //  Should also remove id at least (so there are no issues with id's)
+
     // When creating new combatant
-    public Combatant(String name, int hp, boolean isAlive, CombatantCsv repo) throws Exception {
+    public Combatant(String name, int hp, boolean isAlive, RepositoryCsv repo) throws Exception {
         this.id = repo.getLastId() + 1;
         this.name = name;
         this.hp = hp;
         this.isAlive = isAlive;
-        repo.save(this);
+        repo.saveCombatant(this);
     }
 
     // When retrieving combatant from repository

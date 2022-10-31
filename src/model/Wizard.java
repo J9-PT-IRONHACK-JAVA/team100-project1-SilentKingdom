@@ -1,8 +1,6 @@
 package model;
 
-import repository.CombatantCsv;
-
-import java.io.FileNotFoundException;
+import repository.RepositoryCsv;
 
 public class Wizard extends Combatant{
     private int mana;
@@ -19,7 +17,7 @@ public class Wizard extends Combatant{
 
     }
 
-    public Wizard(String name, int hp, boolean isAlive, int mana, int intelligence, CombatantCsv repo)
+    public Wizard(String name, int hp, boolean isAlive, int mana, int intelligence, RepositoryCsv repo)
             throws Exception {
         super(name, hp, isAlive, repo);
         this.mana = mana;
@@ -32,7 +30,7 @@ public class Wizard extends Combatant{
         this.intelligence = intelligence;
     }
 
-    public Wizard(String name, CombatantCsv repo) throws Exception {
+    public Wizard(String name, RepositoryCsv repo) throws Exception {
         // TO DO Random logic for attributes
         super(name, -1, true, repo);
         this.mana = -1;
