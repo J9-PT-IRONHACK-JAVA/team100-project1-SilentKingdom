@@ -14,12 +14,6 @@ public class Wizard extends Combatant implements Attacker {
             this.weakAttack(target);
         }
     }
-
-    @Override
-    public void takeDamage(int damage) {
-
-    }
-
     @Override
     public void takeDamage(int damage) {
 

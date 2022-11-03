@@ -16,11 +16,6 @@ public class Warrior extends Combatant implements Attacker {
     }
 
     @Override
-    public void TakeDamage(int damage) {
-
-    }
-
-    @Override
     public void takeDamage(int damage) {
         if(this.health > 0) {
             this.health -= damage;
@@ -43,6 +38,11 @@ public class Warrior extends Combatant implements Attacker {
         var damage = 0;
         //TODO implement damage calculation
         target.takeDamage(damage);
+    }
+
+    @Override
+    public void TakeDamage(int damage) {
+
     }
 
     @Override
