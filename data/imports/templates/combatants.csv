@@ -1,3 +1,6 @@
 name,type,hp,stamina,strength,mana,intelligence
 Troll,warrior,190,10,8,-1,-1
 Gondor Soldier,warrior,120,30,7,-1,-1
+Boromir,warrior,120,30,7,-1,-1
+James Potter,wizard,81,-1,-1,35,27
+Sergeant Imperial,warrior,113,18,4,-1,-1

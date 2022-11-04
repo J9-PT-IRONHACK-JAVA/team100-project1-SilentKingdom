@@ -144,6 +144,22 @@ public class RepositoryCsv implements Repository{
         Tools.overwriteCsv(REPO_PATH, rows, HEADERS);
     }
 
+    @Override
+    public void updateCombatant(Combatant combatant) throws Exception {
+        var newRow = mapCombatantToRow(combatant);
+        var rows = getAllRows(REPO_PATH);
+
+        for (int i = 0; i < rows.size(); i++) {
+            if (rows.get(i)[0].equals(newRow[0])){
+                rows.set(i, newRow);
+                break;
+            }
+        }
+
+        // Overwrite file
+        Tools.overwriteCsv(REPO_PATH, rows, HEADERS);
+    }
+
     /**
      * Stores the state of all combatants from a given Army. All existing combatants are updated in the repository,
      * while non-existing ones are inserted.

@@ -1,5 +1,13 @@
 package utils;
 
+import model.Army;
+import model.Combatant;
+import model.Warrior;
+import model.Wizard;
+import net.datafaker.Faker;
+import org.apache.commons.text.CaseUtils;
+import repository.RepositoryCsv;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +29,15 @@ public abstract class Tools {
             if (value.equals(array[i])) return i;
         }
         return -1;
+    }
+
+    public static String generateRandomArmyName(){
+        var faker = new Faker();
+
+        String firstName = faker.elderScrolls().city();
+        String lastName = CaseUtils.toCamelCase(faker.team().creature(), true);
+
+        return (firstName + " " + lastName);
     }
 
 

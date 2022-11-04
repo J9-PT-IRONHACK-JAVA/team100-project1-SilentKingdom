@@ -1,9 +1,12 @@
 package model;
 
+import net.datafaker.Faker;
 import repository.RepositoryCsv;
 
+import java.io.FileNotFoundException;
+
 public abstract class Combatant implements Attacker{
-    private int id;
+    private final int id;
     private String name;
     private int hp;
     private boolean isAlive;
@@ -11,6 +14,13 @@ public abstract class Combatant implements Attacker{
 
     // TODO combatant.Remove method to call repo.deleteCombatant() to remove combatants from repository
     //  Should also remove id at least (so there are no issues with id's)
+
+    public void takeDamage(int damage){
+        hp = Math.min(0, hp-damage);
+        if (hp == 0) {
+            setAlive(false);
+        }
+    }
 
     // When creating new combatant
     public Combatant(String name, int hp, boolean isAlive, RepositoryCsv repo) throws Exception {
@@ -29,7 +39,6 @@ public abstract class Combatant implements Attacker{
         this.isAlive = isAlive;
     }
 
-    public Combatant(){}
 
     public int getId() {
         return id;
@@ -76,4 +85,5 @@ public abstract class Combatant implements Attacker{
                 ", isAlive=" + isAlive +
                 '}';
     }
+
 }

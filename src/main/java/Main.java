@@ -1,23 +1,23 @@
+import model.Army;
 import model.Warrior;
+import model.Wizard;
+import net.datafaker.Faker;
+import org.apache.commons.text.CaseUtils;
 import repository.RepositoryCsv;
+import utils.Tools;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-
-
-
-
-
         // =========== DEMO Repository ============ (Uncomment for testing)
-        /*
+
 
         // Initialize CSV repository
         var repo = new RepositoryCsv();
 
         // Import armies from imports/armies --> Check storage/combatants.csv
         var lightArmy =  repo.importArmy("lotrLightArmy.csv", "Heroes Army");
-        var darkArmy = repo.importArmy("lotrDarkArmy.csv", "Sauron's Army");
+        var darkArmy = Army.createRandom(10, repo);
 
         // Create warrior and export it to imports/templates
         var warrior = new Warrior("Boromir", 120, false, 25, 7, repo);
@@ -51,7 +51,6 @@ public class Main {
         var warrior2 = repo.importCombatant("Troll");
         darkArmy.addCombatant(warrior2);
 
-         */
 
     }
 }
