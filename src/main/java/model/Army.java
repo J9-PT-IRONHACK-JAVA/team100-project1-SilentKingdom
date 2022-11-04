@@ -4,58 +4,48 @@ import net.datafaker.Faker;
 import repository.RepositoryCsv;
 import utils.Tools;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-public class Army implements ArmyMethods{
+public class Army {
     private String name;
     private final HashMap<Integer,Combatant> combatants;
     private final RepositoryCsv repo;
+    private boolean isBot;
 
     // TODO army.remove() method to remove army calling repo.deleteArmy()
     //  In case user wants to change armies during game
 
-    @Override
+
     public Combatant pickRandomCombatant() {
         Random rand = new Random();
         var combatantsList = new ArrayList<>(combatants.values());
         return combatantsList.get(rand.nextInt(combatants.keySet().size()));
     }
 
-    @Override
-    public Combatant pickCombatantByName() {
+    public Combatant pickCombatantByName(String name) {
+        for (Combatant combatant : combatants.values()) {
+            if (name.equals(combatant.getName())) {
+                return combatant;
+            }
+        }
         return null;
     }
 
-    @Override
     public void addCombatant(Combatant combatant) throws Exception {
         combatant.setArmyName(name);
         combatants.put(combatant.getId(), combatant);
         repo.saveCombatant(combatant);
     }
 
-    @Override
     public void removeCombatant(Combatant combatant) {
-
+        combatants.remove(combatant.getId());
     }
-
-    @Override
-    public String getArmyStatus() {
-        return null;
-    }
-
-    @Override
-    public String getArmyVisual() {
-        return null;
-    }
-
 
     public Army(String name, RepositoryCsv repo) {
         this.name = name;
         this.combatants = new HashMap<>();
         this.repo = repo;
+        this.isBot = true;
     }
 
     public String getName() {
@@ -74,6 +64,13 @@ public class Army implements ArmyMethods{
         return combatants.size();
     }
 
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
+    }
 
     @Override
     public String toString() {

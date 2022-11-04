@@ -1,6 +1,10 @@
 package services;
 
 public class GameService {
+    private static final String RANDOM_MODE = "random";
+    private static final String PVP_MODE = "PVP";
+    private static final String PVB_MODE = "PVB";
+
 
     public void startGame(){
 

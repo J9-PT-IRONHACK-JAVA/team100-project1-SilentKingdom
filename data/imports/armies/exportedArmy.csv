@@ -1,11 +1,12 @@
 name,type,hp,stamina,strength,mana,intelligence
-Lieutenant General Imperial,warrior,136,13,5,-1,-1
-Sergeant Imperial,warrior,113,18,4,-1,-1
-Remus Lupin,wizard,57,-1,-1,26,35
-Dudley Dursley,wizard,53,-1,-1,48,7
-Dolores Jane Umbridge,wizard,67,-1,-1,35,28
-First Sergeant Redguard,warrior,121,39,9,-1,-1
-Corporal Redguard,warrior,102,14,9,-1,-1
-Second Lieutenant Altmer,warrior,124,13,7,-1,-1
-Colonel Argonian,warrior,105,39,6,-1,-1
-Master Gunnery Sergeant Riekling,warrior,188,45,4,-1,-1
+Private First Class Breton,warrior,144,49,5,-1,-1
+Staff Sergeant Khajiit,warrior,111,32,7,-1,-1
+Lieutenant General Khajiit,warrior,148,13,5,-1,-1
+Norbert,wizard,90,-1,-1,10,4
+Frank Bryce,wizard,76,-1,-1,27,42
+Angelina Johnson,wizard,91,-1,-1,27,16
+Mrs. Cole,wizard,73,-1,-1,35,29
+Corporal Altmer,warrior,152,28,6,-1,-1
+Colonel Nord,warrior,154,44,4,-1,-1
+Lieutenant General Breton,warrior,167,10,2,-1,-1
+Sergeant Orc,warrior,154,49,6,-1,-1

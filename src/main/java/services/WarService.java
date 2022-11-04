@@ -2,36 +2,123 @@ package services;
 
 import model.Army;
 import model.Combatant;
+import repository.RepositoryCsv;
 
 import java.util.ArrayList;
 
 public class WarService {
 
-    private ArrayList<Combatant> graveyard;
-    private Army light;
-    private Army dark;
+    private final ArrayList<Combatant> graveyard;
+    private final Army lightArmy;
+    private final Army darkArmy;
+    private boolean isOver;
 
-    public WarService(Army light, Army dark) {
+    private final RepositoryCsv repo;
+
+    public WarService(Army light, Army dark, RepositoryCsv repo) {
         this.graveyard = new ArrayList<>();
-        this.light = light;
-        this.dark = dark;
+        this.lightArmy = light;
+        this.darkArmy = dark;
+        this.isOver = false;
+        this.repo = repo;
     }
 
-    public void startRandom() {
+    public void battle(Combatant lightCombatant, Combatant darkCombatant){
+        // TODO Print battle will start with combatants stats
+        System.out.println(lightCombatant);
+        System.out.println(darkCombatant);
+
+        while (lightCombatant.isAlive() && darkCombatant.isAlive()) {
+            // TODO print attacks (can be done inside attack method)
+            lightCombatant.attack(darkCombatant);
+            darkCombatant.attack(lightCombatant);
+        }
+
+        if (!lightCombatant.isAlive()) {
+            lightArmy.removeCombatant(lightCombatant);
+            graveyard.add(lightCombatant);
+            System.out.printf("Light Combatant DEFEATED: %s\n\n", lightCombatant.getName());
+        }
+        if (!darkCombatant.isAlive()) {
+            darkArmy.removeCombatant(darkCombatant);
+            graveyard.add(lightCombatant);
+            System.out.printf("DARK Combatant DEFEATED: %s\n\n", darkCombatant.getName());
+        }
+
+        // TODO Print battle will ended with winner status (or draw)
+    }
+
+    public Combatant getNextCombatant(Army army){
+        if (army.isBot()) return army.pickRandomCombatant();
+
+        // TODO input service ask for next combatant name
+
+        return army.pickCombatantByName("pepito");
+    }
+
+
+    public Army start() throws Exception {
+        // TODO Print announcement that the war begins
+        System.out.println("==========  THE WAR BEGINS ===========");
+
         // Start war (LOOP) picking random combatants while any of the armies is defeated, continue
+        int n = 0;
+        while (!isOver) {
+            // TODO Here we should print the war status
+            n++;
+            System.out.printf("\nBATTLE # %s\n", n);
+            System.out.printf(
+                    "Armies Stats => %s (%s) VS %s (%s)\n",
+                    lightArmy.getName(), lightArmy.getSize(),
+                    darkArmy.getName(), darkArmy.getSize()
+            );
+
+            var lightCombatant = getNextCombatant(lightArmy);
+            var darkCombatant = getNextCombatant(darkArmy);
+
+            battle(lightCombatant, darkCombatant);
+
+            // Update combatants in repository
+            repo.saveCombatant(lightCombatant);
+            repo.saveCombatant(darkCombatant);
+
+            System.out.println(new String(new char[100]).replace("\0", "="));
+
+            isOver = lightArmy.getSize() == 0 || darkArmy.getSize() == 0;
+        }
+
+        // Return the winner army
+        if (lightArmy.getSize() > 0) {
+            return lightArmy;
+        } else if (darkArmy.getSize() > 0) {
+            return darkArmy;
+        }
+
+        // In case of draw return null
+        return null;
     }
 
-    public void startPlayerVsPlayer() {
-        // Start war asking the players to choose combatants
+    public void stop(){
+        setOver(true);
     }
 
-    public void startPlayerVsBot() {
-        // Start war asking the players to choose combatants
+    public ArrayList<Combatant> getGraveyard() {
+        return graveyard;
     }
 
-    public void stop() {
-        // Stop war -- maybe one of the armies surrenders?
+    public Army getLightArmy() {
+        return lightArmy;
     }
 
+    public Army getDarkArmy() {
+        return darkArmy;
+    }
 
+    public boolean isOver() {
+        return isOver;
+    }
+
+    public void setOver(boolean over) {
+        isOver = over;
+    }
 }

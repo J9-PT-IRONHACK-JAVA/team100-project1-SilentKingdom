@@ -1,19 +1,20 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
-1,Heroes Army,Aragorn,warrior,160,true,45,8,-1,-1
-2,Heroes Army,Gandalf,wizard,80,true,-1,-1,40,47
-3,Heroes Army,Gimli,warrior,136,true,25,10,-1,-1
-4,Heroes Army,Legolas,warrior,190,true,36,5,-1,-1
-5,Heroes Army,Radagast,wizard,90,true,-1,-1,35,35
-6,Heroes Army,Galadriel,wizard,100,true,-1,-1,48,23
-7,Heroes Army,Eowyn,warrior,150,true,50,4,-1,-1
-18,Heroes Army,Boromir,warrior,120,false,25,7,-1,-1
-16,Kozanset Kangaroos,Troll,warrior,190,true,10,8,-1,-1
-17,Kozanset Kangaroos,Sergeant Imperial,warrior,113,false,18,4,-1,-1
-8,Kozanset Kangaroos,Remus Lupin,wizard,57,true,-1,-1,26,35
-9,Kozanset Kangaroos,Dudley Dursley,wizard,53,true,-1,-1,48,7
-10,Kozanset Kangaroos,Dolores Jane Umbridge,wizard,67,true,-1,-1,35,28
-11,Kozanset Kangaroos,First Sergeant Redguard,warrior,121,true,39,9,-1,-1
-12,Kozanset Kangaroos,Corporal Redguard,warrior,102,true,14,9,-1,-1
-13,Kozanset Kangaroos,Second Lieutenant Altmer,warrior,124,true,13,7,-1,-1
-14,Kozanset Kangaroos,Colonel Argonian,warrior,105,true,39,6,-1,-1
-15,Kozanset Kangaroos,Master Gunnery Sergeant Riekling,warrior,188,true,45,4,-1,-1
+1,Heroes Army,Aragorn,warrior,35,true,15,8,-1,-1
+2,Heroes Army,Gandalf,wizard,0,false,-1,-1,10,47
+3,Heroes Army,Gimli,warrior,0,false,2,10,-1,-1
+4,Heroes Army,Legolas,warrior,0,false,2,5,-1,-1
+5,Heroes Army,Radagast,wizard,47,true,-1,-1,0,35
+6,Heroes Army,Galadriel,wizard,0,false,-1,-1,2,23
+7,Heroes Army,Eowyn,warrior,0,false,2,4,-1,-1
+19,Heroes Army,Boromir,warrior,120,false,30,7,-1,-1
+16,Stormhold Oxen,Troll,warrior,0,false,5,8,-1,-1
+17,Stormhold Oxen,Staff Sergeant Khajiit,warrior,0,false,17,7,-1,-1
+18,Stormhold Oxen,Lieutenant General Khajiit,warrior,0,false,2,5,-1,-1
+8,Stormhold Oxen,Norbert,wizard,0,false,-1,-1,4,4
+9,Stormhold Oxen,Frank Bryce,wizard,76,false,-1,-1,27,42
+10,Stormhold Oxen,Angelina Johnson,wizard,0,false,-1,-1,17,16
+11,Stormhold Oxen,Mrs. Cole,wizard,0,false,-1,-1,10,29
+12,Stormhold Oxen,Corporal Altmer,warrior,0,false,1,6,-1,-1
+13,Stormhold Oxen,Colonel Nord,warrior,0,false,1,4,-1,-1
+14,Stormhold Oxen,Lieutenant General Breton,warrior,0,false,3,2,-1,-1
+15,Stormhold Oxen,Sergeant Orc,warrior,0,false,0,6,-1,-1

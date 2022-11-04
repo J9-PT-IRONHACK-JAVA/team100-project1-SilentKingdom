@@ -1,9 +1,6 @@
 package model;
 
-import net.datafaker.Faker;
 import repository.RepositoryCsv;
-
-import java.io.FileNotFoundException;
 
 public abstract class Combatant implements Attacker{
     private final int id;
@@ -16,7 +13,7 @@ public abstract class Combatant implements Attacker{
     //  Should also remove id at least (so there are no issues with id's)
 
     public void takeDamage(int damage){
-        hp = Math.min(0, hp-damage);
+        hp = Math.max(0, hp-damage);
         if (hp == 0) {
             setAlive(false);
         }
