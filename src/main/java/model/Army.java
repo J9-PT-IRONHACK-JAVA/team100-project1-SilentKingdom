@@ -1,57 +1,51 @@
 package model;
 
+import net.datafaker.Faker;
 import repository.RepositoryCsv;
+import utils.Tools;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public class Army implements ArmyMethods{
+public class Army {
     private String name;
-    private final ArrayList<Combatant> combatants;
-    private final int initialSize;
-
+    private final HashMap<Integer,Combatant> combatants;
     private final RepositoryCsv repo;
+    private boolean isBot;
 
     // TODO army.remove() method to remove army calling repo.deleteArmy()
     //  In case user wants to change armies during game
 
-    @Override
+
     public Combatant pickRandomCombatant() {
-        return combatants.get(0);
+        Random rand = new Random();
+        var combatantsList = new ArrayList<>(combatants.values());
+        return combatantsList.get(rand.nextInt(combatants.keySet().size()));
     }
 
-    @Override
-    public Combatant pickCombatantByName() {
+    public Combatant pickCombatantByName(String name) {
+        for (Combatant combatant : combatants.values()) {
+            if (name.equals(combatant.getName())) {
+                return combatant;
+            }
+        }
         return null;
     }
 
-    @Override
     public void addCombatant(Combatant combatant) throws Exception {
         combatant.setArmyName(name);
-        combatants.add(combatant);
+        combatants.put(combatant.getId(), combatant);
         repo.saveCombatant(combatant);
     }
 
-    @Override
     public void removeCombatant(Combatant combatant) {
-
+        combatants.remove(combatant.getId());
     }
-
-    @Override
-    public String getArmyStatus() {
-        return null;
-    }
-
-    @Override
-    public String getArmyVisual() {
-        return null;
-    }
-
 
     public Army(String name, RepositoryCsv repo) {
         this.name = name;
-        this.initialSize = 0;
-        this.combatants = new ArrayList<>();
+        this.combatants = new HashMap<>();
         this.repo = repo;
+        this.isBot = true;
     }
 
     public String getName() {
@@ -63,24 +57,51 @@ public class Army implements ArmyMethods{
     }
 
     public ArrayList<Combatant> getCombatants() {
-        return combatants;
+        return new ArrayList<>(combatants.values());
     }
 
     public int getSize() {
         return combatants.size();
     }
 
-    public int getInitialSize() {
-        return initialSize;
+    public boolean isBot() {
+        return isBot;
     }
 
+    public void setBot(boolean bot) {
+        isBot = bot;
+    }
 
     @Override
     public String toString() {
         return "Army{" +
                 "name='" + name + '\'' +
                 ", combatants:\n"
-                +
+                + combatants.toString().replace("},", "}\n,") +
                 '}';
+    }
+
+    public static Army createRandom(int size, RepositoryCsv repo) throws Exception {
+        var faker = new Faker();
+        String randomArmyName = Tools.generateRandomArmyName();
+
+        var army = new Army(randomArmyName, repo);
+
+        // Calculate random number of Wizards in army
+        int wizardNum = faker.number().numberBetween(size/4, size/2);
+        int warriorNum = size - wizardNum;
+
+        // Create random Wizards and add to army until max number
+        while (army.getCombatants().size() < wizardNum) {
+            var randomWizard = Wizard.createRandom(repo);
+            army.addCombatant(randomWizard);
+        }
+        // Create random Warriors until army size
+        while (army.getCombatants().size() < size) {
+            var randomWarrior = Warrior.createRandom(repo);
+            army.addCombatant(randomWarrior);
+        }
+
+        return army;
     }
 }

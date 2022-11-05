@@ -1,23 +1,22 @@
+import model.Army;
 import model.Warrior;
 import repository.RepositoryCsv;
+import services.WarService;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-
-
-
-
-
         // =========== DEMO Repository ============ (Uncomment for testing)
-        /*
+
 
         // Initialize CSV repository
         var repo = new RepositoryCsv();
 
-        // Import armies from imports/armies --> Check storage/combatants.csv
+        // Import army from imports/armies --> Check storage/combatants.csv
         var lightArmy =  repo.importArmy("lotrLightArmy.csv", "Heroes Army");
-        var darkArmy = repo.importArmy("lotrDarkArmy.csv", "Sauron's Army");
+
+        // Create random army of size 10
+        var darkArmy = Army.createRandom(11, repo);
 
         // Create warrior and export it to imports/templates
         var warrior = new Warrior("Boromir", 120, false, 25, 7, repo);
@@ -51,7 +50,20 @@ public class Main {
         var warrior2 = repo.importCombatant("Troll");
         darkArmy.addCombatant(warrior2);
 
-         */
+        // =========== DEMO War =============
+        var warriorLight = lightArmy.pickRandomCombatant();
+        var warriorDark = darkArmy.pickRandomCombatant();
 
+        // Initialize War Service
+        var war = new WarService(lightArmy, darkArmy, repo);
+
+        // Start simulator
+        var winner = war.start();
+
+        System.out.printf("\nTHE WINNER IS:\n %s\n\n",winner);
+
+        System.out.println(String.join(war.getGraveyard().toString().replace("},","}\n")));
+
+        
     }
 }

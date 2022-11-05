@@ -1,20 +1,31 @@
 package model;
 
+import net.datafaker.Faker;
 import repository.RepositoryCsv;
 
-public class Wizard extends Combatant{
+public class Wizard extends Combatant {
     private int mana;
     private int intelligence;
 
 
     @Override
-    public void weakAttack() {
+    public void attack(Combatant target) {
+        if (mana >= 5) {
+            fireball(target);
+        } else {
+            staffHit(target);
+        }
 
     }
 
-    @Override
-    public void heavyAttack() {
+    public void staffHit(Combatant target) {
+        target.takeDamage(2);
+        mana++;
+    }
 
+    public void fireball(Combatant target) {
+        target.takeDamage(intelligence);
+        mana -= 5;
     }
 
     public Wizard(String name, int hp, boolean isAlive, int mana, int intelligence, RepositoryCsv repo)
@@ -28,13 +39,6 @@ public class Wizard extends Combatant{
         super(id, name, hp, isAlive);
         this.mana = mana;
         this.intelligence = intelligence;
-    }
-
-    public Wizard(String name, RepositoryCsv repo) throws Exception {
-        // TO DO Random logic for attributes
-        super(name, -1, true, repo);
-        this.mana = -1;
-        this.intelligence = -1;
     }
 
     public int getMana() {
@@ -59,5 +63,17 @@ public class Wizard extends Combatant{
                 "mana=" + mana +
                 ", intelligence=" + intelligence +
                 "} " + super.toString();
+    }
+
+    public static Wizard createRandom(RepositoryCsv repo) throws Exception {
+        var faker = new Faker();
+        return new Wizard(
+                faker.harryPotter().character(),
+                faker.number().numberBetween(50, 100),
+                true,
+                faker.number().numberBetween(10, 50),
+                faker.number().numberBetween(1, 50),
+                repo
+        );
     }
 }

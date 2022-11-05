@@ -26,7 +26,7 @@ public class RepositoryCsv implements Repository{
     public static final String WARRIOR_TYPE = "warrior";
     public static final String WIZARD_TYPE = "wizard";
 
-    public static final String REPO_PATH ="data/storage/combatants.csv";
+    public static final String REPO_PATH ="src/main/resources/data/storage/combatants.csv";
     public static final String ARMY_CATALOG_PATH = "data/imports/armies/";
     public static final String COMBATANT_CATALOG_PATH = "data/imports/templates/combatants.csv";
     private final File repoFile;
@@ -139,6 +139,22 @@ public class RepositoryCsv implements Repository{
 
         // Replace existing row by new row if found
         rows = replaceOrAppendRow(rows, newRow);
+
+        // Overwrite file
+        Tools.overwriteCsv(REPO_PATH, rows, HEADERS);
+    }
+
+    @Override
+    public void updateCombatant(Combatant combatant) throws Exception {
+        var newRow = mapCombatantToRow(combatant);
+        var rows = getAllRows(REPO_PATH);
+
+        for (int i = 0; i < rows.size(); i++) {
+            if (rows.get(i)[0].equals(newRow[0])){
+                rows.set(i, newRow);
+                break;
+            }
+        }
 
         // Overwrite file
         Tools.overwriteCsv(REPO_PATH, rows, HEADERS);
