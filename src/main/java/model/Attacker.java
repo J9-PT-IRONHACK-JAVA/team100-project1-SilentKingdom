@@ -1,7 +1,6 @@
 package model;
 
 public interface Attacker {
-    public void weakAttack();
+    public void attack(Combatant target);
 
-    public void heavyAttack();
 }

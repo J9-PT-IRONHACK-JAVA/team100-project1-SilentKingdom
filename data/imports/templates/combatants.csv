@@ -1,3 +1,30 @@
 name,type,hp,stamina,strength,mana,intelligence
 Troll,warrior,190,10,8,-1,-1
+<<<<<<< HEAD
 Gondor Soldier,warrior,120,30,7,-1,-1
+=======
+Gondor Soldier,warrior,120,30,7,-1,-1
+Boromir,warrior,120,30,7,-1,-1
+James Potter,wizard,81,-1,-1,35,27
+Sergeant Imperial,warrior,113,18,4,-1,-1
+Gunnery Sergeant Dwemer,warrior,190,19,1,-1,-1
+Terry Boot,wizard,81,-1,-1,41,6
+Staff Sergeant Dwemer,warrior,189,35,4,-1,-1
+Major Altmer,warrior,193,24,3,-1,-1
+Demelza Robins,wizard,66,-1,-1,39,1
+Harry Potter,wizard,53,-1,-1,45,25
+Second Lieutenant Dwemer,warrior,163,38,6,-1,-1
+Lance Corporal Bosmer,warrior,145,43,6,-1,-1
+Major General Dwemer,warrior,152,36,4,-1,-1
+Brigadier General Nord,warrior,178,15,2,-1,-1
+Tom Marvolo Riddle,wizard,87,-1,-1,32,14
+Ariana Dumbledore,wizard,76,-1,-1,23,25
+Master Gunnery Sergeant Breton,warrior,132,25,1,-1,-1
+Sergeant Major of the Marine Corps Dunmer,warrior,161,35,2,-1,-1
+Frank Bryce,wizard,76,-1,-1,27,42
+Lance Corporal Nord,warrior,114,28,6,-1,-1
+Major General Argonian,warrior,197,25,2,-1,-1
+Newt Scamander,wizard,88,-1,-1,25,48
+Private Riekling,warrior,130,38,2,-1,-1
+>>>>>>> develop
+Major Imperial,warrior,110,19,5,-1,-1

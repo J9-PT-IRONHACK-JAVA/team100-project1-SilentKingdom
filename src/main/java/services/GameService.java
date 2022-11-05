@@ -1,13 +1,20 @@
 package services;
 
-import Utils.ConsolePrints;
 import model.Army;
+import repository.RepositoryCsv;
+import utils.ConsolePrints;
 
 public class GameService {
+    private static final String RANDOM_MODE = "random";
+    private static final String PVP_MODE = "PVP";
+    private static final String PVB_MODE = "PVB";
+
+    private static final String BACK = "BACK";
+
 
     private InputService inputService;
 
-    public void startGame(){
+    public void startGame() {
 
         ConsolePrints.printGameWelcome();
 
@@ -15,12 +22,7 @@ public class GameService {
 
         runGameMode(gameMode);
 
-
-
-
-
-
-
+    }
 
         // Standard input and out (interactive part)
         // Choose how to instantiate armies: Import or Introduce size, attributes?
@@ -31,8 +33,6 @@ public class GameService {
 
         // Start war modality instantiate and start WarService
 
-
-    }
 
     public void runGameMode(String gameMode){
         if (gameMode == "1"){
@@ -51,7 +51,7 @@ public class GameService {
     }
 
 
-    public void botVSBotMode() {
+    public void botVSBotMode(RepositoryCsv repo) throws Exception {
 
         ConsolePrints.printBotVsBotSelection();
 
@@ -62,13 +62,11 @@ public class GameService {
         var armySize = inputService.askNumberOfCombatants();
 
         ConsolePrints.printConstructionOfRandomArmy(lightArmyName);
-        var lightArmy = Army.createRandom(lightArmyName, armySize);
-        lightArmy.getStatus();
+        var lightArmy = Army.createRandom(armySize, repo);
         inputService.okWithCreatedArmy();
 
         ConsolePrints.printConstructionOfRandomArmy(darkArmyName);
-        var darkArmy = Army.createRandom(darkArmyName, armySize);
-        darkArmy.getStatus();
+        var darkArmy = Army.createRandom(armySize, repo);
         inputService.okWithCreatedArmy();
 
 
@@ -76,6 +74,7 @@ public class GameService {
 
     public void exitGame(){
         ConsolePrints.printExitGame();
-        System.exit(666);
+        System.exit(0);
     }
+
 }

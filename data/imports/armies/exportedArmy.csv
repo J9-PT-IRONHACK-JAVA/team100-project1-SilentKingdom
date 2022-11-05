@@ -1,14 +1,12 @@
 name,type,hp,stamina,strength,mana,intelligence
-Troll,warrior,190,10,8,-1,-1
-Sauron,wizard,80,-1,-1,45,49
-Orc,warrior,100,15,5,-1,-1
-Uruk-hai,warrior,150,20,8,-1,-1
-Saruman,wizard,90,-1,-1,30,25
-Nazgul,wizard,100,-1,-1,35,20
-Orc,warrior,100,15,5,-1,-1
-Troll,warrior,190,10,8,-1,-1
-Orc,warrior,100,15,5,-1,-1
-Uruk-hai,warrior,150,20,8,-1,-1
-Uruk-hai,warrior,150,20,8,-1,-1
-Nazgul,wizard,100,-1,-1,35,20
-Orc,warrior,100,15,5,-1,-1
+Major Imperial,warrior,110,19,5,-1,-1
+Sergeant Major of the Marine Corps Khajiit,warrior,188,12,5,-1,-1
+Sergeant Major of the Marine Corps Altmer,warrior,124,16,1,-1,-1
+Griphook,wizard,63,-1,-1,19,4
+Vincent Crabbe,wizard,83,-1,-1,28,31
+Aurora Sinistra,wizard,74,-1,-1,43,31
+The Fat Lady,wizard,89,-1,-1,19,25
+General Riekling,warrior,148,30,4,-1,-1
+Master Gunnery Sergeant Dwemer,warrior,133,10,3,-1,-1
+Major Nord,warrior,134,42,5,-1,-1
+Staff Sergeant Khajiit,warrior,163,29,7,-1,-1

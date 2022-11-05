@@ -1,5 +1,8 @@
 package utils;
 
+
+import net.datafaker.Faker;
+import org.apache.commons.text.CaseUtils;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,5 +26,13 @@ public abstract class Tools {
         return -1;
     }
 
+    public static String generateRandomArmyName(){
+        var faker = new Faker();
+
+        String firstName = faker.elderScrolls().city();
+        String lastName = CaseUtils.toCamelCase(faker.team().creature(), true);
+
+        return (firstName + " " + lastName);
+    }
 
 }
