@@ -1,50 +1,55 @@
 package model;
 
+import repository.RepositoryCsv;
+
 import java.util.ArrayList;
 
-public class Army implements ArmyMethods{
+public class Army {
     private String name;
     private final ArrayList<Combatant> combatants;
     private final int initialSize;
-
     public static final int MIN_ARMY_SIZE = 1;
     public static final int MAX_ARMY_SIZE = 10;
+    private final RepositoryCsv repo;
+
+    // TODO army.remove() method to remove army calling repo.deleteArmy()
+    //  In case user wants to change armies during game
 
 
-    @Override
+
     public Combatant pickRandomCombatant() {
         return combatants.get(0);
     }
 
-    @Override
+
     public Combatant pickCombatantByName() {
         return null;
     }
 
-    @Override
-    public void addCombatant(Combatant combatant, int num_of_clones){
+
+    public void addCombatant(Combatant combatant) throws Exception {
+        combatant.setArmyName(name);
         combatants.add(combatant);
+        repo.saveCombatant(combatant);
     }
 
-    @Override
     public void removeCombatant(Combatant combatant) {
 
     }
 
-    @Override
     public String getArmyStatus() {
         return null;
     }
 
-    @Override
     public String getArmyVisual() {
         return null;
     }
 
-    public Army(String name, int initialSize) {
+    public Army(String name, RepositoryCsv repo) {
         this.name = name;
-        this.initialSize = initialSize;
+        this.initialSize = 0;
         this.combatants = new ArrayList<>();
+        this.repo = repo;
     }
 
     public String getName() {
@@ -54,7 +59,6 @@ public class Army implements ArmyMethods{
     public void setName(String name) {
         this.name = name;
     }
-
 
     public ArrayList<Combatant> getCombatants() {
         return combatants;
@@ -67,7 +71,6 @@ public class Army implements ArmyMethods{
     public int getInitialSize() {
         return initialSize;
     }
-
 
 
     @Override

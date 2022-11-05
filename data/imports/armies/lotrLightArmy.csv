@@ -1,0 +1,8 @@
+name,type,hp,stamina,strength,mana,intelligence
+Aragorn,warrior,160,45,8,-1,-1
+Gandalf,wizard,80,-1,-1,40,47
+Gimli,warrior,136,25,10,-1,-1
+Legolas,warrior,190,36,5,-1,-1
+Radagast,wizard,90,-1,-1,35,35
+Galadriel,wizard,100,-1,-1,48,23
+Eowyn,warrior,150,50,4,-1,-1
