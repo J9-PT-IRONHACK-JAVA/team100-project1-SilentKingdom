@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class Army implements ArmyMethods{
     private String name;
-    private String side;
     private final ArrayList<Combatant> combatants;
     private final int initialSize;
+
+    public static final int MIN_ARMY_SIZE = 1;
+    public static final int MAX_ARMY_SIZE = 10;
 
 
     @Override
@@ -20,7 +22,7 @@ public class Army implements ArmyMethods{
     }
 
     @Override
-    public void addCombatant(Combatant combatant){
+    public void addCombatant(Combatant combatant, int num_of_clones){
         combatants.add(combatant);
     }
 
@@ -39,17 +41,9 @@ public class Army implements ArmyMethods{
         return null;
     }
 
-    public Army(String name, String side, int initialSize) {
+    public Army(String name, int initialSize) {
         this.name = name;
-        this.side = side;
         this.initialSize = initialSize;
-        this.combatants = new ArrayList<>();
-    }
-
-    public Army(String name, String side) {
-        this.name = name;
-        this.side = side;
-        this.initialSize = -1;
         this.combatants = new ArrayList<>();
     }
 
@@ -60,15 +54,6 @@ public class Army implements ArmyMethods{
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getSide() {
-        return side;
-    }
-
-    public void setSide(String side) {
-        this.side = side;
-    }
-
 
 
     public ArrayList<Combatant> getCombatants() {
@@ -89,7 +74,6 @@ public class Army implements ArmyMethods{
     public String toString() {
         return "Army{" +
                 "name='" + name + '\'' +
-                ", side='" + side + '\'' +
                 ", combatants:\n"
                 +
                 '}';
