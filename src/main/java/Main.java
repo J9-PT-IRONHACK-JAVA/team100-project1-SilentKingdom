@@ -5,16 +5,31 @@ import repository.RepositoryCsv;
 import model.Army;
 import model.Warrior;
 import repository.RepositoryCsv;
+import services.GameService;
+import services.InputService;
 import services.WarService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        var option1= "Bot VS Bot (random)";
+        var option2= "Player VS Bot";
+        var option3= "Player VS Player";
+
+        var options = new ArrayList<String>(List.of(option1, option2, option3));
+
+        var menu = InputService.buildMenu("Please choose a game mode:", options.toArray(new String[]{}));
+
+        System.out.println(menu);
+
 
         // =========== DEMO Repository ============ (Uncomment for testing)
 
-
+        /*
         // Initialize CSV repository
         var repo = new RepositoryCsv();
 
@@ -57,6 +72,17 @@ public class Main {
         darkArmy.addCombatant(warrior2);
 
 
+        // =========== DEMO InputService =============
+        var inputService = new InputService();
+
+        var armySize = inputService.askNumberOfCombatants();
+
+        if (armySize == -1) {
+            System.exit(0);
+        } else {
+            System.out.printf("Army size = %s\n", armySize);
+            System.exit(0);
+        }
         // =========== DEMO War =============
 
         // Initialize War Service
@@ -68,6 +94,6 @@ public class Main {
         System.out.printf("\nTHE WINNER IS:\n %s\n\n",winner);
 
         System.out.println(String.join(war.getGraveyard().toString().replace("},","}\n")));
-
+        */
     }
 }

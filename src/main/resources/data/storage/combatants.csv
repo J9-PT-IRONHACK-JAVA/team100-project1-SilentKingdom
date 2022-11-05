@@ -1,20 +1,20 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
-1,Heroes Army,Aragorn,warrior,0,false,4,8,-1,-1
-2,Heroes Army,Gandalf,wizard,0,false,-1,-1,3,47
-3,Heroes Army,Gimli,warrior,0,false,0,10,-1,-1
-4,Heroes Army,Legolas,warrior,0,false,4,5,-1,-1
-5,Heroes Army,Radagast,wizard,0,false,-1,-1,1,35
-6,Heroes Army,Galadriel,wizard,0,false,-1,-1,3,23
-7,Heroes Army,Eowyn,warrior,57,true,0,4,-1,-1
-19,Heroes Army,Boromir,warrior,120,false,30,7,-1,-1
-16,Karthwasten Sorcerors,Troll,warrior,0,false,4,8,-1,-1
-17,Karthwasten Sorcerors,Sergeant Major of the Marine Corps Khajiit,warrior,0,false,2,5,-1,-1
-18,Karthwasten Sorcerors,Sergeant Major of the Marine Corps Altmer,warrior,0,false,1,1,-1,-1
-8,Karthwasten Sorcerors,Griphook,wizard,0,false,-1,-1,2,4
-9,Karthwasten Sorcerors,Vincent Crabbe,wizard,0,false,-1,-1,2,31
-10,Karthwasten Sorcerors,Aurora Sinistra,wizard,0,false,-1,-1,3,31
-11,Karthwasten Sorcerors,The Fat Lady,wizard,0,false,-1,-1,9,25
-12,Karthwasten Sorcerors,General Riekling,warrior,0,false,0,4,-1,-1
-13,Karthwasten Sorcerors,Master Gunnery Sergeant Dwemer,warrior,0,false,3,3,-1,-1
-14,Karthwasten Sorcerors,Major Nord,warrior,0,false,27,5,-1,-1
-15,Karthwasten Sorcerors,Staff Sergeant Khajiit,warrior,0,false,1,7,-1,-1
+1,Heroes Army,Aragorn,warrior,160,true,45,8,-1,-1
+2,Heroes Army,Gandalf,wizard,80,true,-1,-1,40,47
+3,Heroes Army,Gimli,warrior,136,true,25,10,-1,-1
+4,Heroes Army,Legolas,warrior,190,true,36,5,-1,-1
+5,Heroes Army,Radagast,wizard,90,true,-1,-1,35,35
+6,Heroes Army,Galadriel,wizard,100,true,-1,-1,48,23
+7,Heroes Army,Eowyn,warrior,150,true,50,4,-1,-1
+19,Heroes Army,Boromir,warrior,120,false,25,7,-1,-1
+16,Northmoor Sorcerors,Troll,warrior,190,true,10,8,-1,-1
+17,Northmoor Sorcerors,Captain Argonian,warrior,163,true,42,8,-1,-1
+18,Northmoor Sorcerors,Sergeant Major Orc,warrior,127,true,30,7,-1,-1
+8,Northmoor Sorcerors,Astoria Greengrass,wizard,51,true,-1,-1,46,8
+9,Northmoor Sorcerors,George Weasley,wizard,70,true,-1,-1,27,6
+10,Northmoor Sorcerors,Remus Lupin,wizard,61,true,-1,-1,20,21
+11,Northmoor Sorcerors,Mrs. Norris,wizard,68,false,-1,-1,12,49
+12,Northmoor Sorcerors,Sergeant Major Nord,warrior,136,true,48,1,-1,-1
+13,Northmoor Sorcerors,First Sergeant Imperial,warrior,190,true,43,6,-1,-1
+14,Northmoor Sorcerors,Staff Sergeant Nord,warrior,134,true,35,3,-1,-1
+15,Northmoor Sorcerors,Brigadier General Dunmer,warrior,159,true,23,9,-1,-1

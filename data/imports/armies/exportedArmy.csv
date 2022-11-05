@@ -1,12 +1,12 @@
 name,type,hp,stamina,strength,mana,intelligence
-Major Imperial,warrior,110,19,5,-1,-1
-Sergeant Major of the Marine Corps Khajiit,warrior,188,12,5,-1,-1
-Sergeant Major of the Marine Corps Altmer,warrior,124,16,1,-1,-1
-Griphook,wizard,63,-1,-1,19,4
-Vincent Crabbe,wizard,83,-1,-1,28,31
-Aurora Sinistra,wizard,74,-1,-1,43,31
-The Fat Lady,wizard,89,-1,-1,19,25
-General Riekling,warrior,148,30,4,-1,-1
-Master Gunnery Sergeant Dwemer,warrior,133,10,3,-1,-1
-Major Nord,warrior,134,42,5,-1,-1
-Staff Sergeant Khajiit,warrior,163,29,7,-1,-1
+Corporal Altmer,warrior,107,12,8,-1,-1
+Captain Argonian,warrior,163,42,8,-1,-1
+Sergeant Major Orc,warrior,127,30,7,-1,-1
+Astoria Greengrass,wizard,51,-1,-1,46,8
+George Weasley,wizard,70,-1,-1,27,6
+Remus Lupin,wizard,61,-1,-1,20,21
+Mrs. Norris,wizard,68,-1,-1,12,49
+Sergeant Major Nord,warrior,136,48,1,-1,-1
+First Sergeant Imperial,warrior,190,43,6,-1,-1
+Staff Sergeant Nord,warrior,134,35,3,-1,-1
+Brigadier General Dunmer,warrior,159,23,9,-1,-1

@@ -14,6 +14,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class InputService {
+
+    private static String EXIT_STRING = """
+            =========================             
+                    EXIT - exit game
+                    =========================
+            """;
     private final Scanner prompt;
 
     public InputService() {
@@ -49,6 +55,22 @@ public class InputService {
 
         return input;
 
+    }
+
+    public static String buildMenu(String title, String ... options) {
+        StringBuilder menu = new StringBuilder(String.format("%s\n", title));
+
+        for (int i = 0; i < options.length; i++) {
+            menu.append(i+1).append(") ").append(options[i]).append("\n");
+        }
+
+        menu.append("""
+=========================             
+    EXIT - exit game
+=========================
+                """);
+
+        return menu.toString();
     }
 
     //BOT VS BOT MODE
