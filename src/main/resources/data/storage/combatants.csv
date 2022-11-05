@@ -1,20 +1,20 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
-1,Heroes Army,Aragorn,warrior,0,false,1,8,-1,-1
-2,Heroes Army,Gandalf,wizard,13,true,-1,-1,10,47
-3,Heroes Army,Gimli,warrior,60,true,0,10,-1,-1
-4,Heroes Army,Legolas,warrior,0,false,3,5,-1,-1
-5,Heroes Army,Radagast,wizard,55,true,-1,-1,0,35
-6,Heroes Army,Galadriel,wizard,0,false,-1,-1,1,23
-7,Heroes Army,Eowyn,warrior,0,false,0,4,-1,-1
+1,Heroes Army,Aragorn,warrior,0,false,3,8,-1,-1
+2,Heroes Army,Gandalf,wizard,0,false,-1,-1,15,47
+3,Heroes Army,Gimli,warrior,0,false,10,10,-1,-1
+4,Heroes Army,Legolas,warrior,0,false,1,5,-1,-1
+5,Heroes Army,Radagast,wizard,0,false,-1,-1,20,35
+6,Heroes Army,Galadriel,wizard,0,false,-1,-1,3,23
+7,Heroes Army,Eowyn,warrior,0,false,3,4,-1,-1
 19,Heroes Army,Boromir,warrior,120,false,30,7,-1,-1
-16,Silvenar Ghosts,Troll,warrior,0,false,4,8,-1,-1
-17,Silvenar Ghosts,Major General Imperial,warrior,0,false,3,1,-1,-1
-18,Silvenar Ghosts,Staff Sergeant Bosmer,warrior,0,false,20,4,-1,-1
-8,Silvenar Ghosts,Rabastan Lestrange,wizard,0,false,-1,-1,1,49
-9,Silvenar Ghosts,Lily Potter,wizard,0,false,-1,-1,24,31
-10,Silvenar Ghosts,Rita Skeeter,wizard,0,false,-1,-1,28,25
-11,Silvenar Ghosts,Colonel Argonian,warrior,0,false,1,7,-1,-1
-12,Silvenar Ghosts,Major Orc,warrior,0,false,4,5,-1,-1
-13,Silvenar Ghosts,Second Lieutenant Imperial,warrior,0,false,0,1,-1,-1
-14,Silvenar Ghosts,Sergeant Dunmer,warrior,0,false,2,2,-1,-1
-15,Silvenar Ghosts,Private First Class Breton,warrior,147,false,48,7,-1,-1
+16,Lainlyn Lions,Troll,warrior,49,true,0,8,-1,-1
+17,Lainlyn Lions,Major Riekling,warrior,0,false,5,2,-1,-1
+18,Lainlyn Lions,Second Lieutenant Imperial,warrior,0,false,4,2,-1,-1
+8,Lainlyn Lions,Great Aunt Muriel,wizard,0,false,-1,-1,3,49
+9,Lainlyn Lions,Great Aunt Muriel,wizard,0,false,-1,-1,5,13
+10,Lainlyn Lions,Viktor Krum,wizard,0,false,-1,-1,1,37
+11,Lainlyn Lions,Master Gunnery Sergeant Dwemer,warrior,0,false,6,9,-1,-1
+12,Lainlyn Lions,Captain Dwemer,warrior,0,false,3,4,-1,-1
+13,Lainlyn Lions,Lance Corporal Imperial,warrior,0,false,5,1,-1,-1
+14,Lainlyn Lions,Private Riekling,warrior,130,false,38,2,-1,-1
+15,Lainlyn Lions,Staff Sergeant Altmer,warrior,0,false,0,5,-1,-1
