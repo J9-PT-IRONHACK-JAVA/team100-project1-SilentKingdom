@@ -26,9 +26,9 @@ public class RepositoryCsv implements Repository{
     public static final String WARRIOR_TYPE = "warrior";
     public static final String WIZARD_TYPE = "wizard";
 
-    public static final String REPO_PATH ="data/storage/combatants.csv";
-    public static final String ARMY_CATALOG_PATH = "data/imports/armies/";
-    public static final String COMBATANT_CATALOG_PATH = "data/imports/templates/combatants.csv";
+    public static final String REPO_PATH ="src/main/resources/data/storage/combatants.csv";
+    public static final String ARMY_CATALOG_PATH = "src/main/resources/data/imports/armies/";
+    public static final String COMBATANT_CATALOG_PATH = "src/main/resources/data/imports/templates/combatants.csv";
     private final File repoFile;
 
     public static final String[] HEADERS = new String[]{

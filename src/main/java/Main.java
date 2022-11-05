@@ -1,16 +1,13 @@
 import model.Army;
 import model.Warrior;
-import model.Wizard;
-import net.datafaker.Faker;
-import org.apache.commons.text.CaseUtils;
 import repository.RepositoryCsv;
 import services.WarService;
-import utils.Tools;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
         // =========== DEMO Repository ============ (Uncomment for testing)
+
 
         // Initialize CSV repository
         var repo = new RepositoryCsv();
@@ -67,5 +64,6 @@ public class Main {
 
         System.out.println(String.join(war.getGraveyard().toString().replace("},","}\n")));
 
+        
     }
 }
