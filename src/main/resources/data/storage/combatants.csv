@@ -1,20 +1,11 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
-1,Heroes Army,Aragorn,warrior,160,true,45,8,-1,-1
-2,Heroes Army,Gandalf,wizard,80,true,-1,-1,40,47
-3,Heroes Army,Gimli,warrior,136,true,25,10,-1,-1
-4,Heroes Army,Legolas,warrior,190,true,36,5,-1,-1
-5,Heroes Army,Radagast,wizard,90,true,-1,-1,35,35
-6,Heroes Army,Galadriel,wizard,100,true,-1,-1,48,23
-7,Heroes Army,Eowyn,warrior,150,true,50,4,-1,-1
-19,Heroes Army,Boromir,warrior,120,false,25,7,-1,-1
-16,Northmoor Sorcerors,Troll,warrior,190,true,10,8,-1,-1
-17,Northmoor Sorcerors,Captain Argonian,warrior,163,true,42,8,-1,-1
-18,Northmoor Sorcerors,Sergeant Major Orc,warrior,127,true,30,7,-1,-1
-8,Northmoor Sorcerors,Astoria Greengrass,wizard,51,true,-1,-1,46,8
-9,Northmoor Sorcerors,George Weasley,wizard,70,true,-1,-1,27,6
-10,Northmoor Sorcerors,Remus Lupin,wizard,61,true,-1,-1,20,21
-11,Northmoor Sorcerors,Mrs. Norris,wizard,68,false,-1,-1,12,49
-12,Northmoor Sorcerors,Sergeant Major Nord,warrior,136,true,48,1,-1,-1
-13,Northmoor Sorcerors,First Sergeant Imperial,warrior,190,true,43,6,-1,-1
-14,Northmoor Sorcerors,Staff Sergeant Nord,warrior,134,true,35,3,-1,-1
-15,Northmoor Sorcerors,Brigadier General Dunmer,warrior,159,true,23,9,-1,-1
+1,Kambria Warlocks,Ignotus Peverell,wizard,0,false,-1,-1,19,18
+2,Kambria Warlocks,Colonel Dwemer,warrior,0,false,1,1,-1,-1
+3,Kambria Warlocks,Sergeant Major Redguard,warrior,0,false,3,5,-1,-1
+4,Kambria Warlocks,Corporal Dwemer,warrior,0,false,4,6,-1,-1
+5,Kambria Warlocks,Lance Corporal Redguard,warrior,0,false,1,4,-1,-1
+6,Dragon Bridge Gnomes,Aberforth Dumbledore,wizard,0,false,-1,-1,4,42
+7,Dragon Bridge Gnomes,Private First Class Bosmer,warrior,0,false,0,5,-1,-1
+8,Dragon Bridge Gnomes,Corporal Orc,warrior,0,false,4,4,-1,-1
+9,Dragon Bridge Gnomes,Private First Class Riekling,warrior,58,true,0,8,-1,-1
+10,Dragon Bridge Gnomes,Sergeant Major Argonian,warrior,132,true,33,5,-1,-1

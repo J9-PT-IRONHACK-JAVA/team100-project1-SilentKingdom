@@ -4,8 +4,14 @@ import model.Army;
 
 import model.Combatant;
 import repository.RepositoryCsv;
+import utils.ConsoleColors;
+import utils.ConsolePrints;
+import utils.Tools;
 
+import java.io.Console;
 import java.util.ArrayList;
+
+import static utils.ConsoleColors.printWithColor;
 
 public class WarService {
 
@@ -14,7 +20,10 @@ public class WarService {
     private final Army darkArmy;
     private boolean isOver;
 
+
     private final RepositoryCsv repo;
+
+    private final InputService inputService = new InputService();
 
     public WarService(Army light, Army dark, RepositoryCsv repo) {
         this.graveyard = new ArrayList<>();
@@ -49,18 +58,23 @@ public class WarService {
         // TODO Print battle will ended with winner status (or draw)
     }
 
-    public Combatant getNextCombatant(Army army){
+    public Combatant getNextCombatant(Army army) {
+        //Random
         if (army.isBot()) return army.pickRandomCombatant();
 
-        // TODO input service ask for next combatant name
-
-        return army.pickCombatantByName("pepito");
+        //Player
+        String nextCombatantIndex = inputService.askNextCombatant(army);
+        if(nextCombatantIndex.equals(Tools.OUT_OF_BOUND)){
+            do {
+                nextCombatantIndex = inputService.askNextCombatant(army);
+            } while (nextCombatantIndex.equals(Tools.OUT_OF_BOUND));
+        }
+        return army.pickCombatantByIndex(nextCombatantIndex);
     }
 
 
     public Army start() throws Exception {
-        // TODO Print announcement that the war begins
-        System.out.println("==========  THE WAR BEGINS ===========");
+        ConsolePrints.printWarBegins();
 
         // Start war (LOOP) picking random combatants while any of the armies is defeated, continue
         int n = 0;

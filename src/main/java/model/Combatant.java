@@ -82,4 +82,6 @@ public abstract class Combatant implements Attacker{
                 '}';
     }
 
+
+
 }

@@ -4,6 +4,8 @@ import model.Army;
 import repository.RepositoryCsv;
 import utils.ConsolePrints;
 
+import java.io.IOException;
+
 public class GameService {
     private static final String RANDOM_MODE = "random";
     private static final String PVP_MODE = "PVP";
@@ -12,15 +14,48 @@ public class GameService {
     private static final String BACK = "BACK";
 
 
-    private InputService inputService;
+    private static final RepositoryCsv repositoryCsv;
 
-    public void startGame() {
+    static {
+        try {
+            repositoryCsv = new RepositoryCsv();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private final InputService inputService = new InputService();
+
+    public void startGame() throws Exception {
 
         ConsolePrints.printGameWelcome();
 
-        var gameMode = inputService.chooseGameMode();
+        // LIGHTARMY CREATION
+        ConsolePrints.printLetsCreateLightArmy();
 
-        runGameMode(gameMode);
+        var whoIsLightArmyControlledBy= inputService.askWhoIsArmyControlledBy();
+        var typeLightArmyCreation = inputService.askTypeArmyCreation();
+        Army lightArmy = createArmy(whoIsLightArmyControlledBy, typeLightArmyCreation);
+
+        ConsolePrints.printNewArmyStatus(lightArmy.getName());
+        lightArmy.printStatus();
+        inputService.okWithThisArmy();
+
+        // DARKARMY CREATION
+        ConsolePrints.printLetsCreateDarkArmy();
+
+        var whoIsDarkArmyControlledBy= inputService.askWhoIsArmyControlledBy();
+        var typeDarkArmyCreation = inputService.askTypeArmyCreation();
+        Army darkArmy = createArmy(whoIsDarkArmyControlledBy, typeDarkArmyCreation);
+
+        ConsolePrints.printNewArmyStatus(darkArmy.getName());
+        darkArmy.printStatus();
+        inputService.okWithThisArmy();
+
+        WarService warService = new WarService(lightArmy, darkArmy, repositoryCsv);
+
+        warService.start();
 
     }
 
@@ -32,45 +67,45 @@ public class GameService {
         // Choose war modality? Random, PlayerVsPlayer, PlayerVsBot?
 
         // Start war modality instantiate and start WarService
+    private Army createArmy(String whoIsControlledBy, String typeOfArmyCreation) throws Exception {
 
+        Army army = null;
 
-    public void runGameMode(String gameMode){
-        if (gameMode == "1"){
-//            botVSBotMode();
+        switch (typeOfArmyCreation) {
+            // import army
+            case "1" -> {
+                var armyName = inputService.askArmyName();
+                var armyToImportFileName = inputService.armyToImportFileName();
+                army = repositoryCsv.importArmy(armyToImportFileName, armyName);
+            }
 
-        } else if (gameMode == "2") {
-            ConsolePrints.printPlayerVsBotSelection();
+            case "2" -> {
+                // create random army
+                var armySize = inputService.askNumberOfCombatants();
+                army = Army.createRandom(armySize, repositoryCsv);
+                ConsolePrints.printConstructionOfRandomArmy();
+                break;
+            }
 
-        } else if (gameMode == "3") {
-            ConsolePrints.printPlayerVsPlayerSelection();
-
-        } else{
-            exitGame();
+            case "3" -> {
+                // create manual army
+                var armyName = inputService.askArmyName();
+                var armySize = inputService.askNumberOfCombatants();
+                army = new Army(armyName, repositoryCsv);
+                while (army.getCombatants().size() < armySize) {
+                    System.out.println("Please select a combatant to add to " + armyName);
+                    // TODO function that displays all combatants from repo to select and returns selected combatant object
+//                army.addCombatant(combatant);
+                }
+                break;
+            }
         }
 
+        assert army != null;
+        army.setBot(!whoIsControlledBy.equals("1"));
+
+        return army;
     }
-
-
-    public void botVSBotMode(RepositoryCsv repo) throws Exception {
-
-        ConsolePrints.printBotVsBotSelection();
-
-        var lightArmyName = inputService.askArmyName();
-        var darkArmyName = inputService.askArmyName();
-
-        ConsolePrints.printLetsChooseArmySize();
-        var armySize = inputService.askNumberOfCombatants();
-
-        ConsolePrints.printConstructionOfRandomArmy(lightArmyName);
-        var lightArmy = Army.createRandom(armySize, repo);
-        inputService.okWithCreatedArmy();
-
-        ConsolePrints.printConstructionOfRandomArmy(darkArmyName);
-        var darkArmy = Army.createRandom(armySize, repo);
-        inputService.okWithCreatedArmy();
-
-
-    } // finishes with the calling of createRandomArmies()
 
     public void exitGame(){
         ConsolePrints.printExitGame();

@@ -1,30 +1,34 @@
-
-import model.Warrior;
-import repository.RepositoryCsv;
-
-import model.Army;
-import model.Warrior;
 import repository.RepositoryCsv;
 import services.GameService;
 import services.InputService;
 import services.WarService;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        var option1= "Bot VS Bot (random)";
-        var option2= "Player VS Bot";
-        var option3= "Player VS Player";
+        InputService inputService = new InputService();
+        GameService gameService = new GameService();
 
-        var options = new ArrayList<String>(List.of(option1, option2, option3));
+        var repo = new RepositoryCsv();
 
-        var menu = InputService.buildMenu("Please choose a game mode:", options.toArray(new String[]{}));
+        gameService.startGame();
 
-        System.out.println(menu);
+
+//        var lightArmy =  repo.importArmy("lotrLightArmy.csv", "Heroes Army");
+//        inputService.askNextCombatant(lightArmy);
+
+//        WarService warService = new WarService(lightArmy, lightArmy, repo);
+//        lightArmy.setBot(false);
+//        System.out.println(warService.getNextCombatant(lightArmy));
+
+//        var repo = new RepositoryCsv();
+//
+//
+//        var lightArmy =  repo.importArmy("lotrLightArmy.csv", "Heroes Army");
+//
+//        lightArmy.printStatus();
+
 
 
         // =========== DEMO Repository ============ (Uncomment for testing)

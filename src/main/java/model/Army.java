@@ -36,6 +36,12 @@ public class Army {
         return null;
     }
 
+    public Combatant pickCombatantByIndex(String nextCombatantIndex){
+        var nextCombatantIndexToInteger = Integer.parseInt(nextCombatantIndex) - 1;
+        var nextCombatant = this.getCombatants().get(nextCombatantIndexToInteger);
+        return nextCombatant;
+    }
+
     public void addCombatant(Combatant combatant) throws Exception {
         combatant.setArmyName(name);
         combatants.put(combatant.getId(), combatant);
@@ -110,8 +116,15 @@ public class Army {
             var randomWarrior = Warrior.createRandom(repo);
             army.addCombatant(randomWarrior);
         }
-
         return army;
+    }
+
+    public void printStatus(){
+        var combatants = this.getCombatants();
+        for (int i = 0; i < combatants.size(); i++) {
+            System.out.println(i+1 + ") " + Tools.combatantStatus(combatants.get(i)));
+        }
+        System.out.println("");
     }
 
 }

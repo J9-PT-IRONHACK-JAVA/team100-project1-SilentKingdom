@@ -62,6 +62,14 @@ public class Warrior extends Combatant{
                 ", strength=" + strength +
                 "} " + super.toString();
     }
+    public String toStringStatus() {
+
+        var str = (this.getName() + "(%s): " + "ID=" + this.getId() + "HP=" + this.getHp() + "stamina=" + stamina +
+                ", strength=" + strength + ", strength=" + strength).formatted(this.getClass());
+
+        return str;
+    }
+
 
     // STATIC METHODS
 
