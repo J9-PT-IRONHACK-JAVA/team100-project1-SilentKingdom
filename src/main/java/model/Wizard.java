@@ -7,7 +7,6 @@ public class Wizard extends Combatant {
     private int mana;
     private int intelligence;
 
-
     @Override
     public void attack(Combatant target) {
         if (mana >= 5) {
