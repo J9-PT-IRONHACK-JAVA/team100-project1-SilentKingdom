@@ -63,6 +63,8 @@ public class RepositoryCsv implements Repository{
         return null;
     }
 
+    // TODO importCombatants method
+
     /**
      * Given a Combatant gets its attributes and saves its configuration into combatant templates for later use
      * If a configuration already exists with the same Combatant name, it is replaced
