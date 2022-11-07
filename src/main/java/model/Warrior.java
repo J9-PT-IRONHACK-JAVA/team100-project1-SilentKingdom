@@ -41,13 +41,6 @@ public class Warrior extends Combatant{
         this.strength = strength;
     }
 
-    public Warrior(String name, RepositoryCsv repo) throws Exception {
-        // TO DO Random logic for attributes
-        super(name, -1, true, repo);
-        this.stamina = -1;
-        this.strength = -1;
-    }
-
     public int getStamina() {
         return stamina;
     }

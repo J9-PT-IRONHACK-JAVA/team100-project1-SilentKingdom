@@ -1,12 +1,12 @@
 name,type,hp,stamina,strength,mana,intelligence
-Lance Corporal Riekling,warrior,189,20,2,-1,-1
-Major Riekling,warrior,176,15,2,-1,-1
-Second Lieutenant Imperial,warrior,165,38,2,-1,-1
-Great Aunt Muriel,wizard,82,-1,-1,33,49
-Great Aunt Muriel,wizard,88,-1,-1,10,13
-Viktor Krum,wizard,87,-1,-1,16,37
-Master Gunnery Sergeant Dwemer,warrior,111,21,9,-1,-1
-Captain Dwemer,warrior,156,25,4,-1,-1
-Lance Corporal Imperial,warrior,199,40,1,-1,-1
-Private Riekling,warrior,130,38,2,-1,-1
-Staff Sergeant Altmer,warrior,136,42,5,-1,-1
+First Lieutenant Dwemer,warrior,166,37,1,-1,-1
+First Sergeant Bosmer,warrior,138,27,4,-1,-1
+Staff Sergeant Redguard,warrior,102,30,8,-1,-1
+Lord Voldemort,wizard,76,-1,-1,10,28
+Mrs. Norris,wizard,56,-1,-1,44,16
+Sergeant Imperial,warrior,166,16,2,-1,-1
+General Riekling,warrior,197,42,3,-1,-1
+Staff Sergeant Nord,warrior,146,16,2,-1,-1
+First Lieutenant Orc,warrior,146,47,9,-1,-1
+Major General Redguard,warrior,191,45,3,-1,-1
+First Lieutenant Bosmer,warrior,196,32,7,-1,-1

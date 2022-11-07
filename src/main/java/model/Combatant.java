@@ -19,9 +19,30 @@ public abstract class Combatant implements Attacker{
         }
     }
 
+    public Combatant copy(RepositoryCsv repo) throws Exception {
+        if (this instanceof Warrior) {
+            var warriorCopy = new Warrior(
+                    getName(), getHp(), true,
+                    ((Warrior) this).getStamina(),
+                    ((Warrior) this).getStrength(), repo
+            );
+            repo.saveCombatant(warriorCopy);
+            return warriorCopy;
+        } else if (this instanceof Wizard) {
+            var wizardCopy = new Warrior(
+                    getName(), getHp(), true,
+                    ((Wizard) this).getMana(),
+                    ((Wizard) this).getIntelligence(), repo
+            );
+            repo.saveCombatant(wizardCopy);
+            return wizardCopy;
+        }
+        return null;
+    }
+
     // When creating new combatant
     public Combatant(String name, int hp, boolean isAlive, RepositoryCsv repo) throws Exception {
-        this.id = repo.getLastId() + 1;
+        this.id = repo.getMaxId() + 1;
         this.name = name;
         this.hp = hp;
         this.isAlive = isAlive;
@@ -35,7 +56,6 @@ public abstract class Combatant implements Attacker{
         this.hp = hp;
         this.isAlive = isAlive;
     }
-
 
     public int getId() {
         return id;

@@ -55,15 +55,15 @@ public class RepositoryCsv implements Repository{
             var valuesList = new ArrayList<>(List.of(reader.nextLine().split(",")));
             if (valuesList.get(Tools.getIndex(IMPORT_HEADERS,NAME)).equals(name)) {
                 var values = convertImportToStorageRow(valuesList);
-
-                return mapRowToCombatant(values);
+                var combatant = mapRowToCombatant(values);
+                saveCombatant(combatant);
+                return combatant;
             }
         }
         reader.close();
         return null;
     }
 
-    // TODO importCombatants method
 
     /**
      * Given a Combatant gets its attributes and saves its configuration into combatant templates for later use
@@ -79,6 +79,7 @@ public class RepositoryCsv implements Repository{
 
         Tools.overwriteCsv(COMBATANT_CATALOG_PATH, rows, IMPORT_HEADERS);
     }
+
 
     /**
      * Creates a new Army with the given name importing all the combatants from a CSV
@@ -249,17 +250,15 @@ public class RepositoryCsv implements Repository{
      * @throws FileNotFoundException if no file is found in repository path
      */
     @Override
-    public int getLastId() throws FileNotFoundException {
-        var reader = new Scanner(repoFile);
-        reader.nextLine();
-        while (reader.hasNextLine()) {
-            String line = reader.nextLine();
-            if (!reader.hasNextLine()) {
-                String id = line.split(",")[Tools.getIndex(HEADERS, ID)];
-                return Integer.parseInt(id);
-            }
+    public int getMaxId() throws FileNotFoundException {
+        var rows = getAllRows(REPO_PATH);
+        var ids = new ArrayList<Integer>();
+        for (String[] row : rows) {
+            String id = row[Tools.getIndex(HEADERS, ID)];
+            ids.add(Integer.parseInt(id));
         }
-        return 0;
+        if (rows.size() == 0) return 0;
+        return Collections.max(ids);
     }
 
     /** Creates a set with all army names unique values and returns and array from it
@@ -277,6 +276,80 @@ public class RepositoryCsv implements Repository{
         return distinctArmiesSet.toArray(distinctArmies);
     }
 
+    /** Gives a list of the warriors templates from the templates csv in a formatted style
+     * @return array of distinct warrior templates
+     * @throws FileNotFoundException if no file is found in catalog path
+     */
+    public HashMap<String,String> listWarriorTemplates() throws FileNotFoundException {
+        var rows = getAllRows(COMBATANT_CATALOG_PATH);
+        var formatStr = "%s (%s): HP=%s, stamina=%s, strength=%s";
+        var warriors = new HashMap<String,String>();
+        for (String[] row : rows) {
+            if (row[Tools.getIndex(IMPORT_HEADERS,TYPE)].equals(WARRIOR_TYPE)) {
+                var warriorStr = String.format(
+                        formatStr,
+                        row[Tools.getIndex(IMPORT_HEADERS,NAME)],
+                        WARRIOR_TYPE,
+                        row[Tools.getIndex(IMPORT_HEADERS,HP)],
+                        row[Tools.getIndex(IMPORT_HEADERS,STAMINA)],
+                        row[Tools.getIndex(IMPORT_HEADERS,STRENGTH)]
+                );
+                warriors.put(row[Tools.getIndex(IMPORT_HEADERS,NAME)], warriorStr);
+            }
+        }
+
+        return warriors;
+    }
+
+    /** Gives a list of the wizards templates from the templates csv in a formatted style
+     * @return array of distinct wizard templates
+     * @throws FileNotFoundException if no file is found in catalog path
+     */
+    public HashMap<String,String> listWizardTemplates() throws FileNotFoundException {
+        var rows = getAllRows(COMBATANT_CATALOG_PATH);
+        var formatStr = "%s (%s): HP=%s, mana=%s, intelligence=%s";
+        var wizards = new HashMap<String,String>();
+        for (String[] row : rows) {
+            if (row[Tools.getIndex(IMPORT_HEADERS,TYPE)].equals(WIZARD_TYPE)) {
+                var wizardStr = String.format(
+                        formatStr,
+                        row[Tools.getIndex(IMPORT_HEADERS,NAME)],
+                        WIZARD_TYPE,
+                        row[Tools.getIndex(IMPORT_HEADERS,HP)],
+                        row[Tools.getIndex(IMPORT_HEADERS,MANA)],
+                        row[Tools.getIndex(IMPORT_HEADERS,INTELLIGENCE)]
+                );
+                wizards.put(row[Tools.getIndex(IMPORT_HEADERS,NAME)], wizardStr);
+            }
+        }
+        return wizards;
+    }
+
+    /** Gives a list of the armies import files summary from the imports folder in a formatted style
+     * @return array of distinct armies files summary
+     * @throws FileNotFoundException if no file is found in catalog path
+     */
+    public HashMap<String,String> listArmiesImport() throws FileNotFoundException {
+        var folder = new File(ARMY_CATALOG_PATH);
+        var armiesMap = new HashMap<String,String>();
+        for (File armyFile : Objects.requireNonNull(folder.listFiles())){
+            var armyFileName = armyFile.getName();
+            var rows = getAllRows(ARMY_CATALOG_PATH + armyFileName);
+
+            int warriors = 0;
+            int wizards = 0;
+            for (String[] row : rows) {
+                if (row[Tools.getIndex(IMPORT_HEADERS, TYPE)].equals(WARRIOR_TYPE)) warriors++;
+                if (row[Tools.getIndex(IMPORT_HEADERS, TYPE)].equals(WIZARD_TYPE)) wizards++;
+            }
+
+            var armyStr = String.format(
+                    "%s: Size=%s (Warriors=%s, Wizards=%s)", armyFileName, rows.size(), warriors, wizards
+            );
+            armiesMap.put(armyFileName, armyStr);
+        }
+        return armiesMap;
+    }
 
     // ============  CONSTRUCTOR & GETTERS  ============
 
@@ -436,7 +509,7 @@ public class RepositoryCsv implements Repository{
         int indexId = Tools.getIndex(HEADERS, ID);
         int indexArmy = Tools.getIndex(HEADERS, ARMY);
         int indexIsAlive = Tools.getIndex(HEADERS, IS_ALIVE);
-        valuesList.add(indexId, String.valueOf(getLastId() + 1));
+        valuesList.add(indexId, String.valueOf(getMaxId() + 1));
         valuesList.add(indexArmy, "null");
         valuesList.add(indexIsAlive, "true");
 
