@@ -4,14 +4,9 @@ import model.Army;
 
 import model.Combatant;
 import repository.RepositoryCsv;
-import utils.ConsoleColors;
 import utils.ConsolePrints;
-import utils.Tools;
 
-import java.io.Console;
 import java.util.ArrayList;
-
-import static utils.ConsoleColors.printWithColor;
 
 public class WarService {
 
@@ -19,16 +14,14 @@ public class WarService {
     private final Army lightArmy;
     private final Army darkArmy;
     private boolean isOver;
-
-
     private final RepositoryCsv repo;
 
     private final InputService inputService = new InputService();
 
-    public WarService(Army light, Army dark, RepositoryCsv repo) {
+    public WarService(Army lightArmy, Army darkArmy, RepositoryCsv repo) {
+        this.lightArmy = lightArmy;
+        this.darkArmy = darkArmy;
         this.graveyard = new ArrayList<>();
-        this.lightArmy = light;
-        this.darkArmy = dark;
         this.isOver = false;
         this.repo = repo;
     }
@@ -69,7 +62,7 @@ public class WarService {
 
 
     public Army start() throws Exception {
-        ConsolePrints.printWarBegins();
+        ConsolePrints.warBegins();
 
         // Start war (LOOP) picking random combatants while any of the armies is defeated, continue
         int n = 0;

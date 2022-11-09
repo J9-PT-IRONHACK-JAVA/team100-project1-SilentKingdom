@@ -13,6 +13,7 @@ import model.Warrior;
 import model.Wizard;
 import repository.RepositoryCsv;
 import utils.ConsoleColors;
+import utils.ConsolePrints;
 import utils.Tools;
 
 import java.util.Scanner;
@@ -27,9 +28,10 @@ public class InputService {
     public static final String PLAYER = "player";
     public static final String BOT = "bot";
     public static final String YES = "yes";
+    public static final String NO = "no";
     public static final String IMPORT = "import";
     public static final String RANDOM = "random";
-    private static final String HANDMADE = "handmade";
+    public static final String HANDMADE = "handmade";
     private static final String EXIT_STRING = """
             ====================            
             EXIT - exit game
@@ -75,6 +77,7 @@ public class InputService {
         String title = "Please tell us how do you wish to call this army:";
         return askMenu(title, false);
     }
+
     public String askWichArmyImport(RepositoryCsv repo) throws FileNotFoundException {
         String title = "Please write down the name of the .csv file where the army to import is.";
 
@@ -92,21 +95,73 @@ public class InputService {
         var menu = buildMenu(title, false);
         do {
             System.out.println(menu);
-            input = prompt.nextLine().trim().toLowerCase();
-            if (input.equals(BACK) || input.equals(EXIT) || isValidArmySize(input)) {
+            input = getInput();
+            if (isValidArmySize(input)) {
                 return input;
             }
             printWithColor("Please try a valid size (between 1 and 10)", ConsoleColors.RED);
         } while (true);
     }
 
-    public String okWithThisArmy() {
-        String title = "Are you happy with this army? ";
+    public String okWithThisArmy(Army army) {
+        ConsolePrints.newArmyStatus(army.getName());
+        army.printStatus();
+        String title = "Are you ok with this army? ";
         String[] options = {
                 option(YES,"Yes!"),
                 option(START,"No, go back to army mode selection")
         };
         return askMenu(title, false, options);
+    }
+
+    public String askPlayAgain() {
+        String title = "Do you want to play again?";
+        String[] options = {
+                option(YES,"Yes!"),
+                option(EXIT,"No, enough blood for today")
+        };
+        return askMenu(title, false, options);
+    }
+
+    public void askExportArmy(Army army, RepositoryCsv repo) throws FileNotFoundException {
+        String title = "Would you like to export this army for future games?";
+        String[] options = {
+                option(YES,"Of course!"),
+                option(NO,"No, I don't like it that much")
+        };
+
+        String answer = askMenu(title, false, options);
+        if (answer.equals(YES)){
+            String fileName = askArmyExportFileName(repo);
+            try {
+                repo.exportArmy(fileName, army);
+            } catch (Exception e) {
+                System.err.println("ERROR: couldn't export army");
+            }
+        }
+    }
+
+    private String askArmyExportFileName(RepositoryCsv repo) throws FileNotFoundException {
+        String title = "Please provide a valid file name (without '.csv')";
+        String input;
+        String menu = buildMenu(title, false);
+        do {
+            System.out.println(menu);
+            input = getInput().trim();
+            if (isValidArmyFileName(input, repo)) {
+                return input;
+            }
+            printWithColor("Please enter a valid file name", ConsoleColors.RED);
+        } while (true);
+    }
+
+    private boolean askOverwriteFile(String fileName){
+        String title = "Army %s file already exists, do you want to overwrite it?". formatted(fileName);
+        String[] options = {
+                option(YES,"Yes!"),
+                option(NO,"No")
+        };
+        return askMenu(title, false, options).equals(YES);
     }
 
     public String askNextCombatant(Army army){
@@ -132,7 +187,7 @@ public class InputService {
         var optionsMap = getOptionsMap(options);
         do {
             System.out.println(menu);
-            String input = prompt.nextLine().trim();
+            String input = getInput();
 
             if (optionsMap.containsKey(input)) return optionsMap.get(input);
             if (options.length == 0) return input;
@@ -140,6 +195,25 @@ public class InputService {
         }while (true);
     }
 
+    private String getInput(){
+        String input = prompt.nextLine().trim();
+        if (input.equals(EXIT)) {
+            ConsolePrints.exitGame();
+            System.exit(0);
+        }
+        return input;
+    }
+
+    private boolean isValidArmyFileName(String fileName, RepositoryCsv repo) throws FileNotFoundException {
+        if (!fileName.matches("^\\w+$")) return false;
+        fileName += ".csv";
+
+        var armiesFiles = repo.listArmiesImport().keySet();
+        if (armiesFiles.contains(fileName)) {
+            return askOverwriteFile(fileName);
+        }
+        return true;
+    }
 
     // ======== STATIC METHODS ==================
     private static ArrayList<String> getListStrNumbers(int n){
@@ -182,10 +256,11 @@ public class InputService {
             optionsMap.put(String.valueOf(i+1), options[i].split("\\|")[0]);
         }
         optionsMap.put(BACK, BACK);
-        optionsMap.put(EXIT, EXIT);
         return optionsMap;
     }
 
     private static String option(String key, String text){return ("%s|"+ text).formatted(key);}
+
+
 
 }

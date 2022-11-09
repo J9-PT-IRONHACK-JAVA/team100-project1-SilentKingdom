@@ -3,7 +3,7 @@ package utils;
 public class ConsolePrints {
 
 
-    public static void printGameWelcome(){
+    public static void gameWelcome(){
         System.out.println("""
                  _    _      _                            _            \s
                 | |  | |    | |                          | |           \s
@@ -25,46 +25,46 @@ public class ConsolePrints {
                                                  ======================================================================
                 """);
     }
-    public static void printBotVsBotSelection(){
+    public static void BotVsBotSelection(){
         System.out.println("""
                 You have entered the Bot VS Bot gaming mode.
 
                 """);
     }
-    public static void printPlayerVsBotSelection() {
+    public static void PlayerVsBotSelection() {
         System.out.println("""
                 You have entered the Player VS Bot gaming mode.
 
                 """);
     }
-    public static void printPlayerVsPlayerSelection() {
+    public static void PlayerVsPlayerSelection() {
         System.out.println("""
                 You have entered the Player VS Player gaming mode.
 
                 """);
     }
-    public static void printLetsChooseArmySize() {
+    public static void LetsChooseArmySize() {
         System.out.println("Let's choose the number of Combatants that will " +
                 "compose both armies");
     }
-    public static void printLetsChooseArmySize(String armyName) {
+    public static void LetsChooseArmySize(String armyName) {
         System.out.println("Let's choose the number of Combatants for " + armyName);
     }
-    public static void printConstructionOfRandomArmy() {
+    public static void ConstructionOfRandomArmy() {
         System.out.println("Construction of random army...");
     }
-    public static void printLetsCreateLightArmy() {
-        System.out.println("Let's first create the Light army!");
+    public static void letsSetArmies() {
+        System.out.println("Let's first set the armies that will fight!");
     }
-    public static void printLetsCreateDarkArmy() {
-        System.out.println("Now let's create the Dark army!");
+    public static void startCreateArmy(int n) {
+        System.out.printf("ARMY #%s CREATION\n\n", n);
     }
 
-    public static void printNewArmyStatus(String armyName) {
+    public static void newArmyStatus(String armyName) {
         System.out.println(armyName + " (NEW ARMY!):");
     }
 
-    public static void printExitGame() {
+    public static void exitGame() {
         System.out.println("""
                 Ok, see you soon!
 
@@ -72,7 +72,7 @@ public class ConsolePrints {
     }
 
 
-    public static void printWarBegins() {
+    public static void warBegins() {
         System.out.println("""
                                                                                          )                       (                      (       ) (                      \s
                                                                                 *   ) ( /(       (  (      (     )\\ )     (      (      )\\ ) ( /( )\\ )                   \s

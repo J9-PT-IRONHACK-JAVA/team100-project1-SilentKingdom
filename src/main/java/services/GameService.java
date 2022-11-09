@@ -5,111 +5,89 @@ import repository.RepositoryCsv;
 import utils.ConsolePrints;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import static services.InputService.*;
 
 public class GameService {
-    private static final String RANDOM_MODE = "random";
-    private static final String PVP_MODE = "PVP";
-    private static final String PVB_MODE = "PVB";
 
-    private static final String BACK = "BACK";
+    private RepositoryCsv repo;
+    private final InputService inputSVC;
 
-
-    private static final RepositoryCsv repositoryCsv;
-
-    static {
+    public GameService(){
+        this.inputSVC = new InputService();
+        RepositoryCsv repositoryCsv;
         try {
             repositoryCsv = new RepositoryCsv();
+            this.repo = repositoryCsv;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println(e.getMessage());
+            System.exit(1);
         }
     }
 
 
-    private final InputService inputService = new InputService();
-/*
-    public void startGame() throws Exception {
+    public void start() throws Exception {
+        ConsolePrints.gameWelcome();
 
-        ConsolePrints.printGameWelcome();
+        while (true) {
+            // War preparation
+            ConsolePrints.letsSetArmies();
 
-        // LIGHTARMY CREATION
-        ConsolePrints.printLetsCreateLightArmy();
+            Army lightArmy = createArmy();
+            Army darkArmy = createArmy();
 
-        var whoIsLightArmyControlledBy= inputService.askWhoIsArmyControlledBy();
-        var typeLightArmyCreation = inputService.askTypeArmyCreation();
-        Army lightArmy = createArmy(whoIsLightArmyControlledBy, typeLightArmyCreation);
+            var war = new WarService(lightArmy, darkArmy, repo);
 
-        ConsolePrints.printNewArmyStatus(lightArmy.getName());
-        lightArmy.printStatus();
-        inputService.okWithThisArmy();
+            // War begins
+            war.start();
 
-        // DARKARMY CREATION
-        ConsolePrints.printLetsCreateDarkArmy();
+            // Play again?
+            String answer = inputSVC.askPlayAgain();
+            if (!answer.equals(YES)) {
+                ConsolePrints.exitGame();
+                System.exit(0);
+            }
 
-        var whoIsDarkArmyControlledBy= inputService.askWhoIsArmyControlledBy();
-        var typeDarkArmyCreation = inputService.askTypeArmyCreation();
-        Army darkArmy = createArmy(whoIsDarkArmyControlledBy, typeDarkArmyCreation);
-
-        ConsolePrints.printNewArmyStatus(darkArmy.getName());
-        darkArmy.printStatus();
-        inputService.okWithThisArmy();
-
-        WarService warService = new WarService(lightArmy, darkArmy, repositoryCsv);
-
-        warService.start();
-
+            // reset armies
+            repo.deleteArmy(lightArmy);
+            repo.deleteArmy(darkArmy);
+        }
     }
 
-        // Standard input and out (interactive part)
-        // Choose how to instantiate armies: Import or Introduce size, attributes?
+    private Army createArmy() throws Exception {
+        boolean isOk;
+        while (true) {
+            ConsolePrints.startCreateArmy(repo.getDistinctArmies().length + 1);
 
-        // Import / Instantiate army's (Ask for Army's names, choose side, etc)
+            String armyMode = inputSVC.askWhoIsArmyControlledBy();
+            String creationType = inputSVC.askTypeArmyCreation();
 
-        // Choose war modality? Random, PlayerVsPlayer, PlayerVsBot?
-
-        // Start war modality instantiate and start WarService
-    private Army createArmy(String whoIsControlledBy, String typeOfArmyCreation) throws Exception {
-
-        Army army = null;
-
-        switch (typeOfArmyCreation) {
-            // import army
-            case "1" -> {
-                var armyName = inputService.askArmyName();
-                var armyToImportFileName = inputService.armyToImportFileName();
-                army = repositoryCsv.importArmy(armyToImportFileName, armyName);
-            }
-
-            case "2" -> {
-                // create random army
-                var armySize = inputService.askNumberOfCombatants();
-                army = Army.createRandom(armySize, repositoryCsv);
-                ConsolePrints.printConstructionOfRandomArmy();
-                break;
-            }
-
-            case "3" -> {
-                // create manual army
-                var armyName = inputService.askArmyName();
-                var armySize = inputService.askNumberOfCombatants();
-                army = new Army(armyName, repositoryCsv);
-                while (army.getCombatants().size() < armySize) {
-                    System.out.println("Please select a combatant to add to " + armyName);
-                    // TODO function that displays all combatants from repo to select and returns selected combatant object
-//                army.addCombatant(combatant);
+            Army army;
+            switch (creationType) {
+                case IMPORT -> {
+                    String armyName = inputSVC.askArmyName();
+                    String armyCsv = inputSVC.askWichArmyImport(repo);
+                    army = repo.importArmy(armyCsv, armyName);
                 }
-                break;
+                case HANDMADE -> {
+                    String armyName = inputSVC.askArmyName();
+                    army = inputSVC.createHandmadeArmy(armyName);
+                    inputSVC.askExportArmy(army, repo);
+                }
+                default -> {
+                    int armySize = Integer.parseInt(inputSVC.askArmySize());
+                    army = Army.createRandom(armySize, repo);
+                    inputSVC.askExportArmy(army, repo);
+                }
             }
+
+            army.setBot(armyMode.equals(PLAYER));
+            String answer = inputSVC.okWithThisArmy(army);
+            isOk = answer.equals(YES);
+            if (!isOk) repo.deleteArmy(army);
+            if (isOk) return army;
         }
-
-        assert army != null;
-        army.setBot(!whoIsControlledBy.equals("1"));
-
-        return army;
-    }*/
-
-    public void exitGame(){
-        ConsolePrints.printExitGame();
-        System.exit(0);
     }
 
 }
