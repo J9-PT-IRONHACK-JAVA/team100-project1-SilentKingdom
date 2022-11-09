@@ -12,7 +12,6 @@ public interface Repository {
     Army importArmy(String fileName, String name) throws Exception;
     void exportArmy(String fileName, Army army) throws Exception;
     void saveCombatant(Combatant combatant) throws Exception;
-    void updateCombatant(Combatant combatant) throws Exception;
     void saveArmy(Army army) throws Exception;
     Combatant getCombatantById(int id) throws Exception;
     ArrayList<Combatant> getArmyCombatants(Army army) throws Exception;

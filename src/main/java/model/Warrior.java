@@ -7,7 +7,6 @@ public class Warrior extends Combatant{
     private int stamina;
     private int strength;
 
-    @Override
     public void attack(Combatant target){
         if (stamina >= 5) {
             heavyAttack(target);
@@ -21,12 +20,10 @@ public class Warrior extends Combatant{
         stamina++;
     }
 
-
     public void heavyAttack(Combatant target) {
         target.takeDamage(strength);
         stamina -= 5;
     }
-
 
     public Warrior(String name, int hp, boolean isAlive, int stamina, int strength, RepositoryCsv repo)
             throws Exception {
@@ -63,6 +60,13 @@ public class Warrior extends Combatant{
                 "stamina=" + stamina +
                 ", strength=" + strength +
                 "} " + super.toString();
+    }
+    public String toStringStatus() {
+
+        var str = (this.getName() + "(%s): " + "ID=" + this.getId() + "HP=" + this.getHp() + "stamina=" + stamina +
+                ", strength=" + strength + ", strength=" + strength).formatted(this.getClass());
+
+        return str;
     }
 
 

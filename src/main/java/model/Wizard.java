@@ -14,7 +14,6 @@ public class Wizard extends Combatant {
         } else {
             staffHit(target);
         }
-
     }
 
     public void staffHit(Combatant target) {
@@ -75,4 +74,5 @@ public class Wizard extends Combatant {
                 repo
         );
     }
+
 }
