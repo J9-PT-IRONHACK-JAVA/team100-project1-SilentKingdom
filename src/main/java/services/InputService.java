@@ -3,6 +3,7 @@ import model.Army;
 import model.Warrior;
 import model.Wizard;
 
+import java.io.FileNotFoundException;
 import java.nio.file.LinkPermission;
 import java.util.*;
 
@@ -10,6 +11,7 @@ import model.Army;
 import model.Combatant;
 import model.Warrior;
 import model.Wizard;
+import repository.RepositoryCsv;
 import utils.ConsoleColors;
 import utils.Tools;
 
@@ -73,10 +75,15 @@ public class InputService {
         String title = "Please tell us how do you wish to call this army:";
         return askMenu(title, false);
     }
-    public String armyToImportFileName() {
-        // TODO use listArmiesImport method from repository to list and let the user choose
+    public String askWichArmyImport(RepositoryCsv repo) throws FileNotFoundException {
         String title = "Please write down the name of the .csv file where the army to import is.";
-        return askMenu(title, false);
+
+        var armiesImport = repo.listArmiesImport();
+        var options = new ArrayList<String>();
+        for (String armyCsvName : armiesImport.keySet()) {
+            options.add(option(armyCsvName, armiesImport.get(armyCsvName)));
+        };
+        return askMenu(title, false, options.toArray(new String[]{}));
     }
 
     public String askArmySize() {
@@ -125,9 +132,10 @@ public class InputService {
         var optionsMap = getOptionsMap(options);
         do {
             System.out.println(menu);
-            String input = prompt.nextLine().trim().toLowerCase();
+            String input = prompt.nextLine().trim();
 
-            if (optionsMap.containsKey(input) || options.length == 0) return optionsMap.get(input);
+            if (optionsMap.containsKey(input)) return optionsMap.get(input);
+            if (options.length == 0) return input;
             printWithColor("Command not recognized!", ConsoleColors.RED);
         }while (true);
     }

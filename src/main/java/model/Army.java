@@ -11,7 +11,6 @@ import java.util.*;
 
 public class Army {
     private String name;
-    private final int initialSize;
     public static final int MIN_ARMY_SIZE = 1;
     public static final int MAX_ARMY_SIZE = 10;
     private final HashMap<Integer,Combatant> combatants;
@@ -27,20 +26,15 @@ public class Army {
         return combatantsList.get(rand.nextInt(combatants.keySet().size()));
     }
 
-    public Combatant pickCombatantByName(String name) {
-        for (Combatant combatant : combatants.values()) {
-            if (name.equals(combatant.getName())) {
-                return combatant;
-            }
-        }
-        return null;
-    }
-
     public Combatant pickCombatantByIndex(String id){
         return combatants.get(Integer.parseInt(id));
     }
 
     public void addCombatant(Combatant combatant) throws Exception {
+        if (getSize() >= MAX_ARMY_SIZE) {
+            System.out.printf("Cannot add more combatants, Army size is already %s\n", MAX_ARMY_SIZE);
+            return;
+        }
         combatant.setArmyName(name);
         combatants.put(combatant.getId(), combatant);
         repo.saveCombatant(combatant);
@@ -52,7 +46,6 @@ public class Army {
 
     public Army(String name, RepositoryCsv repo) {
         this.name = name;
-        this.initialSize = 0;
         this.combatants = new HashMap<>();
         this.repo = repo;
         this.isBot = true;
@@ -72,10 +65,6 @@ public class Army {
 
     public int getSize() {
         return combatants.size();
-    }
-
-    public int getInitialSize() {
-        return initialSize;
     }
 
     public boolean isBot() {
@@ -122,7 +111,7 @@ public class Army {
         for (int i = 0; i < combatants.size(); i++) {
             System.out.println(i+1 + ") " + Tools.combatantStatus(combatants.get(i)));
         }
-        System.out.println("");
+        System.out.println();
     }
 
 }
