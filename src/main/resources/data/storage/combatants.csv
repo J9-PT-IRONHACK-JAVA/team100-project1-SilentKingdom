@@ -1,4 +1,5 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
+<<<<<<< HEAD
 1,null,Aragorn,warrior,160,true,45,8,-1,-1
 2,null,Gandalf,wizard,80,true,-1,-1,40,47
 3,null,Gimli,warrior,136,true,25,10,-1,-1
@@ -6,3 +7,27 @@ id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
 5,null,Radagast,wizard,90,true,-1,-1,35,35
 6,null,Galadriel,wizard,100,true,-1,-1,48,23
 7,null,Eowyn,warrior,150,true,50,4,-1,-1
+=======
+1,Heroes Army,Aragorn,warrior,0,false,0,8,-1,-1
+2,Heroes Army,Gandalf,wizard,29,true,-1,-1,0,47
+3,Heroes Army,Gimli,warrior,0,false,2,10,-1,-1
+4,Heroes Army,Legolas,warrior,11,true,2,5,-1,-1
+5,Heroes Army,Radagast,wizard,0,false,-1,-1,2,35
+6,Heroes Army,Galadriel,wizard,0,false,-1,-1,3,23
+7,Heroes Army,Eowyn,warrior,0,false,1,4,-1,-1
+19,Heroes Army,Boromir,warrior,120,false,30,7,-1,-1
+16,Wayrest Oxen,First Lieutenant Dwemer,warrior,166,false,37,1,-1,-1
+17,Wayrest Oxen,First Sergeant Bosmer,warrior,0,false,5,4,-1,-1
+18,Wayrest Oxen,Staff Sergeant Redguard,warrior,0,false,0,8,-1,-1
+8,Wayrest Oxen,Lord Voldemort,wizard,0,false,-1,-1,1,28
+9,Wayrest Oxen,Mrs. Norris,wizard,0,false,-1,-1,9,16
+10,Wayrest Oxen,Sergeant Imperial,warrior,0,false,3,2,-1,-1
+11,Wayrest Oxen,General Riekling,warrior,0,false,1,3,-1,-1
+12,Wayrest Oxen,Staff Sergeant Nord,warrior,0,false,2,2,-1,-1
+13,Wayrest Oxen,First Lieutenant Orc,warrior,0,false,27,9,-1,-1
+14,Wayrest Oxen,Major General Redguard,warrior,0,false,1,3,-1,-1
+15,Wayrest Oxen,First Lieutenant Bosmer,warrior,0,false,5,7,-1,-1
+20,Wayrest Oxen,Troll,warrior,0,false,2,8,-1,-1
+21,null,Boromir,warrior,120,true,30,7,-1,-1
+22,null,Boromir,warrior,120,true,30,7,-1,-1
+>>>>>>> develop

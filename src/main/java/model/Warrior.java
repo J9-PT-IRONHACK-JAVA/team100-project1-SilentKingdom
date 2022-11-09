@@ -38,7 +38,6 @@ public class Warrior extends Combatant{
         this.strength = strength;
     }
 
-
     public int getStamina() {
         return stamina;
     }

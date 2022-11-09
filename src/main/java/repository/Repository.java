@@ -17,6 +17,6 @@ public interface Repository {
     ArrayList<Combatant> getArmyCombatants(Army army) throws Exception;
     void deleteCombatant(Combatant combatant) throws Exception;
     void deleteArmy(Army army) throws Exception;
-    int getLastId() throws FileNotFoundException;
+    int getMaxId() throws FileNotFoundException;
     String[] getDistinctArmies() throws FileNotFoundException;
 }
