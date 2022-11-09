@@ -36,10 +36,8 @@ public class Army {
         return null;
     }
 
-    public Combatant pickCombatantByIndex(String nextCombatantIndex){
-        var nextCombatantIndexToInteger = Integer.parseInt(nextCombatantIndex) - 1;
-        var nextCombatant = this.getCombatants().get(nextCombatantIndexToInteger);
-        return nextCombatant;
+    public Combatant pickCombatantByIndex(String id){
+        return combatants.get(Integer.parseInt(id));
     }
 
     public void addCombatant(Combatant combatant) throws Exception {

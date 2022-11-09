@@ -26,7 +26,7 @@ public class GameService {
 
 
     private final InputService inputService = new InputService();
-
+/*
     public void startGame() throws Exception {
 
         ConsolePrints.printGameWelcome();
@@ -105,7 +105,7 @@ public class GameService {
         army.setBot(!whoIsControlledBy.equals("1"));
 
         return army;
-    }
+    }*/
 
     public void exitGame(){
         ConsolePrints.printExitGame();

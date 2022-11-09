@@ -24,6 +24,7 @@ public class InputService {
     public static final String START = "start";
     public static final String PLAYER = "player";
     public static final String BOT = "bot";
+    public static final String YES = "yes";
     public static final String IMPORT = "import";
     public static final String RANDOM = "random";
     private static final String HANDMADE = "handmade";
@@ -43,218 +44,96 @@ public class InputService {
         this.prompt = new Scanner(System.in);
     }
 
+    public void close(){
+        this.prompt.close();
+    }
 
     // Each of these methods will ask for the needed attributes,
     // store them in variables and instantiate the new object with them
 
     public String askWhoIsArmyControlledBy(){
-        String input;
-
         String title = "First of all, tell me who will be this army lead by?";
         String[] options = {
-                "PLAYER - the player will decide the combatants to fight every battle",
-                "BOT - the machine will decide the combatants to fight every battle",
+                option(PLAYER,"PLAYER - the player will decide the combatants to fight every battle"),
+                option(BOT,"BOT - the machine will decide the combatants to fight every battle"),
         };
 
-        var whoIsArmyControlledBy = buildMenu(title, options);
-
-        do {
-            System.out.println(whoIsArmyControlledBy);
-            showBackMenuOption();
-            showExitMenuOption();
-
-            input = prompt.nextLine().trim().toLowerCase();
-            switch (input) {
-                case "1" -> { return PLAYER; }
-                case "2" -> { return BOT; }
-                case EXIT, BACK -> { return input;}
-                default -> printWithColor("Command not recognized!", ConsoleColors.RED);
-            }
-
-        }while (true);
+        return askMenu(title, false, options);
     }
     public String askTypeArmyCreation() {
-        String input;
         String title = "How do you wish to create this army?";
         String[] options = {
-                "Import army from personal .csv file",
-                "Create a random army",
-                "Make a customized handmade army"
+                option(IMPORT,"Import army from personal .csv file"),
+                option(RANDOM,"Create a random army"),
+                option(HANDMADE,"Make a customized handmade army")
         };
-
-        var typeArmyCreation = buildMenu(title, options);
-
-        do {
-            System.out.println(typeArmyCreation);
-            showBackMenuOption();
-            showExitMenuOption();
-
-            input = prompt.nextLine().trim().toLowerCase();
-            switch (input) {
-                case "1" -> { return IMPORT; }
-                case "2" -> { return RANDOM; }
-                case "3" -> { return HANDMADE; }
-                case EXIT, BACK -> { return input;}
-                default -> printWithColor("Command not recognized!", ConsoleColors.RED);
-            }
-
-        }while (true);
+        return askMenu(title, false, options);
     }
     public String askArmyName() {
-        var chooseArmyName = buildMenu("Please tell us how do you wish to call this army:");
-        System.out.println(chooseArmyName);
-        showBackMenuOption();
-        showExitMenuOption();
-
-        return prompt.nextLine();
+        String title = "Please tell us how do you wish to call this army:";
+        return askMenu(title, false);
     }
     public String armyToImportFileName() {
         // TODO use listArmiesImport method from repository to list and let the user choose
-        var chooseArmyName = buildMenu("Please write down the name of the .csv file where the army to import is.");
-        System.out.println(chooseArmyName);
-        showBackMenuOption();
-        showExitMenuOption();
-
-        return prompt.nextLine();
+        String title = "Please write down the name of the .csv file where the army to import is.";
+        return askMenu(title, false);
     }
-    public String askNumberOfCombatants() {
+
+    public String askArmySize() {
         String input;
         var title = "Please write down the number of combatants that will compose the army:";
+        var menu = buildMenu(title, false);
         do {
-            System.out.println(title);
-            showBackMenuOption();
-            showExitMenuOption();
-
+            System.out.println(menu);
             input = prompt.nextLine().trim().toLowerCase();
-
             if (input.equals(BACK) || input.equals(EXIT) || isValidArmySize(input)) {
                 return input;
             }
-
             printWithColor("Please try a valid size (between 1 and 10)", ConsoleColors.RED);
         } while (true);
     }
-    private boolean isValidArmySize(String input) {
-        var armySizeInt = 0;
-        if (input.matches("^\\d+$")) {
-            armySizeInt = Integer.parseInt(input);
-            return armySizeInt <= Army.MAX_ARMY_SIZE && armySizeInt >= Army.MIN_ARMY_SIZE;
-        }
-        return false;
-    }
+
     public String okWithThisArmy() {
-        String input;
-        String title = "How do you wish to create this army?";
+        String title = "Are you happy with this army? ";
         String[] options = {
-                "Yes!",
-                "No, build random army again",
-                "No, go back to number of combatants selection",
-                "No, go back to game mode selection"
+                option(YES,"Yes!"),
+                option(START,"No, go back to army mode selection")
         };
-
-        var okWithCreatedArmy = buildMenu(title, options);
-
-        do {
-            System.out.println(okWithCreatedArmy);
-            showBackMenuOption();
-            showExitMenuOption();
-
-            input = prompt.nextLine().trim().toLowerCase();
-            switch (input) {
-                case "1", EXIT, BACK -> { return input; }
-                case "2" -> { return RANDOM; }
-                case "3" -> { return HANDMADE; }
-                case "4" -> { return START; }
-                default -> printWithColor("Command not recognized!", ConsoleColors.RED);
-            }
-
-        } while (true);
+        return askMenu(title, false, options);
     }
 
-    public static String buildMenu(String title, String ... options) {
-        StringBuilder menu = new StringBuilder(String.format("%s\n", title));
-
-        for (int i = 0; i < options.length; i++) {
-            menu.append(i+1).append(") ").append(options[i]).append("\n");
+    public String askNextCombatant(Army army){
+        String title = "Please choose the next combatant to fight for: ";
+        var combatants = army.getCombatants();
+        var options = new ArrayList<String>();
+        for (Combatant combatant : combatants) {
+            options.add(option(String.valueOf(combatant.getId()), Tools.combatantStatus(combatant)));
         }
 
-        return menu.toString();
+        return askMenu(title, false, options.toArray(new String[]{}));
     }
-    public static void showExitMenuOption(){
-        System.out.println(EXIT_STRING);
-    };
-    public static void showBackMenuOption(){
-        System.out.println(BACK_STRING);
-    };
-    public String askNextCombatant(Army army){
-        String nextCombatant;
 
+    /**
+     * Builds a menu with the given title and (optional) options, and returns only a valid user answer
+     * @param title the menu title or introduction
+     * @param showBack if true will show a 'back' option
+     * @param options array of different options to let the user choose between them
+     * @return users valid answer as a response key
+     */
+    private String askMenu(String title, boolean showBack, String... options){
+        var menu = buildMenu(title, showBack, options);
+        var optionsMap = getOptionsMap(options);
         do {
-            var askNextCombatant = buildMenu("Please choose the next combatant to fight for: " + army.getName());
-            System.out.println(askNextCombatant);
-            army.printStatus();
-            showBackMenuOption();
-            showExitMenuOption();
+            System.out.println(menu);
+            String input = prompt.nextLine().trim().toLowerCase();
 
-            nextCombatant = prompt.nextLine().trim().toLowerCase();
-
-            switch (nextCombatant) {
-                case "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "exit", "back" -> {
-                    if(nextCombatant.equals("exit")){
-                        nextCombatant = "0";
-                    }
-                    if(nextCombatant.equals("back")){
-                        nextCombatant = "-1";
-                    }
-
-                    var indexOutOfBounds = false;
-                    try{
-                        army.pickCombatantByIndex(nextCombatant);
-                    }catch(Exception e){
-                        indexOutOfBounds = true;
-                    }
-                    if(!(indexOutOfBounds==false)){
-                        printWithColor("There is no " + nextCombatant + "th combatant. Please enter a valid number.", ConsoleColors.RED);
-                        nextCombatant = Tools.OUT_OF_BOUND;
-                    }
-
-                    return nextCombatant;
-                }
-                default -> printWithColor("Command not recognized!", ConsoleColors.RED);
-            }
-
-        } while (true);
+            if (optionsMap.containsKey(input) || options.length == 0) return optionsMap.get(input);
+            printWithColor("Command not recognized!", ConsoleColors.RED);
+        }while (true);
     }
 
 
-
-
-
-
-
-    public String chooseGameMode() {
-        String input;
-        do {
-            var chooseGameMode = buildMenu(
-                    "Please choose a game mode:",
-                    "Bot VS Bot (random)",
-                    "Player VS Bot", "Player VS Player");
-            System.out.println(chooseGameMode);
-            showExitMenuOption();
-
-            input = prompt.nextLine().trim().toLowerCase();
-            switch (input) {
-                case "1", "2", "3", "exit" -> {
-                    return input;
-                }
-                default -> printWithColor("Command not recognized!", ConsoleColors.RED);
-            }
-        } while (!input.equals("exit"));
-
-        return input;
-    }
-
-
+    // ======== STATIC METHODS ==================
     private static ArrayList<String> getListStrNumbers(int n){
         var list = new ArrayList<String>();
         for (int i = 0; i < n; i++) {
@@ -263,13 +142,42 @@ public class InputService {
         return list;
     }
 
-    class Option {
-        public String text;
-        public String key;
-
-        public Option(String text, String key) {
-            this.text = text;
-            this.key = key;
+    private static boolean isValidArmySize(String input) {
+        var armySizeInt = 0;
+        if (input.matches("^\\d+$")) {
+            armySizeInt = Integer.parseInt(input);
+            return armySizeInt <= Army.MAX_ARMY_SIZE && armySizeInt >= Army.MIN_ARMY_SIZE;
         }
+        return false;
     }
+
+    private static String buildMenu(String title, boolean showBack, String ... options) {
+        StringBuilder menu = new StringBuilder(String.format("%s\n", title));
+
+        for (int i = 0; i < options.length; i++) {
+            menu.append(i+1).append(") ").append(options[i].split("\\|")[1]).append("\n");
+        }
+        if (showBack) menu.append(BACK_STRING);
+        menu.append(EXIT_STRING);
+        return menu.toString();
+    }
+
+    /**
+     * Given an array of options to be printed to the user,
+     * generates a map from the user's input to the option keys to return
+     * @param options String array of
+     * @return map of input answers to option keys
+     */
+    private static HashMap<String,String> getOptionsMap(String[] options) {
+        var optionsMap = new HashMap<String,String>();
+        for (int i = 0; i < options.length; i++) {
+            optionsMap.put(String.valueOf(i+1), options[i].split("\\|")[0]);
+        }
+        optionsMap.put(BACK, BACK);
+        optionsMap.put(EXIT, EXIT);
+        return optionsMap;
+    }
+
+    private static String option(String key, String text){return ("%s|"+ text).formatted(key);}
+
 }

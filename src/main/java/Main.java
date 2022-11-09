@@ -7,12 +7,19 @@ import services.WarService;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        InputService inputService = new InputService();
-        GameService gameService = new GameService();
-
         var repo = new RepositoryCsv();
+        var inputSVC = new InputService();
 
-        gameService.startGame();
+        var armyName = inputSVC.askArmyName();
+
+        inputSVC.askArmySize();
+
+        inputSVC.askWhoIsArmyControlledBy();
+
+        //var armyCSVName = inputSVC.armyToImportFileName();
+        var army = repo.importArmy("lotrLightArmy.csv", armyName);
+        var combatant = army.pickCombatantByIndex(inputSVC.askNextCombatant(army));
+        System.out.println(combatant);
 
 
 //        var lightArmy =  repo.importArmy("lotrLightArmy.csv", "Heroes Army");

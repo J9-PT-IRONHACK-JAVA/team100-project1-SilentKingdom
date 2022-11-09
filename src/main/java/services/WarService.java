@@ -63,13 +63,8 @@ public class WarService {
         if (army.isBot()) return army.pickRandomCombatant();
 
         //Player
-        String nextCombatantIndex = inputService.askNextCombatant(army);
-        if(nextCombatantIndex.equals(Tools.OUT_OF_BOUND)){
-            do {
-                nextCombatantIndex = inputService.askNextCombatant(army);
-            } while (nextCombatantIndex.equals(Tools.OUT_OF_BOUND));
-        }
-        return army.pickCombatantByIndex(nextCombatantIndex);
+        String nextCombatantID = inputService.askNextCombatant(army);
+        return army.pickCombatantByIndex(nextCombatantID);
     }
 
 
