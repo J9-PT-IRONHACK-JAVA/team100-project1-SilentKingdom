@@ -52,6 +52,20 @@ public class Main {
         var warrior2 = repo.importCombatant("Troll");
         darkArmy.addCombatant(warrior2);
 
+                // =========== DEMO War =============
+        var warriorLight = lightArmy.pickRandomCombatant();
+        var warriorDark = darkArmy.pickRandomCombatant();
+
+        // Initialize War Service
+        var war = new WarService(lightArmy, darkArmy, repo);
+
+        // Start simulator
+        var winner = war.start();
+
+        System.out.printf("\nTHE WINNER IS:\n %s\n\n",winner);
+
+        System.out.println(String.join(war.getGraveyard().toString().replace("},","}\n")));
+
          */
     }
 }
