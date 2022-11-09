@@ -26,7 +26,7 @@ public class RepositoryCsv implements Repository{
     public static final String WARRIOR_TYPE = "warrior";
     public static final String WIZARD_TYPE = "wizard";
 
-    public static final String REPO_PATH ="data/storage/combatants.csv";
+    public static final String REPO_PATH ="src/main/resources/data/storage/combatants.csv";
     public static final String ARMY_CATALOG_PATH = "data/imports/armies/";
     public static final String COMBATANT_CATALOG_PATH = "data/imports/templates/combatants.csv";
     private final File repoFile;
@@ -144,6 +144,22 @@ public class RepositoryCsv implements Repository{
         Tools.overwriteCsv(REPO_PATH, rows, HEADERS);
     }
 
+    @Override
+    public void updateCombatant(Combatant combatant) throws Exception {
+        var newRow = mapCombatantToRow(combatant);
+        var rows = getAllRows(REPO_PATH);
+
+        for (int i = 0; i < rows.size(); i++) {
+            if (rows.get(i)[0].equals(newRow[0])){
+                rows.set(i, newRow);
+                break;
+            }
+        }
+
+        // Overwrite file
+        Tools.overwriteCsv(REPO_PATH, rows, HEADERS);
+    }
+
     /**
      * Stores the state of all combatants from a given Army. All existing combatants are updated in the repository,
      * while non-existing ones are inserted.
@@ -188,12 +204,12 @@ public class RepositoryCsv implements Repository{
      * @throws Exception if no file is found in repository path
      */
     @Override
-    public ArrayList<Combatant> getArmyCombatants(Army army) throws Exception {
+    public ArrayList<Combatant> getArmyCombatants(String army) throws Exception {
         var combatants = new ArrayList<Combatant>();
         var reader = new Scanner(repoFile);
         while (reader.hasNextLine()){
             var values = reader.nextLine().split(",");
-            if (values[Tools.getIndex(HEADERS,ARMY)].equals(army.getName())) {
+            if (values[Tools.getIndex(HEADERS,ARMY)].equals(army)) {
                 combatants.add(mapRowToCombatant(values));
             }
         }
