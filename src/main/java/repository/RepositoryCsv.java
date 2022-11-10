@@ -249,7 +249,7 @@ public class RepositoryCsv implements Repository{
      * @throws FileNotFoundException if no file is found in repository path
      */
     @Override
-    public String[] getDistinctArmies() throws FileNotFoundException {
+    public String[] getDistinctArmies(){
         var rows = getAllRows(REPO_PATH);
         var distinctArmiesSet = new HashSet<String>();
         for (String[] row : rows) {
@@ -355,14 +355,20 @@ public class RepositoryCsv implements Repository{
      * Given a CSV file path, reads all lines in the file skipping the header (first line).
      * The lines are split by ',' to obtain rows (String[]), which are collected into an ArrayList
      * @return ArrayList with all rows (String[]) in repository file.
-     * @throws FileNotFoundException if the path does not exist
      */
-    private static ArrayList<String[]> getAllRows(String filePath) throws FileNotFoundException {
+    private static ArrayList<String[]> getAllRows(String filePath){
         var file = new File(filePath);
         var allRows = new ArrayList<String[]>();
-        var reader = new Scanner(file);
+
+        Scanner reader = null;
+        try {
+            reader = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.err.printf("ERROR: couldn't find file '%s'\n", filePath);
+        }
 
         // Check if file is empty
+        assert reader != null;
         if (!reader.hasNextLine()) {
             return allRows;
         }

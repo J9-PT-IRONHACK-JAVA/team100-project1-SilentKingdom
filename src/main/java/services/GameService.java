@@ -1,25 +1,26 @@
 package services;
 
 import model.Army;
+import model.Combatant;
 import repository.RepositoryCsv;
 import utils.ConsolePrints;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static services.InputService.*;
+import static utils.Tools.*;
 
 public class GameService {
-
+    public static final int ATTACK_SLEEP = 1;
     private RepositoryCsv repo;
-    private final InputService inputSVC;
+    private InputService inputSVC;
 
     public GameService(){
-        this.inputSVC = new InputService();
         RepositoryCsv repositoryCsv;
         try {
             repositoryCsv = new RepositoryCsv();
             this.repo = repositoryCsv;
+            this.inputSVC = new InputService(repo);
         } catch (IOException e) {
             System.err.println(e.getMessage());
             System.exit(1);
@@ -32,20 +33,23 @@ public class GameService {
 
         while (true) {
             // War preparation
-            ConsolePrints.letsSetArmies();
-
             Army lightArmy = createArmy();
             Army darkArmy = createArmy();
 
-            var war = new WarService(lightArmy, darkArmy, repo);
+            var war = new WarService(lightArmy, darkArmy, repo, inputSVC);
 
             // War begins
-            war.start();
+            var winner = war.start();
+            sleep(3000);
+
+            System.out.printf("THE WINNER IS... %s\n\n", winner.getName());
+            winner.printStatus();
 
             // Play again?
             String answer = inputSVC.askPlayAgain();
             if (!answer.equals(YES)) {
                 ConsolePrints.exitGame();
+                inputSVC.close();
                 System.exit(0);
             }
 
@@ -58,36 +62,60 @@ public class GameService {
     private Army createArmy() throws Exception {
         boolean isOk;
         while (true) {
-            ConsolePrints.startCreateArmy(repo.getDistinctArmies().length + 1);
-
             String armyMode = inputSVC.askWhoIsArmyControlledBy();
             String creationType = inputSVC.askTypeArmyCreation();
 
             Army army;
             switch (creationType) {
                 case IMPORT -> {
+                    String armyCsv = inputSVC.askWhichArmyImport();
                     String armyName = inputSVC.askArmyName();
-                    String armyCsv = inputSVC.askWichArmyImport(repo);
                     army = repo.importArmy(armyCsv, armyName);
                 }
                 case HANDMADE -> {
                     String armyName = inputSVC.askArmyName();
-                    army = inputSVC.createHandmadeArmy(armyName);
-                    inputSVC.askExportArmy(army, repo);
+                    int armySize = Integer.parseInt(inputSVC.askArmySize());
+                    army = createHandmadeArmy(armySize, armyName);
                 }
                 default -> {
                     int armySize = Integer.parseInt(inputSVC.askArmySize());
                     army = Army.createRandom(armySize, repo);
-                    inputSVC.askExportArmy(army, repo);
                 }
             }
 
-            army.setBot(armyMode.equals(PLAYER));
+            army.setBot(armyMode.equals(BOT));
             String answer = inputSVC.okWithThisArmy(army);
             isOk = answer.equals(YES);
-            if (!isOk) repo.deleteArmy(army);
-            if (isOk) return army;
+            if (!isOk) {
+                repo.deleteArmy(army);
+                continue;
+            }
+            if (creationType.equals(RANDOM) || creationType.equals(HANDMADE)) {
+                inputSVC.askExportArmy(army, repo);
+            }
+            inputSVC.setArmiesCreated(inputSVC.getArmiesCreated() + 1);
+            return army;
         }
+    }
+
+    private Army createHandmadeArmy(int armySize, String armyName) throws Exception {
+        var army = new Army(armyName, repo);
+
+        while (army.getSize() < armySize) {
+            Combatant combatant;
+            String answer = inputSVC.askCombatantCreateType();
+
+            if (answer.equals(IMPORT)) {
+                String combatantName = inputSVC.askWhichCombatantImport();
+                combatant = repo.importCombatant(combatantName);
+            } else {
+                String combatantName = inputSVC.askWhichCombatantImport();
+                combatant = repo.importCombatant(combatantName);
+                //combatant = inputSVC.askCreateCombatant();
+            }
+            army.addCombatant(combatant);
+        }
+        return army;
     }
 
 }

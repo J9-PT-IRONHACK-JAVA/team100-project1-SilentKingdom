@@ -1,11 +1,7 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
-1,Wenceslaos,Corporal Altmer,warrior,107,true,12,8,-1,-1
-2,Wenceslaos,Captain Argonian,warrior,163,true,42,8,-1,-1
-3,Wenceslaos,Sergeant Major Orc,warrior,127,true,30,7,-1,-1
-4,Wenceslaos,Astoria Greengrass,wizard,51,true,-1,-1,46,8
-5,Wenceslaos,George Weasley,wizard,70,true,-1,-1,27,6
-6,Wenceslaos,Remus Lupin,wizard,61,true,-1,-1,20,21
-7,Wenceslaos,Mrs. Norris,wizard,68,true,-1,-1,12,49
-8,Wenceslaos,Sergeant Major Nord,warrior,136,true,48,1,-1,-1
-9,Wenceslaos,First Sergeant Imperial,warrior,190,true,43,6,-1,-1
-10,Wenceslaos,Staff Sergeant Nord,warrior,134,true,35,3,-1,-1
+1,Menevia Conspirators,Captain Dwemer,warrior,125,true,36,3,-1,-1
+2,Menevia Conspirators,Major General Riekling,warrior,75,true,3,7,-1,-1
+3,Menevia Conspirators,Lieutenant General Breton,warrior,186,true,44,9,-1,-1
+4,Shor's Stone Horses,Staff Sergeant Riekling,warrior,197,true,14,7,-1,-1
+5,Shor's Stone Horses,Lieutenant General Riekling,warrior,0,false,5,2,-1,-1
+6,Shor's Stone Horses,Sergeant Major Khajiit,warrior,132,true,32,1,-1,-1

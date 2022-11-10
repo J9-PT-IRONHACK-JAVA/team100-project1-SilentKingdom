@@ -1,10 +1,14 @@
 package utils;
 
+import model.Combatant;
+import services.InputService;
+
 public class ConsolePrints {
 
-
     public static void gameWelcome(){
-        System.out.println("""
+        clearConsole("");
+        String text = ConsoleColors.CYAN +
+                 """
                  _    _      _                            _            \s
                 | |  | |    | |                          | |           \s
                 | |  | | ___| | ___ ___  _ __ ___   ___  | |_ ___      \s
@@ -23,41 +27,13 @@ public class ConsolePrints {
                                                                                             __/ |                     \s
                                                                                            |___/                      \s                        
                                                  ======================================================================
-                """);
+               
+                """;
+        printSlow(text, 100);
     }
-    public static void BotVsBotSelection(){
-        System.out.println("""
-                You have entered the Bot VS Bot gaming mode.
 
-                """);
-    }
-    public static void PlayerVsBotSelection() {
-        System.out.println("""
-                You have entered the Player VS Bot gaming mode.
-
-                """);
-    }
-    public static void PlayerVsPlayerSelection() {
-        System.out.println("""
-                You have entered the Player VS Player gaming mode.
-
-                """);
-    }
-    public static void LetsChooseArmySize() {
-        System.out.println("Let's choose the number of Combatants that will " +
-                "compose both armies");
-    }
-    public static void LetsChooseArmySize(String armyName) {
-        System.out.println("Let's choose the number of Combatants for " + armyName);
-    }
     public static void ConstructionOfRandomArmy() {
         System.out.println("Construction of random army...");
-    }
-    public static void letsSetArmies() {
-        System.out.println("Let's first set the armies that will fight!");
-    }
-    public static void startCreateArmy(int n) {
-        System.out.printf("ARMY #%s CREATION\n\n", n);
     }
 
     public static void newArmyStatus(String armyName) {
@@ -65,6 +41,7 @@ public class ConsolePrints {
     }
 
     public static void exitGame() {
+        clearConsole("");
         System.out.println("""
                 Ok, see you soon!
 
@@ -73,7 +50,9 @@ public class ConsolePrints {
 
 
     public static void warBegins() {
-        System.out.println("""
+        clearConsole("");
+        String text = ConsoleColors.RED +
+               """
                                                                                          )                       (                      (       ) (                      \s
                                                                                 *   ) ( /(       (  (      (     )\\ )     (      (      )\\ ) ( /( )\\ )                   \s
                                                                               ` )  /( )\\())(     )\\))(   ' )\\   (()/(   ( )\\ (   )\\ )  (()/( )\\()(()/(                   \s
@@ -83,6 +62,60 @@ public class ConsolePrints {
                                                             |___|___|___|___|   | |  | __ | _|   \\ \\/\\/ / / _ \\ |   /   | _ | _|  | (_ || | | .` \\__ \\  |___|___|___|___|\s
                                                             |___|___|___|___|   |_|  |_||_|___|   \\_/\\_/ /_/ \\_\\|_|_\\   |___|___|  \\___|___||_|\\_|___/  |___|___|___|___|\s
                                           
-                """);
+                """ + ConsoleColors.RESET;
+        printSlow(text, 100);
+    }
+
+    public static String battleHeader(int n, String warStats){
+        return ConsoleColors.BLACK_BACKGROUND + ConsoleColors.RED_BOLD +
+                "BATTLE # %s".formatted(n) + ConsoleColors.RESET +"\n" +
+                ConsoleColors.CYAN_BOLD + warStats + ConsoleColors.RESET;
+    }
+
+    public static void printSlow(String text, int s) {
+        for (String line: text.split("\\n")) {
+            Tools.sleep(s);
+            System.out.println(line);
+        }
+    }
+
+    public static void clearConsole(String header) {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+        System.out.println(header);
+    }
+
+    public static String warPreparation(int n) {
+        // Font name: small
+        return  ConsoleColors.PURPLE +
+                """         
+                    _   ___ __  __ ___ ___ ___   ___ ___ _____ _   _ ___\s
+                   /_\\ | _ \\  \\/  |_ _| __/ __| / __| __|_   _| | | | _ \\
+                  / _ \\|   / |\\/| || || _|\\__ \\ \\__ \\ _|  | | | |_| |  _/
+                 /_/ \\_\\_|_\\_|  |_|___|___|___/ |___/___| |_|  \\___/|_| \s
+                                                                        \s
+                """ + ConsoleColors.RESET +
+                ConsoleColors.BLACK_BACKGROUND + ConsoleColors.YELLOW_BOLD +
+                "ARMY #%s CREATION".formatted(n) + ConsoleColors.RESET +"\n"
+                ;
+    }
+
+    public static void selectedCombatants(Combatant light, Combatant dark) {
+        String text = ConsoleColors.WHITE_BRIGHT + "The following combatants will fight!\n" +
+                ConsoleColors.YELLOW_BOLD + light.getName() + " - " + Tools.combatantStatus(light) + "\n" +
+                ConsoleColors.PURPLE_BOLD + dark.getName() + " - " + Tools.combatantStatus(dark) + "\n" +
+                ConsoleColors.WHITE_BRIGHT + "Fight until death!!";
+        System.out.println(text);
+    }
+
+    public static void battleResult(Combatant winner, Combatant defeated, boolean light) {
+        String color = (light) ? ConsoleColors.YELLOW_BOLD : ConsoleColors.PURPLE_BOLD;
+        ConsoleColors.printWithColor("%s WINS the battle!".formatted(winner.getName()), color);
+        ConsoleColors.printWithColor(
+                "%s combatant DEFEATED: %s\n\n".formatted(
+                        defeated.getArmyName(),
+                        defeated.getName()
+                ), color);
     }
 }
+
