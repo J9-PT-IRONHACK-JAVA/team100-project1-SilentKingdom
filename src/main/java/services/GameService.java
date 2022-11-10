@@ -35,32 +35,29 @@ public class GameService {
     public static final String ANSI_BG_GREEN  = "\u001B[42m";
 
     public static final String ANSI_GREEN = "\u001B[32m";
-//    public static void printGrid() throws Exception {
+    public static void printGrid(RepositoryCsv repo) throws Exception {
 
-//        RepositoryCsv repo
-//        var armiesNames = repo.getDistinctArmies();
+        var armiesNames = repo.getDistinctArmies();
 //
-//        var lightArmy = repo.getArmyCombatants(armiesNames[0]);
-//        var darkArmy = repo.getArmyCombatants(armiesNames[1]);
+        var lightArmy = repo.getArmyCombatants(armiesNames[0]);
+        var darkArmy = repo.getArmyCombatants(armiesNames[1]);
 
-//        System.out.println(colorDeRosa + "\t" + "\t"+ "Army %s" + "\t"+ "\t" + "\t" + resetColor);
-//        int longOf = RepositoryCsv.HEADERS.length;
-//        var gridPoss = "\t" + Arrays.toString(new char[]{' '});
-//        var separator = "\t" + Arrays.toString(new char[]{ '-','-','-','-'});
-//        for (int i = 0; i < longOf; i++) {
-//                System.out.println(gridPoss);
-//        }
-//        System.out.println(gridPoss);
-//        System.out.println(separator);
+        System.out.println(colorDeRosa + "\t" + "\t"+ "Army 1" + "\t"+ "\t" + "\t" + resetColor);
+        var gridPoss = "\t" + Arrays.toString(new char[]{' '});
+        for (int i = 0; i < lightArmy.size(); i++) {
+                System.out.println(gridPoss);
+        }
+
+//    public static void isAliveColor(){
+//            for (int i = 0; i < lightArmy.size(); i++) {
+//                if (RepositoryCsv.IS_ALIVE == false){
+//
+//                }
+//            }
+//       }
 //    }
 
-//    public static void warrMageColor(){
-//        if(RepositoryCsv.TYPE == "Warrior"){
-//            System.out.println("YEYEYE");
-//        }
-//    }
-
-    public void startGame(String prompt, int userChoices){
+//    public void startGame(String prompt, int userChoices){
 
         // Standard input and out (interactive part)
 

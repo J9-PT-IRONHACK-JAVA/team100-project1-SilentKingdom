@@ -8,8 +8,13 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-//        GameService.printGrid();
+        var repo = new RepositoryCsv();
 
+        var lightArmy =  repo.importArmy("lotrLightArmy.csv", "Heroes Army");
+        var darkArmy = repo.importArmy("lotrDarkArmy.csv", "Sauron's Army");
+
+
+        GameService.printGrid(repo);
         /*
         // =========== DEMO Repository ============ (Uncomment for testing)
 
@@ -63,5 +68,6 @@ public class Main {
 
         System.out.println(String.join(war.getGraveyard().toString().replace("},","}\n")));
          */
+
     }
 }
