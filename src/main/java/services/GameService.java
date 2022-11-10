@@ -1,115 +1,121 @@
 package services;
 
 import model.Army;
+import model.Combatant;
 import repository.RepositoryCsv;
 import utils.ConsolePrints;
 
 import java.io.IOException;
 
+import static services.InputService.*;
+import static utils.Tools.*;
+
 public class GameService {
-    private static final String RANDOM_MODE = "random";
-    private static final String PVP_MODE = "PVP";
-    private static final String PVB_MODE = "PVB";
+    public static final int ATTACK_SLEEP = 1;
+    private RepositoryCsv repo;
+    private InputService inputSVC;
 
-    private static final String BACK = "BACK";
-
-
-    private static final RepositoryCsv repositoryCsv;
-
-    static {
+    public GameService(){
+        RepositoryCsv repositoryCsv;
         try {
             repositoryCsv = new RepositoryCsv();
+            this.repo = repositoryCsv;
+            this.inputSVC = new InputService(repo);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println(e.getMessage());
+            System.exit(1);
         }
     }
 
 
-    private final InputService inputService = new InputService();
-/*
-    public void startGame() throws Exception {
+    public void start() throws Exception {
+        ConsolePrints.gameWelcome();
 
-        ConsolePrints.printGameWelcome();
+        while (true) {
+            // War preparation
+            Army lightArmy = createArmy();
+            Army darkArmy = createArmy();
 
-        // LIGHTARMY CREATION
-        ConsolePrints.printLetsCreateLightArmy();
+            var war = new WarService(lightArmy, darkArmy, repo, inputSVC);
 
-        var whoIsLightArmyControlledBy= inputService.askWhoIsArmyControlledBy();
-        var typeLightArmyCreation = inputService.askTypeArmyCreation();
-        Army lightArmy = createArmy(whoIsLightArmyControlledBy, typeLightArmyCreation);
+            // War begins
+            var winner = war.start();
+            sleep(3000);
 
-        ConsolePrints.printNewArmyStatus(lightArmy.getName());
-        lightArmy.printStatus();
-        inputService.okWithThisArmy();
+            System.out.printf("THE WINNER IS... %s\n\n", winner.getName());
+            winner.printStatus();
 
-        // DARKARMY CREATION
-        ConsolePrints.printLetsCreateDarkArmy();
+            // Play again?
+            String answer = inputSVC.askPlayAgain();
+            if (!answer.equals(YES)) {
+                ConsolePrints.exitGame();
+                inputSVC.close();
+                System.exit(0);
+            }
 
-        var whoIsDarkArmyControlledBy= inputService.askWhoIsArmyControlledBy();
-        var typeDarkArmyCreation = inputService.askTypeArmyCreation();
-        Army darkArmy = createArmy(whoIsDarkArmyControlledBy, typeDarkArmyCreation);
-
-        ConsolePrints.printNewArmyStatus(darkArmy.getName());
-        darkArmy.printStatus();
-        inputService.okWithThisArmy();
-
-        WarService warService = new WarService(lightArmy, darkArmy, repositoryCsv);
-
-        warService.start();
-
+            // reset armies
+            repo.deleteArmy(lightArmy);
+            repo.deleteArmy(darkArmy);
+        }
     }
 
-        // Standard input and out (interactive part)
-        // Choose how to instantiate armies: Import or Introduce size, attributes?
+    private Army createArmy() throws Exception {
+        boolean isOk;
+        while (true) {
+            String armyMode = inputSVC.askWhoIsArmyControlledBy();
+            String creationType = inputSVC.askTypeArmyCreation();
 
-        // Import / Instantiate army's (Ask for Army's names, choose side, etc)
-
-        // Choose war modality? Random, PlayerVsPlayer, PlayerVsBot?
-
-        // Start war modality instantiate and start WarService
-    private Army createArmy(String whoIsControlledBy, String typeOfArmyCreation) throws Exception {
-
-        Army army = null;
-
-        switch (typeOfArmyCreation) {
-            // import army
-            case "1" -> {
-                var armyName = inputService.askArmyName();
-                var armyToImportFileName = inputService.armyToImportFileName();
-                army = repositoryCsv.importArmy(armyToImportFileName, armyName);
-            }
-
-            case "2" -> {
-                // create random army
-                var armySize = inputService.askNumberOfCombatants();
-                army = Army.createRandom(armySize, repositoryCsv);
-                ConsolePrints.printConstructionOfRandomArmy();
-                break;
-            }
-
-            case "3" -> {
-                // create manual army
-                var armyName = inputService.askArmyName();
-                var armySize = inputService.askNumberOfCombatants();
-                army = new Army(armyName, repositoryCsv);
-                while (army.getCombatants().size() < armySize) {
-                    System.out.println("Please select a combatant to add to " + armyName);
-                    // TODO function that displays all combatants from repo to select and returns selected combatant object
-//                army.addCombatant(combatant);
+            Army army;
+            switch (creationType) {
+                case IMPORT -> {
+                    String armyCsv = inputSVC.askWhichArmyImport();
+                    String armyName = inputSVC.askArmyName();
+                    army = repo.importArmy(armyCsv, armyName);
                 }
-                break;
+                case HANDMADE -> {
+                    String armyName = inputSVC.askArmyName();
+                    int armySize = Integer.parseInt(inputSVC.askArmySize());
+                    army = createHandmadeArmy(armySize, armyName);
+                }
+                default -> {
+                    int armySize = Integer.parseInt(inputSVC.askArmySize());
+                    army = Army.createRandom(armySize, repo);
+                }
             }
+
+            army.setBot(armyMode.equals(BOT));
+            String answer = inputSVC.okWithThisArmy(army);
+            isOk = answer.equals(YES);
+            if (!isOk) {
+                repo.deleteArmy(army);
+                continue;
+            }
+            if (creationType.equals(RANDOM) || creationType.equals(HANDMADE)) {
+                inputSVC.askExportArmy(army, repo);
+            }
+            inputSVC.setArmiesCreated(inputSVC.getArmiesCreated() + 1);
+            return army;
         }
+    }
 
-        assert army != null;
-        army.setBot(!whoIsControlledBy.equals("1"));
+    private Army createHandmadeArmy(int armySize, String armyName) throws Exception {
+        var army = new Army(armyName, repo);
 
+        while (army.getSize() < armySize) {
+            Combatant combatant;
+            String answer = inputSVC.askCombatantCreateType();
+
+            if (answer.equals(IMPORT)) {
+                String combatantName = inputSVC.askWhichCombatantImport();
+                combatant = repo.importCombatant(combatantName);
+            } else {
+                String combatantName = inputSVC.askWhichCombatantImport();
+                combatant = repo.importCombatant(combatantName);
+                //combatant = inputSVC.askCreateCombatant();
+            }
+            army.addCombatant(combatant);
+        }
         return army;
-    }*/
-
-    public void exitGame(){
-        ConsolePrints.printExitGame();
-        System.exit(0);
     }
 
 }

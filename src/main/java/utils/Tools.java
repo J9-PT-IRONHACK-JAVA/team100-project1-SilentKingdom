@@ -81,4 +81,10 @@ public abstract class Tools {
         return combatantStatus;
     }
 
+    public static void sleep(int s){
+        try {
+            Thread.sleep(s);
+        } catch (InterruptedException ignored) {}
+    }
+
 }

@@ -18,11 +18,13 @@ public class Warrior extends Combatant{
     public void weakAttack(Combatant target) {
         target.takeDamage(strength/2);
         stamina++;
+        System.out.printf("%s does a weak attack to %s\n", getName(), target.getName());
     }
 
     public void heavyAttack(Combatant target) {
         target.takeDamage(strength);
         stamina -= 5;
+        System.out.printf("%s does a heavy attack to %s!\n", getName(), target.getName());
     }
 
     public Warrior(String name, int hp, boolean isAlive, int stamina, int strength, RepositoryCsv repo)

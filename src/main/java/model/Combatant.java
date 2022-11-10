@@ -1,6 +1,7 @@
 package model;
 
 import repository.RepositoryCsv;
+import utils.ConsoleColors;
 
 public abstract class Combatant implements Attacker{
     private final int id;
@@ -9,14 +10,15 @@ public abstract class Combatant implements Attacker{
     private boolean isAlive;
     private String armyName;
 
-    // TODO combatant.Remove method to call repo.deleteCombatant() to remove combatants from repository
-    //  Should also remove id at least (so there are no issues with id's)
-
     public void takeDamage(int damage){
         hp = Math.max(0, hp-damage);
+        System.out.printf("%s takes %s damage... ", getName(), Math.min(damage, hp));
+
         if (hp == 0) {
             setAlive(false);
+            System.out.printf("%s is dead!!\n\n", getName());
         }
+        System.out.printf("remaining HP = %s\n", hp);
     }
 
     public Combatant copy(RepositoryCsv repo) throws Exception {

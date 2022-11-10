@@ -6,12 +6,10 @@ import model.Combatant;
 import repository.RepositoryCsv;
 import utils.ConsoleColors;
 import utils.ConsolePrints;
-import utils.Tools;
 
-import java.io.Console;
 import java.util.ArrayList;
 
-import static utils.ConsoleColors.printWithColor;
+import static utils.Tools.*;
 
 public class WarService {
 
@@ -19,74 +17,69 @@ public class WarService {
     private final Army lightArmy;
     private final Army darkArmy;
     private boolean isOver;
-
-
     private final RepositoryCsv repo;
+    private final InputService inputService;
 
-    private final InputService inputService = new InputService();
-
-    public WarService(Army light, Army dark, RepositoryCsv repo) {
+    public WarService(Army lightArmy, Army darkArmy, RepositoryCsv repo, InputService inputSVC) {
+        this.lightArmy = lightArmy;
+        this.darkArmy = darkArmy;
         this.graveyard = new ArrayList<>();
-        this.lightArmy = light;
-        this.darkArmy = dark;
         this.isOver = false;
         this.repo = repo;
+        this.inputService = inputSVC;
     }
 
-    public void battle(Combatant lightCombatant, Combatant darkCombatant){
-        // TODO Print battle will start with combatants stats
-        System.out.println(lightCombatant);
-        System.out.println(darkCombatant);
+    public void battle(Combatant lightCombatant, Combatant darkCombatant, int n){
+        ConsolePrints.selectedCombatants(lightCombatant, darkCombatant);
 
         while (lightCombatant.isAlive() && darkCombatant.isAlive()) {
-            // TODO print attacks (can be done inside attack method)
+            printBattleHeader(lightCombatant, darkCombatant, n);
             lightCombatant.attack(darkCombatant);
+
+            printBattleHeader(lightCombatant, darkCombatant, n);
             darkCombatant.attack(lightCombatant);
+
+            sleep(GameService.ATTACK_SLEEP);
         }
 
         if (!lightCombatant.isAlive()) {
             lightArmy.removeCombatant(lightCombatant);
             graveyard.add(lightCombatant);
-            System.out.printf("Light Combatant DEFEATED: %s\n\n", lightCombatant.getName());
+            ConsolePrints.battleResult(darkCombatant, lightCombatant, false);
         }
         if (!darkCombatant.isAlive()) {
             darkArmy.removeCombatant(darkCombatant);
             graveyard.add(lightCombatant);
-            System.out.printf("DARK Combatant DEFEATED: %s\n\n", darkCombatant.getName());
+            ConsolePrints.battleResult(lightCombatant, darkCombatant, true);
         }
-
-        // TODO Print battle will ended with winner status (or draw)
     }
 
     public Combatant getNextCombatant(Army army) {
-        //Random
-        if (army.isBot()) return army.pickRandomCombatant();
+        Combatant combatant;
 
-        //Player
-        String nextCombatantID = inputService.askNextCombatant(army);
-        return army.pickCombatantByIndex(nextCombatantID);
+        if (army.isBot()) {
+            combatant = army.pickRandomCombatant();
+        } else {
+            String nextCombatantID = inputService.askNextCombatant(army);
+            combatant = army.pickCombatantByIndex(nextCombatantID);
+        }
+        return combatant;
     }
 
 
     public Army start() throws Exception {
-        ConsolePrints.printWarBegins();
+        ConsolePrints.warBegins();
 
         // Start war (LOOP) picking random combatants while any of the armies is defeated, continue
         int n = 0;
         while (!isOver) {
-            // TODO Here we should print the war status
             n++;
-            System.out.printf("\nBATTLE # %s\n", n);
-            System.out.printf(
-                    "Armies Stats => %s (%s) VS %s (%s)\n",
-                    lightArmy.getName(), lightArmy.getSize(),
-                    darkArmy.getName(), darkArmy.getSize()
-            );
+            ConsolePrints.clearConsole(ConsolePrints.battleHeader(n, warStatus()));
 
             var lightCombatant = getNextCombatant(lightArmy);
             var darkCombatant = getNextCombatant(darkArmy);
 
-            battle(lightCombatant, darkCombatant);
+            battle(lightCombatant, darkCombatant, n);
 
             // Update combatants in repository
             repo.saveCombatant(lightCombatant);
@@ -108,10 +101,6 @@ public class WarService {
         return null;
     }
 
-    public void stop(){
-        setOver(true);
-    }
-
     public ArrayList<Combatant> getGraveyard() {
         return graveyard;
     }
@@ -124,11 +113,17 @@ public class WarService {
         return darkArmy;
     }
 
-    public boolean isOver() {
-        return isOver;
+    private String warStatus(){
+        return ConsoleColors.YELLOW_BOLD + "Armies Stats => %s (%s) VS %s (%s)\n".formatted(
+                lightArmy.getName(), lightArmy.getSize(),
+                darkArmy.getName(), darkArmy.getSize())
+                + ConsoleColors.RESET;
     }
 
-    public void setOver(boolean over) {
-        isOver = over;
+    private void printBattleHeader(Combatant light, Combatant dark, int n){
+        ConsolePrints.clearConsole(
+                ConsolePrints.battleHeader(n,
+                        ConsolePrints.combatantsStatus(light, dark))
+        );
     }
 }

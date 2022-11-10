@@ -114,4 +114,13 @@ public class Army {
         System.out.println();
     }
 
+    public String getStatus(){
+        var combatants = this.getCombatants();
+        StringBuilder status = new StringBuilder();
+        for (Combatant combatant : combatants) {
+            status.append("- ").append(Tools.combatantStatus(combatant)).append("\n");
+        }
+        return status.toString();
+    }
+
 }
