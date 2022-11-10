@@ -66,10 +66,11 @@ public class ConsolePrints {
         printSlow(text, 100);
     }
 
-    public static String battleHeader(int n, String warStats){
-        return ConsoleColors.BLACK_BACKGROUND + ConsoleColors.RED_BOLD +
-                "BATTLE # %s".formatted(n) + ConsoleColors.RESET +"\n" +
-                ConsoleColors.CYAN_BOLD + warStats + ConsoleColors.RESET;
+    public static String battleHeader(int n, String ... extras){
+        return  "\n" +
+                ConsoleColors.BLACK_BACKGROUND + ConsoleColors.RED_BOLD +
+                         "BATTLE # %s".formatted(n) + ConsoleColors.RESET +"\n" +
+                String.join("\n", extras);
     }
 
     public static void printSlow(String text, int s) {
@@ -106,6 +107,12 @@ public class ConsolePrints {
                 ConsoleColors.PURPLE_BOLD + dark.getName() + " - " + Tools.combatantStatus(dark) + "\n" +
                 ConsoleColors.WHITE_BRIGHT + "Fight until death!!";
         System.out.println(text);
+    }
+
+    public static String combatantsStatus(Combatant light, Combatant dark) {
+        return ConsoleColors.YELLOW_BOLD + light.getName() + " - " + Tools.combatantStatus(light) + "\n" +
+                ConsoleColors.PURPLE_BOLD + dark.getName() + " - " + Tools.combatantStatus(dark) + "\n" +
+                ConsoleColors.RESET;
     }
 
     public static void battleResult(Combatant winner, Combatant defeated, boolean light) {

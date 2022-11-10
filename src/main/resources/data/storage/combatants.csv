@@ -1,7 +1,8 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
-1,Menevia Conspirators,Captain Dwemer,warrior,125,true,36,3,-1,-1
-2,Menevia Conspirators,Major General Riekling,warrior,75,true,3,7,-1,-1
-3,Menevia Conspirators,Lieutenant General Breton,warrior,186,true,44,9,-1,-1
-4,Shor's Stone Horses,Staff Sergeant Riekling,warrior,197,true,14,7,-1,-1
-5,Shor's Stone Horses,Lieutenant General Riekling,warrior,0,false,5,2,-1,-1
-6,Shor's Stone Horses,Sergeant Major Khajiit,warrior,132,true,32,1,-1,-1
+1,Falkreath Vampires,Private First Class Redguard,warrior,0,false,2,7,-1,-1
+2,Falkreath Vampires,First Sergeant Dunmer,warrior,140,true,13,2,-1,-1
+3,Falkreath Vampires,Staff Sergeant Riekling,warrior,198,true,33,8,-1,-1
+4,Tulune Gnomes,Poppy Pomfrey,wizard,61,true,-1,-1,0,42
+5,Tulune Gnomes,Lieutenant General Khajiit,warrior,111,true,46,4,-1,-1
+6,Tulune Gnomes,Private First Class Imperial,warrior,105,true,43,9,-1,-1
+7,Tulune Gnomes,Staff Sergeant Khajiit,warrior,185,true,42,6,-1,-1

@@ -29,12 +29,16 @@ public class WarService {
         this.inputService = inputSVC;
     }
 
-    public void battle(Combatant lightCombatant, Combatant darkCombatant){
+    public void battle(Combatant lightCombatant, Combatant darkCombatant, int n){
         ConsolePrints.selectedCombatants(lightCombatant, darkCombatant);
 
         while (lightCombatant.isAlive() && darkCombatant.isAlive()) {
+            printBattleHeader(lightCombatant, darkCombatant, n);
             lightCombatant.attack(darkCombatant);
+
+            printBattleHeader(lightCombatant, darkCombatant, n);
             darkCombatant.attack(lightCombatant);
+
             sleep(GameService.ATTACK_SLEEP);
         }
 
@@ -75,7 +79,7 @@ public class WarService {
             var lightCombatant = getNextCombatant(lightArmy);
             var darkCombatant = getNextCombatant(darkArmy);
 
-            battle(lightCombatant, darkCombatant);
+            battle(lightCombatant, darkCombatant, n);
 
             // Update combatants in repository
             repo.saveCombatant(lightCombatant);
@@ -114,5 +118,12 @@ public class WarService {
                 lightArmy.getName(), lightArmy.getSize(),
                 darkArmy.getName(), darkArmy.getSize())
                 + ConsoleColors.RESET;
+    }
+
+    private void printBattleHeader(Combatant light, Combatant dark, int n){
+        ConsolePrints.clearConsole(
+                ConsolePrints.battleHeader(n,
+                        ConsolePrints.combatantsStatus(light, dark))
+        );
     }
 }
