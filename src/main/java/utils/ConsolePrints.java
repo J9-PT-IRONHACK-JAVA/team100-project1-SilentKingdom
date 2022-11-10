@@ -3,6 +3,8 @@ package utils;
 import model.Combatant;
 import services.InputService;
 
+import java.io.IOException;
+
 public class ConsolePrints {
 
     public static void gameWelcome(){
@@ -81,8 +83,16 @@ public class ConsolePrints {
     }
 
     public static void clearConsole(String header) {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            }
+            else {
+                System.out.print("\033\143");
+                System.out.flush();
+            }
+        } catch (IOException | InterruptedException ex) {exitGame();}
+
         System.out.println(header);
     }
 
