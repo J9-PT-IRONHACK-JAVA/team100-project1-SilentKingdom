@@ -12,5 +12,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // GameService Start
 
+        GameService.printGrid(new RepositoryCsv());
+
     }
 }
