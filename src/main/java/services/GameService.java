@@ -3,7 +3,7 @@ package services;
 import model.Army;
 import model.Combatant;
 import repository.RepositoryCsv;
-import utils.ConsolePrints;
+import utils.Prints;
 
 import java.io.IOException;
 
@@ -29,7 +29,8 @@ public class GameService {
 
 
     public void start() throws Exception {
-        ConsolePrints.gameWelcome();
+        Prints.gameWelcome();
+        inputSVC.askContinue(false, false);
 
         while (true) {
             // War preparation
@@ -39,16 +40,13 @@ public class GameService {
             var war = new WarService(lightArmy, darkArmy, repo, inputSVC);
 
             // War begins
-            var winner = war.start();
-            sleep(3000);
-
-            System.out.printf("THE WINNER IS... %s\n\n", winner.getName());
-            winner.printStatus();
+            war.start();
+            inputSVC.askContinue(false, false);
 
             // Play again?
             String answer = inputSVC.askPlayAgain();
             if (!answer.equals(YES)) {
-                ConsolePrints.exitGame();
+                Prints.exitGame();
                 inputSVC.close();
                 System.exit(0);
             }
@@ -56,6 +54,7 @@ public class GameService {
             // reset armies
             repo.deleteArmy(lightArmy);
             repo.deleteArmy(darkArmy);
+            inputSVC.setArmiesCreated(0);
         }
     }
 

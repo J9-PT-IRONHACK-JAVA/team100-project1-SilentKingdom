@@ -2,7 +2,7 @@ package model;
 
 import net.datafaker.Faker;
 import repository.RepositoryCsv;
-import utils.ConsoleColors;
+import utils.Colors;
 
 public class Wizard extends Combatant {
     private int mana;
@@ -18,15 +18,15 @@ public class Wizard extends Combatant {
     }
 
     public void staffHit(Combatant target) {
-        ConsoleColors.printWithColor("%s hits %s with the staff\n".formatted(getName(), target.getName()),
-                ConsoleColors.RESET);
+        Colors.printWithColor("%s hits %s with the staff".formatted(getName(), target.getName()),
+                Colors.WHITE_BRIGHT);
         target.takeDamage(2);
         mana++;
     }
 
     public void fireball(Combatant target) {
-        ConsoleColors.printWithColor("%s throws a fireball to %s!\n".formatted(getName(), target.getName()),
-                ConsoleColors.RESET);
+        Colors.printWithColor("%s throws a fireball to %s!".formatted(getName(), target.getName()),
+                Colors.WHITE_BRIGHT);
         target.takeDamage(intelligence);
         mana -= 5;
     }

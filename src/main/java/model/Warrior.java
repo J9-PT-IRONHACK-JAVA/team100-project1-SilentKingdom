@@ -2,6 +2,7 @@ package model;
 
 import net.datafaker.Faker;
 import repository.RepositoryCsv;
+import utils.Colors;
 
 public class Warrior extends Combatant{
     private int stamina;
@@ -16,15 +17,17 @@ public class Warrior extends Combatant{
     }
 
     public void weakAttack(Combatant target) {
+        Colors.printWithColor("%s does a weak attack to %s".formatted(getName(), target.getName()),
+                Colors.WHITE_BRIGHT);
         target.takeDamage(strength/2);
         stamina++;
-        System.out.printf("%s does a weak attack to %s\n", getName(), target.getName());
     }
 
     public void heavyAttack(Combatant target) {
+        Colors.printWithColor("%s does a heavy attack to %s!".formatted(getName(), target.getName()),
+                Colors.WHITE_BRIGHT);
         target.takeDamage(strength);
         stamina -= 5;
-        System.out.printf("%s does a heavy attack to %s!\n", getName(), target.getName());
     }
 
     public Warrior(String name, int hp, boolean isAlive, int stamina, int strength, RepositoryCsv repo)
@@ -65,10 +68,11 @@ public class Warrior extends Combatant{
     }
     public String toStringStatus() {
 
-        var str = (this.getName() + "(%s): " + "ID=" + this.getId() + "HP=" + this.getHp() + "stamina=" + stamina +
-                ", strength=" + strength + ", strength=" + strength).formatted(this.getClass());
-
-        return str;
+        return (this.getName() + "(%s): "
+                + "ID=" + this.getId()
+                + "HP=" + this.getHp()
+                + "stamina=" + stamina +
+                ", strength=" + strength).formatted(this.getClass());
     }
 
 

@@ -17,9 +17,6 @@ public class Army {
     private final RepositoryCsv repo;
     private boolean isBot;
 
-    // TODO army.remove() method to remove army calling repo.deleteArmy()
-    //  In case user wants to change armies during game
-
     public Combatant pickRandomCombatant() {
         Random rand = new Random();
         var combatantsList = new ArrayList<>(combatants.values());

@@ -1,6 +1,6 @@
 package utils;
 
-public class ConsoleColors {
+public class Colors {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
 
@@ -75,6 +75,6 @@ public class ConsoleColors {
     public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
 
     public static void printWithColor(String text, String color) {
-        System.out.println(color + text + ConsoleColors.RESET);
+        System.out.println(color + text + Colors.RESET);
     }
 }

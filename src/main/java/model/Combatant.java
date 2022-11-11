@@ -1,7 +1,7 @@
 package model;
 
 import repository.RepositoryCsv;
-import utils.ConsoleColors;
+import utils.Colors;
 
 public abstract class Combatant implements Attacker{
     private final int id;
@@ -12,13 +12,13 @@ public abstract class Combatant implements Attacker{
 
     public void takeDamage(int damage){
         hp = Math.max(0, hp-damage);
-        System.out.printf("%s takes %s damage... ", getName(), Math.min(damage, hp));
+        String txt = Colors.WHITE_BRIGHT + "%s takes %s damage... ".formatted(getName(), Math.min(damage, hp));
 
         if (hp == 0) {
             setAlive(false);
-            System.out.printf("%s is dead!!\n\n", getName());
+            System.out.printf(txt + "%s is dead!!\n\n" + Colors.RESET, getName());
         }
-        System.out.printf("remaining HP = %s\n", hp);
+        System.out.printf(txt + "remaining HP = %s\n" + Colors.RESET, hp);
     }
 
     public Combatant copy(RepositoryCsv repo) throws Exception {

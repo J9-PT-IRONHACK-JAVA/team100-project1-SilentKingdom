@@ -6,15 +6,15 @@ import java.util.*;
 
 import model.Combatant;
 import repository.RepositoryCsv;
-import utils.ConsoleColors;
-import utils.ConsolePrints;
+import utils.Colors;
+import utils.Prints;
 import utils.Tools;
 
 import java.util.Scanner;
 
-import static utils.ConsoleColors.printWithColor;
-import static utils.ConsolePrints.clearConsole;
-import static utils.ConsolePrints.warPreparation;
+import static utils.Colors.printWithColor;
+import static utils.Prints.clearConsole;
+import static utils.Prints.warPreparation;
 
 public class InputService {
 
@@ -47,6 +47,20 @@ public class InputService {
         this.prompt.close();
     }
 
+    public boolean askContinue(boolean skip, boolean addSkipOption, String ... prints) {
+        if (skip) return true;
+        System.out.println(String.join("\n", prints));
+        String strToPrint = Colors.RESET + "Press any key... ";
+        if (addSkipOption) strToPrint += "('skip' to finish battle)";
+        for (char c : strToPrint.toCharArray()) {
+            try {Thread.sleep(20);} catch (Exception ignore) {}
+            System.out.print(c);
+        }
+        System.out.println();
+        String input = getInput();
+        return input.equals("skip");
+    }
+
     // Each of these methods will ask for the needed attributes,
     // store them in variables and instantiate the new object with them
 
@@ -64,9 +78,9 @@ public class InputService {
         clearConsole(warPreparation( armiesCreated + 1));
         String title = "How do you wish to create this army?";
         String[] options = {
-                option(IMPORT,"Import army from personal .csv file"),
-                option(RANDOM,"Create a random army"),
-                option(HANDMADE,"Make a customized handmade army")
+                option(IMPORT,"IMPORT - Import army from personal .csv file"),
+                option(RANDOM,"RANDOM - Create a random army"),
+                option(HANDMADE,"HANDMADE - Make a customized handmade army")
         };
         return askMenu(title, false, options);
     }
@@ -108,18 +122,18 @@ public class InputService {
         var title = "Please write down the number of combatants that will compose the army:";
         var menu = buildMenu(title, false);
         do {
-            printWithColor(menu, ConsoleColors.WHITE_BRIGHT);
+            printWithColor(menu, Colors.WHITE_BRIGHT);
             input = getInput();
             if (isValidArmySize(input)) {
                 return input;
             }
-            printWithColor("Please try a valid size (between 1 and 10)", ConsoleColors.RED);
+            printWithColor("Please try a valid size (between 1 and 10)", Colors.RED);
         } while (true);
     }
 
     public String okWithThisArmy(Army army) {
         clearConsole(warPreparation( armiesCreated + 1));
-        ConsolePrints.newArmyStatus(army.getName());
+        Prints.newArmyStatus(army.getName());
         army.printStatus();
         String title = "Are you ok with this army? ";
         String[] options = {
@@ -130,6 +144,7 @@ public class InputService {
     }
 
     public String askPlayAgain() {
+        Prints.clearConsole("");
         String title = "Do you want to play again?";
         String[] options = {
                 option(YES,"Yes!"),
@@ -163,12 +178,12 @@ public class InputService {
         String input;
         String menu = buildMenu(title, false);
         do {
-            printWithColor(menu, ConsoleColors.WHITE_BRIGHT);
+            printWithColor(menu, Colors.WHITE_BRIGHT);
             input = getInput().trim();
             if (isValidArmyFileName(input, repo)) {
                 return input + ".csv";
             }
-            printWithColor("Please enter a valid file name", ConsoleColors.RED);
+            printWithColor("Please enter a valid file name", Colors.RED);
         } while (true);
     }
 
@@ -192,8 +207,9 @@ public class InputService {
         return askMenu(title, false, options);
     }
 
-    public String askNextCombatant(Army army){
-        String title = "Please choose the next combatant to fight for: ";
+    public String askNextCombatant(Army army, String color){
+        String title = "Please choose the next combatant to fight for %s%s: ".formatted(color, army.getName())
+                + Colors.WHITE_BRIGHT;
         var combatants = army.getCombatants();
         var options = new ArrayList<String>();
         for (Combatant combatant : combatants) {
@@ -214,19 +230,19 @@ public class InputService {
         var menu = buildMenu(title, showBack, options);
         var optionsMap = getOptionsMap(options);
         do {
-            printWithColor(menu, ConsoleColors.WHITE_BRIGHT);
+            printWithColor(menu, Colors.WHITE_BRIGHT);
             String input = getInput();
 
             if (optionsMap.containsKey(input)) return optionsMap.get(input);
             if (options.length == 0) return input;
-            printWithColor("Command not recognized!", ConsoleColors.RED);
+            printWithColor("Command not recognized!", Colors.RED);
         }while (true);
     }
 
     private String getInput(){
         String input = prompt.nextLine().trim();
         if (input.equals(EXIT)) {
-            ConsolePrints.exitGame();
+            Prints.exitGame();
             System.exit(0);
         }
         return input;
@@ -264,12 +280,14 @@ public class InputService {
 
     private static String buildMenu(String title, boolean showBack, String ... options) {
         StringBuilder menu = new StringBuilder(String.format("%s\n", title));
-
-        for (int i = 0; i < options.length; i++) {
-            menu.append(i+1).append(") ").append(options[i].split("\\|")[1]).append("\n");
+        if (options.length > 0) {
+            menu.append("\n");
+            for (int i = 0; i < options.length; i++) {
+                menu.append("\s\s").append(i + 1).append(") ").append(options[i].split("\\|")[1]).append("\n");
+            }
         }
         if (showBack) menu.append(BACK_STRING);
-        return menu + ConsoleColors.RESET + "('exit' = finish game)\n";
+        return menu + Colors.RESET + "\n('exit' = finish game)\n";
     }
 
     /**

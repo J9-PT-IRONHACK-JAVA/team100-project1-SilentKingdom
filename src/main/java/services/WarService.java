@@ -4,12 +4,10 @@ import model.Army;
 
 import model.Combatant;
 import repository.RepositoryCsv;
-import utils.ConsoleColors;
-import utils.ConsolePrints;
+import utils.Colors;
+import utils.Prints;
 
 import java.util.ArrayList;
-
-import static utils.Tools.*;
 
 public class WarService {
 
@@ -29,61 +27,68 @@ public class WarService {
         this.inputService = inputSVC;
     }
 
-    public void battle(Combatant lightCombatant, Combatant darkCombatant, int n){
-        ConsolePrints.selectedCombatants(lightCombatant, darkCombatant);
+    public void battle(Combatant lightCombatant, Combatant darkCombatant, int n) throws Exception {
+        printBattleHeader(lightCombatant, darkCombatant, n);
+        System.out.println(Colors.WHITE_BRIGHT +"\n LET'S FIGHT!!!" + Colors.RESET);
+
+        var skip = false;
 
         while (lightCombatant.isAlive() && darkCombatant.isAlive()) {
+            skip = inputService.askContinue(skip, true);
             printBattleHeader(lightCombatant, darkCombatant, n);
             lightCombatant.attack(darkCombatant);
+            repo.saveCombatant(darkCombatant);
 
+            skip = inputService.askContinue(skip, true);
             printBattleHeader(lightCombatant, darkCombatant, n);
             darkCombatant.attack(lightCombatant);
-
-            sleep(GameService.ATTACK_SLEEP);
+            repo.saveCombatant(lightCombatant);
         }
+
+        printBattleHeader(lightCombatant, darkCombatant, n);
 
         if (!lightCombatant.isAlive()) {
-            lightArmy.removeCombatant(lightCombatant);
-            graveyard.add(lightCombatant);
-            ConsolePrints.battleResult(darkCombatant, lightCombatant, false);
+            processDefeated(lightArmy, darkCombatant, lightCombatant, false);
         }
         if (!darkCombatant.isAlive()) {
-            darkArmy.removeCombatant(darkCombatant);
-            graveyard.add(lightCombatant);
-            ConsolePrints.battleResult(lightCombatant, darkCombatant, true);
+            processDefeated(darkArmy, lightCombatant, darkCombatant, true);
         }
+
+        inputService.askContinue(false, false);
     }
 
-    public Combatant getNextCombatant(Army army) {
+    private void processDefeated(Army loserArmy, Combatant winner, Combatant defeated, Boolean lightWins) {
+        loserArmy.removeCombatant(defeated);
+        graveyard.add(defeated);
+        Prints.battleResult(winner, defeated, lightWins);
+    }
+
+    private Combatant getNextCombatant(Army army, String color) {
         Combatant combatant;
 
         if (army.isBot()) {
             combatant = army.pickRandomCombatant();
         } else {
-            String nextCombatantID = inputService.askNextCombatant(army);
+            String nextCombatantID = inputService.askNextCombatant(army, color);
             combatant = army.pickCombatantByIndex(nextCombatantID);
         }
         return combatant;
     }
 
 
-    public Army start() throws Exception {
-        ConsolePrints.warBegins();
-
+    public void start() throws Exception {
+        Prints.warBegins();
+        inputService.askContinue(false, false);
         // Start war (LOOP) picking random combatants while any of the armies is defeated, continue
         int n = 0;
         while (!isOver) {
             n++;
-            ConsolePrints.clearConsole(ConsolePrints.battleHeader(n, warStatus()));
+            Prints.clearConsole(Prints.battleHeader(n, getWarStatus()));
 
-            var lightCombatant = getNextCombatant(lightArmy);
-            var darkCombatant = getNextCombatant(darkArmy);
+            var lightCombatant = getNextCombatant(lightArmy, Colors.YELLOW_BOLD);
+            var darkCombatant = getNextCombatant(darkArmy, Colors.PURPLE_BOLD);
 
             battle(lightCombatant, darkCombatant, n);
-
-            // Update combatants in repository
-            repo.saveCombatant(lightCombatant);
-            repo.saveCombatant(darkCombatant);
 
             System.out.println(new String(new char[100]).replace("\0", "="));
 
@@ -92,38 +97,42 @@ public class WarService {
 
         // Return the winner army
         if (lightArmy.getSize() > 0) {
-            return lightArmy;
+            Prints.winner(lightArmy, Colors.YELLOW_BOLD, getGraveyard());
         } else if (darkArmy.getSize() > 0) {
-            return darkArmy;
+            Prints.winner(darkArmy, Colors.PURPLE_BOLD, getGraveyard());
+        } else {
+            Prints.winner(null, Colors.CYAN_BOLD, getGraveyard());
         }
-
-        // In case of draw return null
-        return null;
     }
 
     public ArrayList<Combatant> getGraveyard() {
         return graveyard;
     }
 
-    public Army getLightArmy() {
-        return lightArmy;
+
+    private String getWarStatus() {
+        String lightStatus = getArmyStatus(lightArmy, Colors.YELLOW_BOLD);
+        String darkStatus = getArmyStatus(darkArmy, Colors.PURPLE_BOLD);
+
+        return "\n" + lightStatus + "\n" + darkStatus + "\n";
     }
 
-    public Army getDarkArmy() {
-        return darkArmy;
-    }
+    private String getArmyStatus(Army army, String color){
+        try {
+            var combatants = repo.getArmyCombatants(army);
+            String armyGrid = Prints.getArmyGrid(combatants);
+            String armyTitle = "%s (%s) => ".formatted(army.getName(), army.getSize());
+            return  color + armyTitle + Colors.RESET + armyGrid + "\n";
+        } catch (Exception e) {
+            return "ERROR: couldn't get army status from repository";
+        }
 
-    private String warStatus(){
-        return ConsoleColors.YELLOW_BOLD + "Armies Stats => %s (%s) VS %s (%s)\n".formatted(
-                lightArmy.getName(), lightArmy.getSize(),
-                darkArmy.getName(), darkArmy.getSize())
-                + ConsoleColors.RESET;
     }
 
     private void printBattleHeader(Combatant light, Combatant dark, int n){
-        ConsolePrints.clearConsole(
-                ConsolePrints.battleHeader(n,
-                        ConsolePrints.combatantsStatus(light, dark))
+        Prints.clearConsole(
+                Prints.battleHeader(n, getWarStatus())
         );
+        System.out.println(Prints.combatantsStatus(light, dark));
     }
 }

@@ -60,20 +60,12 @@ public abstract class Tools {
             type = "warrior";
             stamina = String.valueOf(((Warrior) combatant).getStamina());
             strength = String.valueOf(((Warrior) combatant).getStrength());
-            mana = "-1";
-            intelligence = "-1";
-
-
-
             combatantStatus = (name + " (%s): " + "HP=" + hp + ", stamina=" + stamina +
                     ", strength=" + strength).formatted(type);
         } else {
             type = "wizard";
-            stamina = "-1";
-            strength = "-1";
             mana = String.valueOf(((Wizard) combatant).getMana());
             intelligence = String.valueOf(((Wizard) combatant).getIntelligence());
-
             combatantStatus = (name + " (%s): " + "HP=" + hp + ", mana=" + mana +
                     ", intelligence=" + intelligence).formatted(type);
         }
