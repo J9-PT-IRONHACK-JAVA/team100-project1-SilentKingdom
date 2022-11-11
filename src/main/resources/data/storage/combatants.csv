@@ -1,0 +1,7 @@
+id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
+1,Verkarth Foes,General Dunmer,warrior,0,false,3,9,-1,-1
+2,Verkarth Foes,Sergeant Major Nord,warrior,0,false,5,5,-1,-1
+3,Tignus Warlocks,The Fat Lady,wizard,79,true,-1,-1,40,29
+4,Tignus Warlocks,Major General Orc,warrior,31,true,3,7,-1,-1
+5,Tignus Warlocks,Staff Sergeant Orc,warrior,108,true,5,8,-1,-1
+6,Tignus Warlocks,Master Sergeant Bosmer,warrior,0,false,1,2,-1,-1
