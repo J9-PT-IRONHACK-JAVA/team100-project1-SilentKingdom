@@ -49,6 +49,7 @@ public class Prints {
         clearConsole("");
         System.out.println(Colors.CYAN +
                 """
+                          
                           ______ __                   __            ____                           \s
                          /_  __// /_   ____ _ ____   / /__ _____   / __/____   _____               \s
                           / /  / __ \\ / __ `// __ \\ / //_// ___/  / /_ / __ \\ / ___/               \s
@@ -73,6 +74,7 @@ public class Prints {
         clearConsole("");
         String text = Colors.RED +
                """
+                                             
                                              )                       (                      (       ) (                      \s
                                     *   ) ( /(       (  (      (     )\\ )     (      (      )\\ ) ( /( )\\ )                   \s
                                   ` )  /( )\\())(     )\\))(   ' )\\   (()/(   ( )\\ (   )\\ )  (()/( )\\()(()/(                   \s
@@ -88,6 +90,7 @@ public class Prints {
 
     public static String battleHeader(int n, String warStatus){
         String title = Colors.RED_BOLD + """
+                
                 __      __   _     ___\s
                 \\ \\    / /  /_\\   | _ \\
                  \\ \\/\\/ /  / _ \\  |   /
@@ -122,7 +125,8 @@ public class Prints {
     public static String warPreparation(int n) {
         // Font name: small
         String title = Colors.GREEN +
-                """         
+                """  
+                           
                     _   ___ __  __ ___ ___ ___   ___ ___ _____ _   _ ___\s
                    /_\\ | _ \\  \\/  |_ _| __/ __| / __| __|_   _| | | | _ \\
                   / _ \\|   / |\\/| || || _|\\__ \\ \\__ \\ _|  | | | |_| |  _/
@@ -182,6 +186,7 @@ public class Prints {
     public static void winner(Army army, String color, ArrayList<Combatant> graveyard){
         clearConsole("");
         String header = """
+                
                 __      __  ___   _  _   _  _   ___   ___     ___   ___              \s
                 \\ \\    / / |_ _| | \\| | | \\| | | __| | _ \\   |_ _| / __|             \s
                  \\ \\/\\/ /   | |  | .` | | .` | | _|  |   /    | |  \\__ \\    _   _   _\s

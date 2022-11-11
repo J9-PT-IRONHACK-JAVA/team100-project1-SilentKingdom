@@ -2,9 +2,12 @@ package services;
 import model.Army;
 
 import java.io.FileNotFoundException;
+import java.rmi.ServerError;
 import java.util.*;
 
 import model.Combatant;
+import model.Warrior;
+import model.Wizard;
 import repository.RepositoryCsv;
 import utils.Colors;
 import utils.Prints;
@@ -124,7 +127,7 @@ public class InputService {
         do {
             printWithColor(menu, Colors.WHITE_BRIGHT);
             input = getInput();
-            if (isValidArmySize(input)) {
+            if (isValidNum(input, Army.MIN_ARMY_SIZE, Army.MAX_ARMY_SIZE)) {
                 return input;
             }
             printWithColor("Please try a valid size (between 1 and 10)", Colors.RED);
@@ -153,7 +156,24 @@ public class InputService {
         return askMenu(title, false, options);
     }
 
-    public void askExportArmy(Army army, RepositoryCsv repo) throws FileNotFoundException {
+    public void askExportCombatant(Combatant combatant) {
+        clearConsole(warPreparation( armiesCreated + 1));
+        System.out.println(Tools.combatantStatus(combatant) + "\n");
+        String title = "Would you like to export this combatant as a template?";
+        String[] options = {
+                option(YES,"Sure!"),
+                option(NO,"Not now")
+        };
+
+        String answer = askMenu(title, false, options);
+        try {
+            if (answer.equals(YES)) repo.exportCombatant(combatant);
+        } catch (Exception e) {
+            System.err.println("ERROR: could not export combatant");
+        }
+    }
+
+    public void askExportArmy(Army army) {
         clearConsole(warPreparation( armiesCreated + 1));
         String title = "Would you like to export this army for future games?";
         String[] options = {
@@ -163,7 +183,7 @@ public class InputService {
 
         String answer = askMenu(title, false, options);
         if (answer.equals(YES)){
-            String fileName = askArmyExportFileName(repo);
+            String fileName = askArmyExportFileName();
             try {
                 repo.exportArmy(fileName, army);
             } catch (Exception e) {
@@ -172,15 +192,15 @@ public class InputService {
         }
     }
 
-    private String askArmyExportFileName(RepositoryCsv repo) throws FileNotFoundException {
-        clearConsole(warPreparation( armiesCreated + 1));
+    private String askArmyExportFileName() {
+        clearConsole(warPreparation(armiesCreated + 1));
         String title = "Please provide a valid file name (without '.csv')";
         String input;
         String menu = buildMenu(title, false);
         do {
             printWithColor(menu, Colors.WHITE_BRIGHT);
             input = getInput().trim();
-            if (isValidArmyFileName(input, repo)) {
+            if (isValidArmyFileName(input)) {
                 return input + ".csv";
             }
             printWithColor("Please enter a valid file name", Colors.RED);
@@ -197,14 +217,82 @@ public class InputService {
         return askMenu(title, false, options).equals(YES);
     }
 
-    public String askCombatantCreateType(){
+    public String askCombatantCreateMode(int size, Army army){
         clearConsole(warPreparation( armiesCreated + 1));
+        System.out.printf("(%s remaining combatants)\n", size - army.getSize());
+        army.printStatus();
         String title = "How do you want to create the next combatant?";
         String[] options = {
                 option(IMPORT,"Import it from template"),
                 option(HANDMADE,"Create it manually"),
         };
         return askMenu(title, false, options);
+    }
+
+    public String askCombatantType(Army army){
+        clearConsole(warPreparation( armiesCreated + 1));
+        army.printStatus();
+        String title = "What type of combatant do you want to create?";
+        String[] options = {
+                option(RepositoryCsv.WARRIOR_TYPE,"WARRIOR (X)"),
+                option(RepositoryCsv.WIZARD_TYPE,"WIZARD (O)"),
+        };
+        return askMenu(title, false, options);
+    }
+
+    public Combatant askCombatantAttributes(String type, Army army) throws Exception {
+        clearConsole(warPreparation( armiesCreated + 1));
+        army.printStatus();
+        System.out.println(Colors.WHITE_BRIGHT + "Please, set your %s attributes:\n".formatted(type.toLowerCase()));
+        String name = askCombatantName();
+
+        if (type.equals(RepositoryCsv.WARRIOR_TYPE)) {
+            int hp = askNumber("* HP (%s-%s):", 100, 200);
+            int stamina = askNumber("* STAMINA (%s-%s):", 10, 50);
+            int strength = askNumber("* STRENGTH (%s-%s):", 1, 10);
+            return new Warrior(name, hp, true, stamina, strength, repo);
+        } else {
+            int hp = askNumber("* HP (%s-%s):", 50, 100);
+            int mana = askNumber("* MANA (%s-%s):", 10, 50);
+            int intelligence = askNumber("* INTELLIGENCE (%s-%s):", 1, 50);
+            return new Wizard(name, hp, true, mana, intelligence, repo);
+        }
+    }
+    public int askNumber(String title, int min, int max) {
+        do {
+            System.out.println(Colors.WHITE_BRIGHT + title.formatted(min, max));
+            String input = getInput();
+            if (isValidNum(input, min, max)) {
+                return Integer.parseInt(input);
+            }
+            printWithColor("Please introduce a valid number (between %s and %s)".formatted(min, max), Colors.RED);
+        } while (true);
+    }
+
+    public String askCombatantName() {
+        String input;
+        do {
+            System.out.println(Colors.WHITE_BRIGHT +"* NAME:");
+            input = getInput().trim();
+            if (input.matches("^(\\w|\\s|-)+$")) {
+                return input;
+            }
+            printWithColor("Please enter a valid combatant name", Colors.RED);
+        } while (true);
+    }
+
+    public Combatant askCreateHandmadeCombatant(Army army) {
+        String type = askCombatantType(army);
+        try {
+            if (type.equals(RepositoryCsv.WARRIOR_TYPE)) {
+                return askCombatantAttributes(RepositoryCsv.WARRIOR_TYPE, army);
+            } else {
+                return askCombatantAttributes(RepositoryCsv.WIZARD_TYPE, army);
+            }
+        } catch (Exception e) {
+            System.err.println("ERROR: could not create combatant, try importing one");
+        }
+        return null;
     }
 
     public String askNextCombatant(Army army, String color){
@@ -248,13 +336,17 @@ public class InputService {
         return input;
     }
 
-    private boolean isValidArmyFileName(String fileName, RepositoryCsv repo) throws FileNotFoundException {
+    private boolean isValidArmyFileName(String fileName) {
         if (!fileName.matches("^\\w+$")) return false;
         fileName += ".csv";
 
-        var armiesFiles = repo.listArmiesImport().keySet();
-        if (armiesFiles.contains(fileName)) {
-            return askOverwriteFile(fileName);
+        try {
+            var armiesFiles = repo.listArmiesImport().keySet();
+            if (armiesFiles.contains(fileName)) {
+                return askOverwriteFile(fileName);
+            }
+        } catch (Exception e) {
+            System.err.printf("ERROR: could not find directory %s\n", RepositoryCsv.ARMY_CATALOG_PATH);
         }
         return true;
     }
@@ -269,11 +361,11 @@ public class InputService {
 
     // ======== STATIC METHODS ==================
 
-    private static boolean isValidArmySize(String input) {
+    private static boolean isValidNum(String input, int min, int max) {
         var armySizeInt = 0;
         if (input.matches("^\\d+$")) {
             armySizeInt = Integer.parseInt(input);
-            return armySizeInt <= Army.MAX_ARMY_SIZE && armySizeInt >= Army.MIN_ARMY_SIZE;
+            return armySizeInt <= max && armySizeInt >= min;
         }
         return false;
     }
@@ -306,7 +398,5 @@ public class InputService {
     }
 
     private static String option(String key, String text){return ("%s|"+ text).formatted(key);}
-
-
 
 }

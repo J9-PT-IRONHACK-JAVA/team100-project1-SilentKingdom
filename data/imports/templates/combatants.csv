@@ -1,8 +1,9 @@
 name,type,hp,stamina,strength,mana,intelligence
-Troll,warrior,190,10,8,-1,-1
 Gondor Soldier,warrior,120,30,7,-1,-1
-Boromir,warrior,120,30,7,-1,-1
-James Potter,wizard,81,-1,-1,35,27
-Sergeant Imperial,warrior,113,18,4,-1,-1
-Gunnery Sergeant Dwemer,warrior,190,19,1,-1,-1
-Terry Boot,wizard,81,-1,-1,41,6
+Elf Archer,warrior,130,50,5,-1,-1
+Dwarf Soldier,warrior,190,20,10,-1,-1
+Istar,wizard,89,-1,-1,39,21
+Nazgul,wizard,100,-1,-1,35,20
+Uruk-hai,warrior,150,20,8,-1,-1
+Orc,warrior,100,15,5,-1,-1
+Troll,warrior,190,10,8,-1,-1

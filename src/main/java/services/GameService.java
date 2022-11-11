@@ -8,7 +8,6 @@ import utils.Prints;
 import java.io.IOException;
 
 import static services.InputService.*;
-import static utils.Tools.*;
 
 public class GameService {
     public static final int ATTACK_SLEEP = 1;
@@ -90,7 +89,7 @@ public class GameService {
                 continue;
             }
             if (creationType.equals(RANDOM) || creationType.equals(HANDMADE)) {
-                inputSVC.askExportArmy(army, repo);
+                inputSVC.askExportArmy(army);
             }
             inputSVC.setArmiesCreated(inputSVC.getArmiesCreated() + 1);
             return army;
@@ -102,15 +101,14 @@ public class GameService {
 
         while (army.getSize() < armySize) {
             Combatant combatant;
-            String answer = inputSVC.askCombatantCreateType();
+            String answer = inputSVC.askCombatantCreateMode(armySize, army);
 
             if (answer.equals(IMPORT)) {
                 String combatantName = inputSVC.askWhichCombatantImport();
                 combatant = repo.importCombatant(combatantName);
             } else {
-                String combatantName = inputSVC.askWhichCombatantImport();
-                combatant = repo.importCombatant(combatantName);
-                //combatant = inputSVC.askCreateCombatant();
+                combatant = inputSVC.askCreateHandmadeCombatant(army);
+                inputSVC.askExportCombatant(combatant);
             }
             army.addCombatant(combatant);
         }

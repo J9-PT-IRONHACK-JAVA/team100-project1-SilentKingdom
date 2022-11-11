@@ -310,9 +310,8 @@ public class RepositoryCsv implements Repository{
 
     /** Gives a list of the armies import files summary from the imports folder in a formatted style
      * @return array of distinct armies files summary
-     * @throws FileNotFoundException if no file is found in catalog path
      */
-    public HashMap<String,String> listArmiesImport() throws FileNotFoundException {
+    public HashMap<String,String> listArmiesImport() {
         var folder = new File(ARMY_CATALOG_PATH);
         var armiesMap = new HashMap<String,String>();
         for (File armyFile : Objects.requireNonNull(folder.listFiles())){
