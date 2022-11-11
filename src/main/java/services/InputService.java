@@ -247,20 +247,20 @@ public class InputService {
         String name = askCombatantName();
 
         if (type.equals(RepositoryCsv.WARRIOR_TYPE)) {
-            int hp = askNumber("* HP (%s-%s):", 100, 200);
-            int stamina = askNumber("* STAMINA (%s-%s):", 10, 50);
-            int strength = askNumber("* STRENGTH (%s-%s):", 1, 10);
+            int hp = askNumber("* HP (%s-%s) = ", 100, 200);
+            int stamina = askNumber("* STAMINA (%s-%s) = ", 10, 50);
+            int strength = askNumber("* STRENGTH (%s-%s) = ", 1, 10);
             return new Warrior(name, hp, true, stamina, strength, repo);
         } else {
-            int hp = askNumber("* HP (%s-%s):", 50, 100);
-            int mana = askNumber("* MANA (%s-%s):", 10, 50);
-            int intelligence = askNumber("* INTELLIGENCE (%s-%s):", 1, 50);
+            int hp = askNumber("* HP (%s-%s) = ", 50, 100);
+            int mana = askNumber("* MANA (%s-%s) = ", 10, 50);
+            int intelligence = askNumber("* INTELLIGENCE (%s-%s) = ", 1, 50);
             return new Wizard(name, hp, true, mana, intelligence, repo);
         }
     }
     public int askNumber(String title, int min, int max) {
         do {
-            System.out.println(Colors.WHITE_BRIGHT + title.formatted(min, max));
+            System.out.printf(Colors.WHITE_BRIGHT + title + Colors.RESET, min, max);
             String input = getInput();
             if (isValidNum(input, min, max)) {
                 return Integer.parseInt(input);
@@ -272,7 +272,7 @@ public class InputService {
     public String askCombatantName() {
         String input;
         do {
-            System.out.println(Colors.WHITE_BRIGHT +"* NAME:");
+            System.out.print(Colors.WHITE_BRIGHT + "* NAME = " + Colors.RESET);
             input = getInput().trim();
             if (input.matches("^(\\w|\\s|-)+$")) {
                 return input;

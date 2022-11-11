@@ -11,35 +11,16 @@ public abstract class Combatant implements Attacker{
     private String armyName;
 
     public void takeDamage(int damage){
-        hp = Math.max(0, hp-damage);
-        String txt = Colors.WHITE_BRIGHT + "%s takes %s damage... ".formatted(getName(), Math.min(damage, hp));
+        int realDamage = Math.min(damage, hp);
+        String txt = Colors.WHITE_BRIGHT + "%s takes %s damage... ".formatted(getName(), realDamage);
+        hp -= Math.min(damage, hp);
 
         if (hp == 0) {
             setAlive(false);
             System.out.printf(txt + "%s is dead!!\n\n" + Colors.RESET, getName());
+        } else {
+            System.out.printf(txt + "remaining HP = %s\n" + Colors.RESET, hp);
         }
-        System.out.printf(txt + "remaining HP = %s\n" + Colors.RESET, hp);
-    }
-
-    public Combatant copy(RepositoryCsv repo) throws Exception {
-        if (this instanceof Warrior) {
-            var warriorCopy = new Warrior(
-                    getName(), getHp(), true,
-                    ((Warrior) this).getStamina(),
-                    ((Warrior) this).getStrength(), repo
-            );
-            repo.saveCombatant(warriorCopy);
-            return warriorCopy;
-        } else if (this instanceof Wizard) {
-            var wizardCopy = new Warrior(
-                    getName(), getHp(), true,
-                    ((Wizard) this).getMana(),
-                    ((Wizard) this).getIntelligence(), repo
-            );
-            repo.saveCombatant(wizardCopy);
-            return wizardCopy;
-        }
-        return null;
     }
 
     // When creating new combatant

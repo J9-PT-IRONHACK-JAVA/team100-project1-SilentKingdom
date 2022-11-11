@@ -1,4 +1,7 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
-1,Wences,Geralt of Rivia,wizard,100,true,-1,-1,30,49
-2,Wences,Yennefer,wizard,70,true,-1,-1,50,50
-3,Wences,Troll,warrior,190,true,10,8,-1,-1
+1,Verkarth Foes,General Dunmer,warrior,0,false,3,9,-1,-1
+2,Verkarth Foes,Sergeant Major Nord,warrior,0,false,5,5,-1,-1
+3,Tignus Warlocks,The Fat Lady,wizard,79,true,-1,-1,40,29
+4,Tignus Warlocks,Major General Orc,warrior,31,true,3,7,-1,-1
+5,Tignus Warlocks,Staff Sergeant Orc,warrior,108,true,5,8,-1,-1
+6,Tignus Warlocks,Master Sergeant Bosmer,warrior,0,false,1,2,-1,-1

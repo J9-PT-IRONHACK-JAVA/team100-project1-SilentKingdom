@@ -194,7 +194,7 @@ public class Prints {
                 """ + "\n";
 
 
-        String winnerStats = (army != null) ? army.getName().toUpperCase() + "\n"
+        String winnerStats = (army != null) ? army.getName().toUpperCase() + "\n\n"
                 + army.getStatus() : "NO ONE, IT'S A DRAW!";
 
         String winnerStr = color + header + winnerStats + Colors.RESET + "\n";
@@ -206,9 +206,9 @@ public class Prints {
     public static String getGraveyard(ArrayList<Combatant> graveyard) {
         StringBuilder text = new StringBuilder("\n GRAVEYARD \n\n" + Colors.RESET);
         for (Combatant combatant: graveyard) {
-            text.append(Tools.combatantStatus(combatant)).append("\n");
+            text.append(" - ").append(Tools.combatantStatus(combatant)).append("\n");
         }
-        return (text + "\n\n" + " R. I. P. " + "\n\n");
+        return (text + "\n" + " R. I. P. " + "\n\n");
     }
 }
 
