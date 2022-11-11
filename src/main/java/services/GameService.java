@@ -7,10 +7,8 @@ import repository.RepositoryCsv;
 import utils.ConsolePrints;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 import static utils.ConsoleColors.*;
 
@@ -42,37 +40,43 @@ public class GameService {
 
         System.out.println(RED_BACKGROUND+BLACK_BOLD+"\t"+"\t"+"\t"+"\t"+"\t"+ "Army 1" +"\t"+"\t"+"\t"+"\t"+"\t"+"\t"+resetColor);
 
-        var gridPossWar = "\t" + Arrays.toString(new String[]{BLACK_BOLD + 'X' + resetColor});
-        var gridPossWiz = "\t" + Arrays.toString(new String[]{BLACK_BOLD + 'O' + resetColor});
-
-        setPositionAndColor(lightArmy, gridPossWar, gridPossWiz);
+        System.out.println(setPositionAndColor(lightArmy));
 
         System.out.println("\n" + "\n" + CYAN_BACKGROUND + BLACK_BOLD +"\t"+"\t"+"\t"+"\t"+"\t"+"Army 2"+"\t"+"\t"+"\t"+"\t"+"\t"+"\t"+resetColor);
 
-        setPositionAndColor(darkArmy, gridPossWar, gridPossWiz);
+        System.out.println(setPositionAndColor(darkArmy));
+
     }
 
     //TODO hacer un string y imprimirlo al final,
-    private static void setPositionAndColor(ArrayList<Combatant> darkArmy, String gridPossWar, String gridPossWiz) {
-        for (Combatant combatant : darkArmy) {
+    public static String setPositionAndColor(ArrayList<Combatant> army) {
+
+        var gridPossWar = BLACK_BOLD + " X " + resetColor;
+        var gridPossWiz = BLACK_BOLD + " O " + resetColor;
+
+        String finalGameBoard = "";
+
+        for (Combatant combatant : army) {
+            finalGameBoard += " ";
             if (combatant.getClass() == Warrior.class) {
                 if (combatant.isAlive() && combatant.getHp() >= 60) {
-                    System.out.print(GREEN_BACKGROUND + gridPossWar);
+                    finalGameBoard += (GREEN_BACKGROUND + gridPossWar);
                 }else if (combatant.isAlive() && combatant.getHp() >= 40) {
-                System.out.print(YELLOW_BACKGROUND + gridPossWiz);
+                    finalGameBoard += (YELLOW_BACKGROUND + gridPossWar);
                 } else {
-                    System.out.print(RED_BACKGROUND + gridPossWar);
+                    finalGameBoard += (RED_BACKGROUND + gridPossWar);
                 }
             } else {
                 if (combatant.isAlive() && combatant.getHp() >= 60) {
-                    System.out.print(GREEN_BACKGROUND + gridPossWiz);
+                    finalGameBoard += (GREEN_BACKGROUND + gridPossWiz);
                 } else if (combatant.isAlive() && combatant.getHp() >= 40) {
-                    System.out.print(YELLOW_BACKGROUND + gridPossWiz);
+                    finalGameBoard += (YELLOW_BACKGROUND + gridPossWiz);
                 } else {
-                    System.out.print(RED_BACKGROUND + gridPossWiz);
+                    finalGameBoard += (RED_BACKGROUND + gridPossWiz);
                 }
             }
         }
+        return finalGameBoard;
     }
 
 

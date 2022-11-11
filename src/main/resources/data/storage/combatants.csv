@@ -1,20 +1,20 @@
 id,army,name,type,hp,is_alive,stamina,strength,mana,intelligence
-1,Winterhold Owls,Minerva McGonagall,wizard,80,true,-1,-1,18,21
-2,Winterhold Owls,Rodolphus Lestrange,wizard,57,true,-1,-1,23,38
-3,Winterhold Owls,Morfin Gaunt,wizard,72,true,-1,-1,43,7
-4,Winterhold Owls,Mafalda Hopkirk,wizard,57,true,-1,-1,34,36
-5,Winterhold Owls,General Altmer,warrior,195,true,15,5,-1,-1
-6,Winterhold Owls,Second Lieutenant Argonian,warrior,185,true,45,6,-1,-1
-7,Winterhold Owls,Lieutenant Colonel Argonian,warrior,145,true,20,2,-1,-1
-8,Winterhold Owls,Sergeant Major Altmer,warrior,179,true,45,7,-1,-1
-9,Winterhold Owls,Private First Class Imperial,warrior,171,true,22,3,-1,-1
-10,Winterhold Owls,Major General Dunmer,warrior,175,true,40,9,-1,-1
-11,Menevia Buffalo,Madam Malkin,wizard,55,true,-1,-1,17,17
-12,Menevia Buffalo,Beedle the Bard,wizard,53,true,-1,-1,16,38
-13,Menevia Buffalo,Dennis Creevey,wizard,58,true,-1,-1,24,43
-14,Menevia Buffalo,Master Sergeant Khajiit,warrior,165,true,15,2,-1,-1
-15,Menevia Buffalo,Sergeant Major of the Marine Corps Dwemer,warrior,172,true,13,1,-1,-1
-16,Menevia Buffalo,Colonel Altmer,warrior,130,true,45,2,-1,-1
-17,Menevia Buffalo,Gunnery Sergeant Dunmer,warrior,177,true,30,1,-1,-1
-18,Menevia Buffalo,Sergeant Major Riekling,warrior,137,true,38,9,-1,-1
-19,Menevia Buffalo,Gunnery Sergeant Dunmer,warrior,109,true,19,1,-1,-1
+1,Karthwasten Druids,Walden Macnair,wizard,84,true,-1,-1,31,25
+2,Karthwasten Druids,Dobby,wizard,59,true,-1,-1,13,1
+3,Karthwasten Druids,Private Redguard,warrior,154,true,44,9,-1,-1
+4,Karthwasten Druids,Lieutenant Colonel Breton,warrior,145,true,44,5,-1,-1
+5,Karthwasten Druids,Master Gunnery Sergeant Bosmer,warrior,191,true,31,3,-1,-1
+6,Karthwasten Druids,First Lieutenant Breton,warrior,193,true,45,3,-1,-1
+7,Karthwasten Druids,Brigadier General Khajiit,warrior,187,true,42,9,-1,-1
+8,Karthwasten Druids,Lieutenant Colonel Argonian,warrior,161,true,11,7,-1,-1
+9,Karthwasten Druids,Lieutenant General Orc,warrior,132,true,12,7,-1,-1
+10,Karthwasten Druids,Captain Dwemer,warrior,199,true,33,5,-1,-1
+11,Tulune Ants,Andromeda Tonks,wizard,91,true,-1,-1,13,48
+12,Tulune Ants,Wilhelmina Grubbly-Plank,wizard,84,true,-1,-1,40,36
+13,Tulune Ants,Master Sergeant Nord,warrior,144,true,44,9,-1,-1
+14,Tulune Ants,Sergeant Major Redguard,warrior,156,true,39,8,-1,-1
+15,Tulune Ants,Lieutenant General Imperial,warrior,102,true,12,6,-1,-1
+16,Tulune Ants,Lance Corporal Redguard,warrior,152,true,45,5,-1,-1
+17,Tulune Ants,Corporal Riekling,warrior,162,true,46,5,-1,-1
+18,Tulune Ants,Second Lieutenant Dwemer,warrior,164,true,49,9,-1,-1
+19,Tulune Ants,Colonel Nord,warrior,115,true,12,1,-1,-1
