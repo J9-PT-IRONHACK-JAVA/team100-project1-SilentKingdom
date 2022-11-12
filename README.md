@@ -3,17 +3,11 @@
 
 <img src="docs/team100_logo.png" alt="Team100" width="250"/>
 
+# SilentKingdom 
 
-  ```
-   ___  _  _            _    _  __ _                 _             
- / __|(_)| | ___  _ _ | |_ | |/ /(_) _ _   __ _  __| | ___  _ __  
- \__ \| || |/ -_)| ' \|  _|| ' < | || ' \ / _` |/ _` |/ _ \| '  \ 
- |___/|_||_|\___||_||_|\__||_|\_\|_||_||_|\__, |\__,_|\___/|_|_|_|
-                                           |___/                   
-```
 ## Introduction
 
-The final total war game between light and darkness.
+RPG: The final total war game between light and darkness.
 
 Build your custom armies from custom combatants, create random ones and export them for future games.
 
