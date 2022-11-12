@@ -1,8 +1,3 @@
-
-
-
-<img src="docs/team100_logo.png" alt="Team100" width="250"/>
-
 ```
   ___  _  _            _    _  __ _                 _             
  / __|(_)| | ___  _ _ | |_ | |/ /(_) _ _   __ _  __| | ___  _ __  
@@ -37,3 +32,9 @@ It's quite intuitive, just follow the instructions that you will see in the cons
 Introduce valid answers to the menus presented.
 
 Write exit anytime, anywhere to close the game gracefully (or ^C if you're a badass)
+
+<hr>
+
+_Developed by:_
+
+<img src="docs/team100_logo.png" alt="Team100" width="130"/>
